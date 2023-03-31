@@ -35,7 +35,7 @@
 5. Edit `.env`
 6. Run `npm start` to get the bot working
 
-* Update Bot : `npm run updatebot`
+* Update Bot : `npm run update`
 
 ## Edit .env file
 Please make sure to fill every fields marked with <ins>"* needed"</ins> because they are mandatory for the main functions of the bot! Otherwise the bot won't start and / or might crash at some point when these information are missing.
