@@ -41,7 +41,7 @@ module.exports = {
                 },
                 {
                     name: "<:djs:1091295192956547072> Discord.js Version",
-                    value: `\`${version}\``,
+                    value: `\`v${version}\``,
                     inline: true
                 },
                 {
