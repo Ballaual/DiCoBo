@@ -1,0 +1,27 @@
+{
+  "projectName": "DiCoBo",
+  "projectOwner": "ballaual",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "eslint",
+  "contributors": [
+    {
+      "login": "ballaual",
+      "name": "Ballaual",
+      "avatar_url": "https://avatars.githubusercontent.com/u/38478976?v=4",
+      "profile": "https://github.com/ballaual",
+      "contributions": [
+        "code",
+        "test",
+        "ideas",
+        "infra"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
