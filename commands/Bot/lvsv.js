@@ -13,18 +13,18 @@ module.exports = {
         const guild = interaction.client.guilds.cache.get(guildId)
 
         if (interaction.member.id !== process.env.adminID) {
-            return interaction.reply({ content: "Bot owner only!" })
+            return interaction.reply({ content: "Only the bot owner is allowed to use this command!", ephemeral: true })
         }
 
         if (!guild) {
-            return interaction.reply({ content: "No guild ID was specified. Please specify a guild ID" })
+            return interaction.reply({ content: "No guild ID was specified. Please specify a guild ID", ephemeral: true })
         }
 
         try {
             await guild.leave()
-            return interaction.reply({ content: `Left **${guild.name}** with \`${guild.memberCount}\` members.` })
+            return interaction.reply({ content: `Left **${guild.name}** with \`${guild.memberCount}\` members.`, ephemeral: true })
         } catch (err) {
-            return interaction.reply({ content: `An error occurred while leaving the server: \`${err.message}\`` })
+            return interaction.reply({ content: `An error occurred while leaving the server: \`${err.message}\``, ephemeral: true })
         }
     }
 }
