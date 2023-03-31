@@ -4,17 +4,17 @@ const { EmbedBuilder } = require("discord.js")
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("poke")
-        .setDescription("Send a poke to another user.")
+        .setDescription("Send a poke to another user")
         .addUserOption(option =>
             option
                 .setName("target")
-                .setDescription("The user you want to poke.")
+                .setDescription("The user you want to poke")
                 .setRequired(true)
         )
         .addStringOption(option =>
             option
                 .setName("message")
-                .setDescription("The message you want to send.")
+                .setDescription("The message you want to send")
                 .setRequired(false)
                 .setMaxLength(1024)
         ),

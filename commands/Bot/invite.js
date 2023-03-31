@@ -4,7 +4,7 @@ const { EmbedBuilder } = require("discord.js")
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("invite")
-        .setDescription("Displays the invite link for the bot."),
+        .setDescription("Displays the global invite link for the bot"),
 
     async execute (interaction) {
         if (!process.env.oauthv2link) {
