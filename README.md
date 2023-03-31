@@ -29,7 +29,7 @@
 
 ## Setup your own Bot
 1. Run `git clone https://github.com/ballaual/DiCoBo.git`
-2. Run `cd music-slash-bot`
+2. Run `cd DiCoBo`
 3. Run `npm i` to install the modules required
 4. Copy or Rename `.env_example` to `.env`
 5. Edit `.env`
