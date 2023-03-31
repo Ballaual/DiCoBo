@@ -44,7 +44,8 @@ Please make sure to fill every fields marked with <ins>"* needed"</ins> because 
 > token |
 > botID |
 > adminID |
-> oauthv2link |
+> oauthv2Link |
+> githubLink |
 > logChannel
 
 * Optional fields
