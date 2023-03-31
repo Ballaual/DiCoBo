@@ -16,10 +16,10 @@ module.exports = {
         }
 
         const embed = new EmbedBuilder()
-            .setTitle(`${interaction.client.user.username}"s invite link:`)
+            .setTitle(`${interaction.client.user.username}'s invite link:`)
             .setThumbnail(interaction.client.user.displayAvatarURL())
             .setColor("#007BFF")
-            .setDescription(`My invite link is: ${process.env.oauthv2link}`)
+            .setDescription(`My invite link is:\n${process.env.oauthv2link}`)
 
         return interaction.reply({ embeds: [embed] })
     }

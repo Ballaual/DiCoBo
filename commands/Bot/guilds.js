@@ -18,7 +18,7 @@ module.exports = {
             return `${index + 1}) ${guild.name} | ${guild.memberCount} members | ID:${guild.id} `
         }).join("\n")
         const embed = new EmbedBuilder()
-            .setTitle(`${interaction.client.user.username}"s top Guilds:`)
+            .setTitle(`${interaction.client.user.username}'s top Guilds:`)
             .setThumbnail(interaction.client.user.displayAvatarURL())
             .setColor("#FFFF00")
             .setDescription(description)
