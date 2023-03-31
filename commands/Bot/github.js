@@ -11,13 +11,13 @@ module.exports = {
             return interaction.reply({ content: "Missing `githubLink` in .env", ephemeral: true })
         }
 
-        if (!process.env.oauthv2link.startsWith("https://github.com/")) {
+        if (!process.env.githubLink.startsWith("https://github.com/")) {
             return interaction.reply({ content: "Please provide a valid Github link", ephemeral: true })
         }
 
         const embed = new EmbedBuilder()
             .setTitle(`${interaction.client.user.username}'s Github Repository:`)
-            .setThumbnail(interaction.client.user.displayAvatarURL())
+            .setThumbnail("https://cdn.discordapp.com/emojis/1091295909972803616.png")
             .setColor("#007BFF")
             .setDescription(`You can find the sourcecode here:\n${process.env.githubLink}`)
 
