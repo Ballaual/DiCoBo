@@ -26,15 +26,87 @@
 3. Discord Bot Token: **[Get it here](https://discord.com/developers/applications)**
 4. Discord Bot CLIENT_ID: **[Get it here](https://discord.com/developers/applications)**
 
-## Setup your own Bot
-1. Run `git clone https://github.com/ballaual/DiCoBo.git`
-2. Run `cd music-slash-bot`
-3. Run `npm i` to install the modules required
-4. Copy or Rename `.env_example` to `.env`
-5. Edit `.env`
-6. Run `npm start` to get the bot working
+## Server installation instructions
 
-* Update Bot : `npm run updatebot`
+* Windows
+
+<details>
+<summary>using CMD</summary>
+
+1. Open CMD using `WIN + R` and type `cmd` and hit `ENTER`
+2. Run `git clone https://github.com/ballaual/DiCoBo.git`
+3. Run `cd DiCoBo`
+4. Run `npm i` to install the required modules
+5. Copy or Rename `.env_example` to `.env`
+6. Edit `.env` - see [here](#edit-env-file)
+7. Run `npm start` to start the bot
+
+* Update the bot : `npm run update`
+</details>
+
+<details>
+<summary>without using CMD</summary>
+
+1. Download latest release from [here](https://github.com/ballaual/DiCoBo/releases/latest)
+2. Unzip the files using WinRAR or any other package manager
+3. Navigate into the folder `DiCoBo`
+4. Execute `install.bat` to install the required modules
+5. Copy or Rename `.env_example` to `.env`
+6. Edit `.env` - see [here](#edit-env-file)
+7. Execute `startbot.bat` to start the bot
+
+* Update the bot : Execute `update.bat`
+</details>
+
+* Linux
+
+<details>
+<summary>Debian >=10</summary>
+
+1. As root: Create a new user `useradd -m -s /bin/bash dicobo`
+2. Login as dicobo using `su - dicobo`
+3. Run `git clone https://github.com/ballaual/DiCoBo.git`
+4. Run `cd DiCoBo`
+5. Run `npm i` to install the required modules
+6. Run `cp .env_example .env`
+7. Edit `.env` using nano or vim - see [here](#edit-env-file)
+8. Run `npm start` to start the bot
+
+* Update the bot : `npm run update`
+</details>
+
+<details>
+<summary>using systemd</summary>
+
+1. Follow the guide from Debian installation guide until step 7
+2. As root: Navigate to systemd's folder using `cd /etc/systemd/system/`
+3. Create a new file called `dicobo.service`
+4. Insert following code  
+
+>[Unit]<br>
+>Description=DiCoBo Discordbot<br>
+>After=network.service<br>
+><br>
+>[Service]<br>
+>User=dicobo<br>
+>Group=dicobo<br>
+>Type=simple<br>
+>WorkingDirectory=/home/dicobo/DiCoBo/<br>
+>ExecStart=node .<br>
+>RestartSec=15<br>
+>Restart=always<br>
+><br>
+>[Install]<br>
+>WantedBy=multi-user.target<br>
+
+5. Run `systemctl daemon-reload` to reload systemd's configs
+6. Run `systemctl start dicobo` to start the bot
+  
+Note: Now the bot will always run in background an will automatically start when you restart the whole machine.<br>
+To stop simply run `systemctl stop dicobo`
+
+* Update the bot : `cd /home/dicobo/DiCoBo/ && npm run update`
+</details>
 
 ## Edit .env file
 Please make sure to fill every field marked with <b>*needed</b> because they are mandatory for the main functions of the bot! Otherwise the bot won't start and / or might crash at some point if these information are missing.
