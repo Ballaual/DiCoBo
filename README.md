@@ -22,11 +22,11 @@
 * [License](#License)
 
 ## Invite the bot
-You can invite the bot to your server using the following link
+You can invite the bot to your server using the following link<br>
 **LINK COMING SOON**
 
 ## Set the correct permissions
-Please make sure to set some relevant permissions when using the bot on your server.
+Please make sure to set some relevant permissions when using the bot on your server.<br>
 **MORE INFORMATION SOON**
 
 ## Requirements
@@ -111,13 +111,13 @@ Please make sure to set some relevant permissions when using the bot on your ser
 5. Run `systemctl daemon-reload` to reload systemd's configs
 6. Run `systemctl start dicobo` to start the bot
   
-Note: Now the bot will always run in background an will automatically start when you restart the whole machine.<br>
+Note: Now the bot will always run in background and will automatically start when you restart the whole machine.<br>
 To stop simply run `systemctl stop dicobo`
 
 * Update the bot : `cd /home/dicobo/DiCoBo/ && npm run update`
 </details>
 
-## Edit .env file
+## Edit the .env file
 Please make sure to fill every field marked with <b>*needed</b> because they are mandatory for the main functions of the bot! Otherwise the bot won't start and / or might crash at some point if these information are missing.
 
 * Needed fields
