@@ -50,7 +50,7 @@ Please make sure to set some relevant permissions when using the bot on your ser
 6. Edit `.env` - see [here](#edit-env-file)
 7. Run `npm start` to start the bot
 
-* Update the bot : `npm run update`
+* Update the bot: `npm run update`
 </details>
 
 <details>
@@ -64,7 +64,7 @@ Please make sure to set some relevant permissions when using the bot on your ser
 6. Edit `.env` - see [here](#edit-env-file)
 7. Execute `startbot.bat` to start the bot
 
-* Update the bot : Execute `update.bat`
+* Update the bot: Execute `update.bat`
 </details>
 
 * Linux
@@ -81,7 +81,7 @@ Please make sure to set some relevant permissions when using the bot on your ser
 7. Edit `.env` using nano or vim - see [here](#edit-env-file)
 8. Run `npm start` to start the bot
 
-* Update the bot : `npm run update`
+* Update the bot: `npm run update`
 </details>
 
 <details>
@@ -109,12 +109,14 @@ Please make sure to set some relevant permissions when using the bot on your ser
 >WantedBy=multi-user.target<br>
 
 5. Run `systemctl daemon-reload` to reload systemd's configs
-6. Run `systemctl start dicobo` to start the bot
+6. Run `systemctl enable dicobo` to enable autostart
+7. Run `systemctl start dicobo` to start the bot
   
 Note: Now the bot will always run in background and will automatically start when you restart the whole machine.<br>
-To stop simply run `systemctl stop dicobo`
+To stop the bot run `systemctl stop dicobo`<br>
+To disable the autostart run `systemctl disable dicobo`
 
-* Update the bot : `cd /home/dicobo/DiCoBo/ && npm run update`
+* Update the bot: `cd /home/dicobo/DiCoBo/ && npm run update`
 </details>
 
 ## Edit the .env file
