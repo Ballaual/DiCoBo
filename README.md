@@ -158,6 +158,7 @@ Thanks goes to these wonderful people!
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ballaual"><img src="https://avatars.githubusercontent.com/u/38478976?v=4?s=100" width="100px;" alt="Ballaual"/><br /><sub><b>Ballaual</b></sub></a><br /><a href="https://github.com/ballaual/DiCoBo/commits?author=ballaual" title="Code">💻</a> <a href="https://github.com/ballaual/DiCoBo/commits?author=ballaual" title="Tests">⚠️</a> <a href="#ideas-ballaual" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-ballaual" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Justdom22"><img src="https://avatars.githubusercontent.com/u/109627807?v=4?s=100" width="100px;" alt="Justdom22"/><br /><sub><b>Justdom22</b></sub></a><br /><a href="#ideas-Justdom22" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
