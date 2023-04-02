@@ -12,13 +12,22 @@
 
 ## Overview
 
+* [Invite](#invite-the-bot)
+* [Permissions](#set-the-correct-permissions)
 * [Requirements](#Requirements)
 * [Server installation guide](#Server-installation-instructions)
 * [Edit .env](#edit-env-file)
 * [Contributing](#Contributing)
-* [Contact](#Contact)
-* [Author](#Author)
+* [Contact](#author--contact)
 * [License](#License)
+
+## Invite the bot
+You can invite the bot to your server using the following link
+**LINK COMING SOON**
+
+## Set the correct permissions
+Please make sure to set some relevant permissions when using the bot on your server.
+**MORE INFORMATION SOON**
 
 ## Requirements
 1. Nodejs>=18.5.0: **[Download](https://nodejs.org/en/download)**
@@ -130,18 +139,15 @@ Please make sure to fill every field marked with <b>*needed</b> because they are
 5. Push to the branch: `git push -u origin <branch-name>`
 6. Submit a pull request
 
-## Contact
-* Ballaual - [Discord](https://discord.com/users/475642657490599937) - alex@ballaual.de
-
-## Author
-* [Ballaual](https://github.com/ballaual)
+## Author & Contact
+* [Ballaual](https://github.com/ballaual) - [Discord](https://discord.com/users/475642657490599937) - alex@ballaual.de
 
 ## License
 Released under the [MIT License](https://github.com/ballaual/DiCoBo/blob/master/LICENSE)
 
 ## Contributors ✨
 
-Thanks goes to these wonderful people
+Thanks goes to these wonderful people!
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
