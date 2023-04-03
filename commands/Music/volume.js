@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const { EmbedBuilder } = require("discord.js")
 const progressbar = require("string-progressbar")
-const distube = require("../../distubeClient");
+const distube = require("../../distubeClient")
 
 module.exports = {
     data: new SlashCommandBuilder()
