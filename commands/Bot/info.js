@@ -6,7 +6,7 @@ const botver = require("../../version.json").version
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("info")
-        .setDescription("Send detailed info about the bot"),
+        .setDescription("Displays detailed information about the bot"),
     async execute (interaction) {
         const client = interaction.client
         const embed = new EmbedBuilder()

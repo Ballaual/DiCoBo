@@ -4,10 +4,10 @@ const distube = require("../../distubeClient");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("play")
-        .setDescription("Playing music")
+        .setDescription("Plays music from Youtube, Spotify, Soundcloud or Deezer")
         .addStringOption(option =>
             option.setName("query")
-                .setDescription("The song you want to play | Supported url: youtube,soundcloud,spotify")
+                .setDescription("Search the song you want to play | Supported url: Youtube, Spotify, Soundcloud, Deezer")
                 .setRequired(true)),
     async execute (interaction) {
         const voiceChannel = interaction.member.voice.channel

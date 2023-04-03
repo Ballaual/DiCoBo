@@ -4,7 +4,7 @@ const { EmbedBuilder } = require("discord.js")
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("github")
-        .setDescription("Displays the github repository link for the bot"),
+        .setDescription("Displays the link to the public github repository of the bot"),
 
     async execute (interaction) {
         if (!process.env.githubLink) {

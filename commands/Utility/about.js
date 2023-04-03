@@ -4,7 +4,7 @@ const { EmbedBuilder } = require("discord.js")
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("about")
-        .setDescription("Get information about a specific user")
+        .setDescription("Displays some information about a specific user")
         .addUserOption((option) =>
             option
                 .setName("user")

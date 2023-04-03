@@ -5,7 +5,7 @@ const distube = require("../../distubeClient");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("queue")
-        .setDescription("Check queue"),
+        .setDescription("Displays the current music queue"),
     async execute (interaction) {
         const queue = await distube.getQueue(interaction)
         const voiceChannel = interaction.member.voice?.channel

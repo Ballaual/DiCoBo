@@ -7,7 +7,7 @@ require("dotenv").config()
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("reload")
-        .setDescription("Reloads the bot's global slash commands"),
+        .setDescription("Reloads the bots global slash commands"),
     async execute (interaction) {
         if (!interaction.member.permissions.has("ADMINISTRATOR")) {
             const errorEmbed = new EmbedBuilder()

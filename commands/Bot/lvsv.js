@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders")
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("lvsv")
-        .setDescription("leaveserver | Bot owner only!")
+        .setDescription("Leaves a specified discord server | Bot owner only!")
         .addStringOption(option =>
             option.setName("id")
                 .setDescription("id server")

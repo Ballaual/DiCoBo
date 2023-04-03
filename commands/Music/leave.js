@@ -4,7 +4,7 @@ const { joinVoiceChannel } = require("@discordjs/voice")
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("leave")
-        .setDescription("Leave voice channel"),
+        .setDescription("The bot leaves the current voice channel"),
 
     async execute (interaction) {
         const voiceChannel = interaction.member.voice.channel

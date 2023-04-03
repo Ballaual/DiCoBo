@@ -4,7 +4,7 @@ const { EmbedBuilder } = require("discord.js")
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("avatar")
-        .setDescription("Get user avatar")
+        .setDescription("Displays a users avatar")
         .addUserOption(option =>
             option.setName("user")
                 .setDescription("The user to get the avatar from")),

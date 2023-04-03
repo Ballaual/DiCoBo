@@ -6,7 +6,7 @@ const { EmbedBuilder } = require("discord.js")
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("help")
-        .setDescription("Shows every command available"),
+        .setDescription("Shows a list with every command available"),
     async execute (interaction) {
         const commandFolders = fs.readdirSync(path.join(__dirname, "..", "..", "commands")).filter(folder => folder !== "Inactive")
         const commands = []

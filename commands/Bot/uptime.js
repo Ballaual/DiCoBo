@@ -4,7 +4,7 @@ const { EmbedBuilder } = require("discord.js")
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("uptime")
-        .setDescription("Get the bot uptime"),
+        .setDescription("Displays the bots uptime"),
     async execute (interaction) {
         const days = Math.floor(interaction.client.uptime / 86400000)
         const hours = Math.floor(interaction.client.uptime / 3600000) % 24
