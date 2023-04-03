@@ -55,7 +55,7 @@ module.exports = {
 
         try {
             await distube.pause(interaction)
-            await interaction.reply("⏸ ***Paused the current track***")
+            await interaction.reply("⏸️ ***Paused the current track***")
         } catch (error) {
             console.error(error)
             return interaction.reply({

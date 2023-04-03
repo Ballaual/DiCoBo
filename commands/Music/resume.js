@@ -55,7 +55,7 @@ module.exports = {
 
         try {
             await distube.resume(interaction)
-            await interaction.reply("▶ ***Resumed the current track***")
+            await interaction.reply("▶️ ***Resumed the current track***")
         } catch (error) {
             console.error(error)
             return interaction.reply({
