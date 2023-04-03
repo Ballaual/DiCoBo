@@ -2,18 +2,20 @@ const Distube = require("distube")
 const { SoundCloudPlugin } = require("@distube/soundcloud")
 const { SpotifyPlugin } = require("@distube/spotify")
 const { YtDlpPlugin } = require("@distube/yt-dlp")
+const { DeezerPlugin } = require("@distube/deezer")
 const { EmbedBuilder } = require("discord.js")
 const discordClient = require("./discordClient")
 
 // eslint-disable-next-line new-cap
 const distube = new Distube.default(discordClient, {
+    searchSongs: 5,
+    leaveOnFinish: true,
     leaveOnEmpty: true,
     emptyCooldown: 30,
-    leaveOnFinish: false,
     emitNewSongOnly: true,
     nsfw: true,
     youtubeCookie: process.env.ytcookie,
-    plugins: [new SoundCloudPlugin(), new SpotifyPlugin(), new YtDlpPlugin()]
+    plugins: [new SoundCloudPlugin(), new SpotifyPlugin(), new YtDlpPlugin(), new DeezerPlugin()]
 })
 
 const status = (queue) => {
