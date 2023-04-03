@@ -7,7 +7,6 @@ module.exports = {
         .setDescription("Displays the donation link"),
 
     async execute (interaction) {
-
         const embed = new EmbedBuilder()
             .setTitle(`Support ${interaction.client.user.username}!`)
             .setThumbnail("https://cdn.discordapp.com/emojis/1092421597211656262.png")
