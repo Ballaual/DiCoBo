@@ -1,5 +1,3 @@
-// Update DiCoBo
-
 const fs = require("fs")
 const childProcess = require("child_process")
 
