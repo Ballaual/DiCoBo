@@ -11,7 +11,7 @@ module.exports = {
             return interaction.reply({ content: "Missing `oauthv2Link` in .env", ephemeral: true })
         }
 
-        if (!process.env.oauthv2link.startsWith("https://discord.com/")) {
+        if (!process.env.oauthv2Link.startsWith("https://discord.com/")) {
             return interaction.reply({ content: "Please provide a valid OAuth2 link", ephemeral: true })
         }
 
@@ -19,7 +19,7 @@ module.exports = {
             .setTitle(`${interaction.client.user.username}'s invite link:`)
             .setThumbnail(interaction.client.user.displayAvatarURL())
             .setColor("#007BFF")
-            .setDescription(`My invite link is:\n${process.env.oauthv2Link}`)
+            .setDescription(`You can invite me with the following link:\n${process.env.oauthv2Link}`)
 
         return interaction.reply({ embeds: [embed] })
     }
