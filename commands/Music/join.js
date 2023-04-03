@@ -21,7 +21,7 @@ module.exports = {
                 guildId: interaction.guildId,
                 adapterCreator: interaction.guild.voiceAdapterCreator
             })
-            await interaction.reply("***Successfully joined the voice channel***")
+            await interaction.reply(`***Successfully joined the voice channel ${voiceChannel.name}***`)
         } catch (error) {
             return interaction.reply({
                 content: `There was an error connecting to the voice channel: ${error}`,

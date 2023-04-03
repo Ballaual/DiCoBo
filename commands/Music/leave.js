@@ -41,6 +41,6 @@ module.exports = {
     }
 
     connection.destroy();
-    await interaction.reply("***Successfully left the voice channel***");
+    await interaction.reply(`***Successfully left the voice channel ${voiceChannel.name}***`);
   },
 };
