@@ -23,7 +23,24 @@
 
 ## Invite the bot
 You can invite the bot to your server using the following link<br>
-**LINK COMING SOON**
+https://discord.com/api/oauth2/authorize?client_id=1074301877988102245&permissions=275200207952&scope=bot%20applications.commands<br>
+
+* Permissions
+> Manage Roles<br>
+> Manage Channels<br>
+> Read Messages/View Channels<br>
+> Send Messages<br>
+> Send Messages in Threads<br>
+> Manage Messages<br>
+> Embed Links<br>
+> Attach Files<br>
+> Read Message History<br>
+> Use External Emojis<br>
+> Add Reactions<br>
+> Connect<br>
+> Speak<br>
+> Move Members<br>
+> Use Voice Activity<br>
 
 ## Set the correct permissions
 Please make sure to set some relevant permissions when using the bot on your server.<br>
