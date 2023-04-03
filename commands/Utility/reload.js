@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const { REST } = require("@discordjs/rest")
-const { Routes } = require("discord-api-types/v9")
+const { Routes } = require("discord-api-types/v10")
 const { EmbedBuilder } = require("discord.js")
 require("dotenv").config()
 
@@ -16,7 +16,7 @@ module.exports = {
             return interaction.reply({ embeds: [errorEmbed] })
         }
 
-        const rest = new REST({ version: "9" }).setToken(process.env.token)
+        const rest = new REST({ version: "10" }).setToken(process.env.token)
 
         try {
             await rest.put(
