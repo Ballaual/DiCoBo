@@ -17,7 +17,7 @@ module.exports = {
       });
     } else if (voiceChannel && !botMember.voice?.channelId) {
       return interaction.reply({
-        content: "I'm not currently in a voice channel!",
+        content: "I am not currently in a voice channel!",
         ephemeral: true,
       });
     } else if (!voiceChannel) {
@@ -35,7 +35,7 @@ module.exports = {
 
     if (!connection) {
       return interaction.reply({
-        content: "I'm not currently in a voice channel!",
+        content: "I am not currently in a voice channel!",
         ephemeral: true,
       });
     }
