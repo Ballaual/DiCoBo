@@ -27,11 +27,11 @@ module.exports = {
         if (!queue || queue.songs.length === 0) {
             const queueError = new EmbedBuilder()
                 .setDescription("There is currently nothing to shuffle!")
-                .setColor("#FFFFFF");
+                .setColor("#FF0000");
             return interaction.reply({ embeds: [queueError], ephemeral: true });
         }
 
         await distube.shuffle(interaction);
-        await interaction.reply("🔀 ***Shuffled the songs in the queue***");
+        await interaction.reply("🔀 | ***Shuffled the songs in the queue***");
     },
 };

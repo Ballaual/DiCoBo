@@ -14,7 +14,7 @@ module.exports = {
                 .setDescription("There is currently no song in the queue!")
                 .setColor("#FF0000")
 
-            return interaction.reply({ embeds: [queueError] })
+            return interaction.reply({ embeds: [queueError], ephemeral: true })
         }
 
         const q = queue.songs.map((song, i) => {
