@@ -46,9 +46,9 @@ module.exports = {
             return interaction.reply({ embeds: [queueError], ephemeral: true })
         }
 
-        if (queue.resumed) {
+        if (queue.playing) {
             return interaction.reply({
-                content: "The track is currently not paused!",
+                content: "The track is already playing!",
                 ephemeral: true
             })
         }
