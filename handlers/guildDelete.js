@@ -3,7 +3,7 @@ const { EmbedBuilder } = require("discord.js")
 const guildDelete = (client) => {
     client.on("guildDelete", guild => {
         const embed = new EmbedBuilder()
-            .setTitle("I've left a server")
+            .setTitle("I've left a server!")
             .setThumbnail(client.user.displayAvatarURL())
             .setDescription(`I've left ${guild.name} | ID ${guild.id}\n Server member: ${guild.memberCount}\nTotal server: ${client.guilds.cache.size}`)
             .setTimestamp()

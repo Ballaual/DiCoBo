@@ -5,7 +5,7 @@ const distube = require("../../distubeClient")
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("previous")
-        .setDescription("Plays the previous song!"),
+        .setDescription("Plays the previous song"),
     async execute (interaction) {
         const queue = await distube.getQueue(interaction)
         const voiceChannelId = interaction.member.voice.channelId
@@ -26,7 +26,7 @@ module.exports = {
 
         if (!queue) {
             const queueError = new MessageEmbed()
-                .setDescription("There is Nothing Playing")
+                .setDescription("There is currently nothing playing!")
                 .setColor("#FF0000")
             return interaction.reply({ embeds: [queueError] })
         }

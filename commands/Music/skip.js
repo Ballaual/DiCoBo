@@ -48,7 +48,7 @@ module.exports = {
             await distube.skip(interaction)
             await interaction.reply("⏩ | ***Skipped***")
         } catch {
-            interaction.reply({ content: "There is no up next song", ephemeral: true })
+            interaction.reply({ content: "There is no next song in this queue", ephemeral: true })
         }
     }
 }

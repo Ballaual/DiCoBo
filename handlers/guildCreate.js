@@ -3,7 +3,7 @@ const { EmbedBuilder } = require("discord.js")
 const guildCreate = (client) => {
     client.on("guildCreate", guild => {
         const embed = new EmbedBuilder()
-            .setTitle("I've been added to a new server")
+            .setTitle("I've been added to a new server!")
             .setThumbnail(client.user.displayAvatarURL())
             .setDescription(`I've been added to ${guild.name} | ID ${guild.id}\n Server member: ${guild.memberCount}\nTotal server: ${client.guilds.cache.size}`)
             .setTimestamp()
