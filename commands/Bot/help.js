@@ -8,7 +8,7 @@ module.exports = {
         .setName("help")
         .setDescription("Shows every command available"),
     async execute (interaction) {
-        const commandFolders = fs.readdirSync(path.join(__dirname, "..", "..", "commands")).filter(folder => folder !== "MusicInactive")
+        const commandFolders = fs.readdirSync(path.join(__dirname, "..", "..", "commands")).filter(folder => folder !== "Inactive")
         const commands = []
 
         for (const folder of commandFolders) {
