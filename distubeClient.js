@@ -8,7 +8,7 @@ const discordClient = require("./discordClient")
 
 // eslint-disable-next-line new-cap
 const distube = new Distube.default(discordClient, {
-    searchSongs: 5,
+    searchSongs: 3,
     leaveOnFinish: true,
     leaveOnEmpty: true,
     emptyCooldown: 30,
