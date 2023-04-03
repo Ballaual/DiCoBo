@@ -1,28 +1,47 @@
 const ready = (client) => {
-    client.on("ready", async (interaction) => {
-        console.log("\x1b[34m%s\x1b[0m", "Logging into Bot User...")
-        console.log("\x1b[34m%s\x1b[0m", `Logged in as ${client.user.tag}!`)
-        const statuses = [ // status bot
-            "Hentaiz",
-            `with ${client.guilds.cache.size} servers`,
-            `with ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)} users`,
-            "Youtube",
-            "Slash command",
-            "Spotify",
-            "soundcloud",
-            "Twitch"
-        ]
-        let index = 0
+    const updateActivity = () => {
+      if (client && client.guilds.cache.size > 0) {
+        const activities = [
+          { name: "/help" },
+          { name: `on ${client.guilds.cache.size} servers` },
+          { name: `with ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)} users` },
+          // add more activities as needed
+        ];
+  
+        console.log("\x1b[34m%s\x1b[0m", "Logging into Bot User...");
+        console.log("\x1b[34m%s\x1b[0m", `Logged in as ${client.user.tag} on ${client.guilds.cache.size} servers!`);
+  
+        let currentActivityIndex = 0;
+  
+        client.user.setPresence({
+          activities: [activities[currentActivityIndex]],
+          type: "LISTENING",
+          status: "online",
+        });
+  
         setInterval(() => {
-            if (index === statuses.length) index = 0
-            const status = statuses[index]
-            client.user.setActivity(`${status}`, {
-                type: "LISTENING",
-                browser: "DISCORD IOS"
-            })
-            index++
-        }, 60000)
-    })
-}
-
-module.exports = ready
+          currentActivityIndex = (currentActivityIndex + 1) % activities.length;
+          client.user.setPresence({
+            activities: [activities[currentActivityIndex]],
+            type: "LISTENING",
+            status: "online",
+          });
+        }, 15000);
+      }
+    };
+  
+    client.on("ready", () => {
+      updateActivity();
+    });
+  
+    client.on("guildMemberAdd", () => {
+      updateActivity();
+    });
+  
+    client.on("guildMemberRemove", () => {
+      updateActivity();
+    });
+  };
+  
+  module.exports = ready;
+  
