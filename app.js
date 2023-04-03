@@ -1,7 +1,6 @@
 console.log("\x1b[33m%s\x1b[0m", "Welcome to DiCoBo | https://github.com/ballaual/DiCoBo")
 
 const discordClient = require("./discordClient")
-const distubeClient = require("./distubeClient");
 
 const registerSlashCommands = require("./handlers/registerSlashCommands")
 registerSlashCommands(discordClient)
