@@ -11,18 +11,10 @@ module.exports = {
                 .setRequired(true)),
     async execute (interaction) {
         const voiceChannel = interaction.member.voice.channel
-        // const queue = await distube.getQueue(interaction)
         const query = interaction.options.getString("query")
         if (!voiceChannel) {
-            return interaction.reply({ content: "Please join a voice channel!", ephemeral: true })
+            return interaction.reply({ content: "Please join a voice channel first!", ephemeral: true })
         }
-
-        // FIX needed
-        /* if (queue) {
-            if (interaction.member.guild.me.voice.channelId !== interaction.member.voice.channelId) {
-                return interaction.reply({ content: "You are not on the same voice channel as me!", ephemeral: true })
-            }
-        } */
 
         await interaction.reply("🔍 **Searching and attempting...**")
         await interaction.editReply("Searching done :ok_hand: ")
