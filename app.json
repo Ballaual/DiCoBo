@@ -2,6 +2,5 @@
     "name": "dicobo",
     "description": "a discordbot written in discord.js v14 using (/) commands",
     "repository": "https://github.com/ballaual/DiCoBo",
-    "logo": "https://i.imgur.com/xOXUzKx.png",
     "keywords": "Discordbot"
 }
