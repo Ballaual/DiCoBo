@@ -31,7 +31,7 @@ module.exports = {
       
         if (!botMember.voice?.channelId) {
           return interaction.reply({
-            content: "I'm not currently in a voice channel!",
+            content: "I am not currently in a voice channel!",
             ephemeral: true,
           });
         }
