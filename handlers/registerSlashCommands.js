@@ -31,12 +31,12 @@ const registerSlashCommands = (client) => {
 
     (async () => {
         try {
-            console.log("\x1b[31m%s\x1b[0m", `Started refreshing ${client.commands.size} application (/) commands.`)
+            console.log("\x1b[31m%s\x1b[0m", `Start register ${client.commands.size} application (/) commands to the Discord API.`)
             const data = await rest.put(
                 Routes.applicationCommands(process.env.botID),
                 { body: client.commands.map((command) => command.data.toJSON()) }
             )
-            console.log("\x1b[31m%s\x1b[0m", `Successfully reloaded ${data.length} application (/) commands.`)
+            console.log("\x1b[31m%s\x1b[0m", `Successfully registered ${data.length} application (/) commands to the Discord API!`)
         } catch (error) {
             console.error(error)
         }
