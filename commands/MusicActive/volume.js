@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const { EmbedBuilder } = require("discord.js")
 const progressbar = require("string-progressbar")
+const distube = require("../../distubeClient");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -14,9 +15,9 @@ module.exports = {
         ),
     timeout: 5000,
 
-    async execute (interaction, client) {
+    async execute (interaction) {
         const volume = interaction.options.getInteger("amount")
-        const queue = await client.distube.getQueue(interaction)
+        const queue = await distube.getQueue(interaction)
         const voiceChannel = interaction.member.voice.channel
         // FIX needed
         // const connection = client.voice.connections.get(interaction.guild.id);
@@ -42,7 +43,7 @@ module.exports = {
             return interaction.reply({ content: "Please enter a valid number (between 1 and 200)", ephemeral: true })
         }
 
-        await client.distube.setVolume(interaction, volume)
+        await distube.setVolume(interaction, volume)
 
         const total = 200
         const current = volume

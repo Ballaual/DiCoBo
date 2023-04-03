@@ -1,12 +1,13 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const { EmbedBuilder } = require("discord.js")
+const distube = require("../../distubeClient");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("queue")
         .setDescription("Check queue"),
     async execute (interaction) {
-        const queue = await interaction.client.distube.getQueue(interaction)
+        const queue = await distube.getQueue(interaction)
         const voiceChannel = interaction.member.voice?.channel
 
         if (!voiceChannel) {

@@ -40,6 +40,9 @@ module.exports = (client) => {
 
 // TO-DO - Merge these stuff
 
+// const humanizeDuration = require("humanize-duration")
+// const Timeout = new Set()
+
 /* client.on("interactionCreate", async (interaction) => {
     if (interaction.isCommand() || interaction.isContextMenu()) {
         if (!client.slash.has(interaction.commandName)) return

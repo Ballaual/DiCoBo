@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
+const distube = require("../../distubeClient");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -8,9 +9,9 @@ module.exports = {
             option.setName("query")
                 .setDescription("The song you want to play | Supported url: youtube,soundcloud,spotify")
                 .setRequired(true)),
-    async execute (interaction, client) {
+    async execute (interaction) {
         const voiceChannel = interaction.member.voice.channel
-        // const queue = await client.distube.getQueue(interaction)
+        // const queue = await distube.getQueue(interaction)
         const query = interaction.options.getString("query")
         if (!voiceChannel) {
             return interaction.reply({ content: "Please join a voice channel!", ephemeral: true })
@@ -25,7 +26,7 @@ module.exports = {
 
         await interaction.reply("🔍 **Searching and attempting...**")
         await interaction.editReply("Searching done :ok_hand: ")
-        client.distube.play(voiceChannel, query, {
+        distube.play(voiceChannel, query, {
             textChannel: interaction.channel,
             member: interaction.member
         })
