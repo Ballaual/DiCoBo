@@ -48,7 +48,7 @@ module.exports = {
 
         if (queue.paused) {
             return interaction.reply({
-                content: "The queue has been already paused!",
+                content: "The track has been already paused!",
                 ephemeral: true
             })
         }
