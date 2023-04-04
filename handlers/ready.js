@@ -1,3 +1,5 @@
+const loadListener = require("./loadListener")
+
 const ready = (client) => {
     let serverCount = 0
     let memberCount = 0
@@ -38,6 +40,7 @@ const ready = (client) => {
   
     client.on("ready", () => {
       updateActivity()
+      //loadListener(client)
     })
   
     client.on("guildMemberAdd", () => {
