@@ -1,5 +1,3 @@
-const loadListener = require("./loadListener")
-
 const ready = (client) => {
     let serverCount = 0
     let memberCount = 0
