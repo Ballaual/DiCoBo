@@ -5,7 +5,7 @@ const distube = require("../../distubeClient")
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("shuffle")
-        .setDescription("Shuffle the guild queue songs"),
+        .setDescription("Shuffles the song inside the queue"),
     async execute (interaction) {
         const queue = await distube.getQueue(interaction)
         const voiceChannelId = interaction.member.voice.channelId
