@@ -5,7 +5,7 @@ const distubeClient = require("../../distubeClient");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("jump")
-        .setDescription("Jump to the song number in the queue")
+        .setDescription("Jumps to a song number in the queue and skip the rest")
         .addIntegerOption(option => 
             option.setName("id")
                 .setDescription("The music's ID in the queue")

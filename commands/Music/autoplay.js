@@ -5,7 +5,7 @@ const distube = require("../../distubeClient");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("autoplay")
-    .setDescription("Enable or disable autoplay"),
+    .setDescription("Enables or disables autoplay"),
 
   async execute(interaction) {
     const queue = await distube.getQueue(interaction);
