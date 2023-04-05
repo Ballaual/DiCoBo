@@ -40,7 +40,6 @@ const ready = (client) => {
 
     client.on("ready", () => {
         updateActivity()
-        // loadListener(client)
     })
 
     client.on("guildMemberAdd", () => {
