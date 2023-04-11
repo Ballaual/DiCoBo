@@ -43,8 +43,13 @@ https://discord.com/api/oauth2/authorize?client_id=1074301877988102245&permissio
 > Use Voice Activity<br>
 
 ## Set the correct permissions
-Please make sure to set some relevant permissions when using the bot on your server.<br>
-**MORE INFORMATION SOON**
+Please make sure to set some relevant permissions on your server, to avoid trolls and griefing.<br>
+1. Open your server settings
+2. Navigate to Integrations -> DiCoBo
+3. Set permissions for @everyone
+4. You should deny at least the following commands to @everyone: clear, log, reload
+5. You may add permissions to a moderation rules to these command
+6. The lvsv command is handled in background to be used only by the server owner
 
 ## Requirements
 1. Nodejs>=18.5.0: **[Download](https://nodejs.org/en/download)**
