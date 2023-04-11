@@ -1,13 +1,13 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const { EmbedBuilder } = require("discord.js")
-const distubeClient = require("../../distubeClient")
+const distube = require("../../distubeClient")
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("loop")
         .setDescription("Loops through current song or the queue"),
     async execute (interaction) {
-        const queue = await distubeClient.getQueue(interaction)
+        const queue = await distube.getQueue(interaction)
         const voiceChannel = interaction.member.voice.channel
         const botMember = interaction.guild.members.cache.get(
             interaction.client.user.id
@@ -43,7 +43,7 @@ module.exports = {
             return interaction.reply({ embeds: [queueError] })
         }
 
-        const repeatMode = distubeClient.setRepeatMode(interaction)
+        const repeatMode = distube.setRepeatMode(interaction)
         const repeatMessage =
       repeatMode === 2 ? "Repeat queue" : repeatMode ? "Repeat song" : "Off"
 

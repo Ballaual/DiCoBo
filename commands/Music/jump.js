@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const { EmbedBuilder } = require("discord.js")
-const distubeClient = require("../../distubeClient")
+const distube = require("../../distubeClient")
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,7 +12,7 @@ module.exports = {
                 .setRequired(true)),
     async execute (interaction) {
         const musicId = interaction.options.getInteger("id")
-        const queue = await distubeClient.getQueue(interaction)
+        const queue = await distube.getQueue(interaction)
         const voiceChannelId = interaction.member.voice.channelId
 
         if (!voiceChannelId) {
@@ -48,7 +48,7 @@ module.exports = {
         }
 
         try {
-            await distubeClient.jump(interaction, parseInt(musicId))
+            await distube.jump(interaction, parseInt(musicId))
             await interaction.reply(`⏩ | ***Jumped to song number ${musicId} in the queue***`)
         } catch (error) {
             return interaction.reply({ content: "Invalid song ID!)", ephemeral: true })

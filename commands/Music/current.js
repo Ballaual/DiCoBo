@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const { EmbedBuilder } = require("discord.js")
-const distubeClient = require("../../distubeClient")
+const distube = require("../../distubeClient")
 
 const status = (queue) => {
     const filterText = Array.isArray(queue.filters) ? queue.filters.join(", ") : "Off"
@@ -13,7 +13,7 @@ module.exports = {
         .setDescription("Displays information about the current track is playing"),
 
     async execute (interaction) {
-        const queue = await distubeClient.getQueue(interaction)
+        const queue = await distube.getQueue(interaction)
         const voiceChannelId = interaction.member.voice.channelId
 
         if (!voiceChannelId) {

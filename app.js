@@ -1,27 +1,30 @@
 console.log("\x1b[33m%s\x1b[0m", "Welcome to DiCoBo | https://github.com/ballaual/DiCoBo")
 
-const discordClient = require("./discordClient")
+const client = require("./discordClient")
 
 const registerSlashCommands = require("./handlers/registerSlashCommands")
-registerSlashCommands(discordClient)
+registerSlashCommands(client)
 
 const interactionCreate = require("./handlers/interactionCreate.js")
-interactionCreate(discordClient)
+interactionCreate(client)
 
 const ready = require("./handlers/ready")
-ready(discordClient)
+ready(client)
 
 const errors = require("./handlers/errors")
-errors(discordClient)
+errors(client)
 
 const messageCreate = require("./handlers/messageCreate")
-messageCreate(discordClient)
+messageCreate(client)
 
 const guildCreate = require("./handlers/guildCreate")
-guildCreate(discordClient)
+guildCreate(client)
 
 const guildDelete = require("./handlers/guildDelete")
-guildDelete(discordClient)
+guildDelete(client)
+
+const setupTempChannels = require("./handlers/setupTempChannels")
+setupTempChannels()
 
 const checkUpdates = require("./handlers/checkUpdates")
 checkUpdates()
