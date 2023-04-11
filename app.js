@@ -23,8 +23,8 @@ guildCreate(client)
 const guildDelete = require("./handlers/guildDelete")
 guildDelete(client)
 
-const setupTempChannels = require("./handlers/setupTempChannels")
-setupTempChannels()
+const loadTempChannels = require("./handlers/loadTempChannels")
+loadTempChannels()
 
 const checkUpdates = require("./handlers/checkUpdates")
 checkUpdates()
