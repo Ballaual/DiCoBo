@@ -2,8 +2,9 @@
 
 <p align="center">
     <img alt="Size" src="https://img.shields.io/github/languages/code-size/ballaual/DiCoBo">
-    <img alt="Stars" src="https://img.shields.io/github/stars/ballaual/DiCoBo">
+    <img alt="Stars" src="https://img.shields.io/github/watchers/ballaual/DiCoBo">
     <img alt="Fork" src="https://img.shields.io/github/forks/ballaual/DiCoBo">
+    <img alt="Stars" src="https://img.shields.io/github/stars/ballaual/DiCoBo">
     <img alt="Version" src="https://img.shields.io/github/package-json/v/ballaual/DiCoBo">
     <img alt="License" src="https://img.shields.io/github/license/ballaual/DiCoBo">
 </p>
