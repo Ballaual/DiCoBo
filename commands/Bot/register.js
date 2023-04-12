@@ -22,7 +22,7 @@ module.exports = {
             option.setName("name")
                 .setDescription("The name of the new channel")
                 .setRequired(true)
-                .setMaxLength(20)
+                .setMaxLength(12)
         )
         .addChannelOption(option =>
             option.setName("channel")
