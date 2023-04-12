@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/ballaual/DiCoBo#readme",
   "dependencies": {
+    "@ballaual/discord-temp-voice": "^1.0.0",
     "@discordjs/opus": "^0.9.0",
     "@discordjs/rest": "^1.7.0",
     "@discordjs/voice": "^0.16.0",
@@ -31,7 +32,6 @@
     "@distube/spotify": "^1.5.1",
     "@distube/yt-dlp": "^1.1.3",
     "@distube/ytdl-core": "^4.11.8",
-    "@hunteroi/discord-temp-channels": "^3.1.0",
     "discord-api-types": "^0.37.38",
     "discord.js": "^14.9.0",
     "distube": "^4.0.4",

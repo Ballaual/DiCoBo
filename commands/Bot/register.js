@@ -1,4 +1,4 @@
-const { TempChannelsManager } = require("@hunteroi/discord-temp-channels")
+const { TempChannelsManager } = require("@ballaual/discord-temp-voice")
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const sqlite3 = require("sqlite3")
 const fs = require("fs")
@@ -39,13 +39,6 @@ module.exports = {
         const channelId = interaction.options.getChannel("channel").id
         const categoryId = interaction.options.getChannel("category").id
 
-        // Fetch channel information
-        const channel = await interaction.client.channels.fetch(channelId)
-
-        // Get maxUsers and bitrate from the channel
-        const maxUsers = channel.userLimit
-        const bitrate = channel.bitrate
-
         const options = {
             childCategory: categoryId,
             childAutoDeleteIfEmpty: true,
@@ -53,8 +46,6 @@ module.exports = {
             childAutoDeleteIfOwnerLeaves: false,
             childVoiceFormat: `(str, count) => \`${name} #\${count}\``,
             childVoiceFormatRegex: /^Example #\d+ \|/,
-            childMaxUsers: maxUsers,
-            childBitrate: bitrate
         }
 
         const optionsJson = JSON.stringify(options)
