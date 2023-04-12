@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/ballaual/DiCoBo#readme",
   "dependencies": {
-    "@ballaual/discord-temp-voice": "^1.0.0",
+    "@ballaual/discord-temp-voice": "^1.0.2",
     "@discordjs/opus": "^0.9.0",
     "@discordjs/rest": "^1.7.0",
     "@discordjs/voice": "^0.16.0",
