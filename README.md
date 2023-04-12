@@ -4,7 +4,6 @@
     <img alt="Size" src="https://img.shields.io/github/languages/code-size/ballaual/DiCoBo">
     <img alt="Stars" src="https://img.shields.io/github/stars/ballaual/DiCoBo">
     <img alt="Fork" src="https://img.shields.io/github/forks/ballaual/DiCoBo">
-    <img alt="Downloads" src="https://img.shields.io/github/downloads/ballaual/DiCoBo/total">
     <img alt="Version" src="https://img.shields.io/github/package-json/v/ballaual/DiCoBo">
     <img alt="License" src="https://img.shields.io/github/license/ballaual/DiCoBo">
 </p>
@@ -20,7 +19,12 @@
 * [Contact](#author--contact)
 * [License](#License)
 
-* Permissions
+## Set the correct permissions
+
+When inviting the Bot make sure it has the following OAuth Scopes set in the Discord Developer Portal.
+
+> bot
+> applications.commands
 > Manage Roles<br>
 > Manage Channels<br>
 > Read Messages/View Channels<br>
@@ -37,7 +41,6 @@
 > Move Members<br>
 > Use Voice Activity<br>
 
-## Set the correct permissions
 Please make sure to set some relevant permissions on your server, to avoid trolls and griefing.<br>
 1. Open your server settings
 2. Navigate to Integrations -> DiCoBo
