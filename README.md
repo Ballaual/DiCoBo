@@ -12,7 +12,6 @@
 
 ## Overview
 
-* [Invite](#invite-the-bot)
 * [Permissions](#set-the-correct-permissions)
 * [Requirements](#Requirements)
 * [Server installation guide](#Server-installation-instructions)
@@ -20,10 +19,6 @@
 * [Contributing](#Contributing)
 * [Contact](#author--contact)
 * [License](#License)
-
-## Invite the bot
-You can invite the bot to your server using the following link<br>
-https://discord.com/api/oauth2/authorize?client_id=1074301877988102245&permissions=275200207952&scope=bot%20applications.commands<br>
 
 * Permissions
 > Manage Roles<br>
@@ -47,7 +42,7 @@ Please make sure to set some relevant permissions on your server, to avoid troll
 1. Open your server settings
 2. Navigate to Integrations -> DiCoBo
 3. Set permissions for @everyone
-4. You should deny at least the following commands to @everyone: clear, log, reload
+4. You should deny at least the following commands to @everyone: clear, log, reload, registerchannel, unregisterchannel
 5. You may add permissions to a moderation rules to these command
 6. The lvsv command is handled in background to be used only by the server owner
 
