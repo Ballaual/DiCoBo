@@ -45,7 +45,7 @@ module.exports = {
             childAutoDeleteIfParentGetsUnregistered: true,
             childAutoDeleteIfOwnerLeaves: false,
             childVoiceFormat: `(str, count) => \`${name} #\${count}\``,
-            childVoiceFormatRegex: /^Example #\d+ \|/,
+            childVoiceFormatRegex: /^Example #\d+ \|/
         }
 
         const optionsJson = JSON.stringify(options)
