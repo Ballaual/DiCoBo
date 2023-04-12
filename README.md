@@ -23,8 +23,8 @@
 
 When inviting the Bot make sure it has the following OAuth Scopes set in the Discord Developer Portal.
 
-> bot
-> applications.commands
+> bot<br>
+> applications.commands<br>
 > Manage Roles<br>
 > Manage Channels<br>
 > Read Messages/View Channels<br>
