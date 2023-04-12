@@ -1,6 +1,6 @@
 {
   "name": "dicobo",
-  "version": "1.2.5",
+  "version": "1.3.0",
   "description": "a discordbot written in discord.js v14 using (/) commands",
   "main": "app.js",
   "scripts": {
