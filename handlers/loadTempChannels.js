@@ -1,4 +1,4 @@
-const { TempChannelsManager } = require("@ballaual/discord-temp-voice")
+const { TempChannelsManager } = require("@hunteroi/discord-temp-channels")
 const client = require("../discordClient")
 const sqlite3 = require("sqlite3")
 const fs = require("fs")

@@ -1,4 +1,4 @@
-const { TempChannelsManager } = require("@ballaual/discord-temp-voice")
+const { TempChannelsManager } = require("@hunteroi/discord-temp-channels")
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const sqlite3 = require("sqlite3")
 const fs = require("fs")
@@ -45,7 +45,8 @@ module.exports = {
             childAutoDeleteIfParentGetsUnregistered: true,
             childAutoDeleteIfOwnerLeaves: false,
             childVoiceFormat: `(str, count) => \`${name} #\${count}\``,
-            childVoiceFormatRegex: /^Example #\d+ \|/
+            childVoiceFormatRegex: /^Example #\d+ \|/,
+            childShouldBeACopyOfParent: true
         }
 
         const optionsJson = JSON.stringify(options)
