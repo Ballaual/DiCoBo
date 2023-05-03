@@ -1,4 +1,4 @@
-const { TempChannelsManager } = require("@hunteroi/discord-temp-channels")
+const { TempChannelsManager } = require("@ballaual/discord-temp-voice")
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const sqlite3 = require("sqlite3")
 const fs = require("fs")
