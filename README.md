@@ -156,7 +156,7 @@ Please make sure to fill every field marked with <b>*needed</b> because they are
 
 * Optional fields
 > - ytcookie
-> A tutorial video for ytcookie can be found [here](https://www.youtube.com/watch?v=iQnpef9LgVM)
+> - A tutorial video for ytcookie can be found [here](https://www.youtube.com/watch?v=iQnpef9LgVM)
 
 
 ## Contributing
