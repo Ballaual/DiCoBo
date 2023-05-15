@@ -19,7 +19,7 @@ const distube = new Distube.default(discordClient, {
 
 const status = (queue) => {
 	const filterText = Array.isArray(queue.filters) ? queue.filters.join(', ') : 'Off';
-	return `Volume: \`${queue.volume}%\` | Loop: \`${queue.repeatMode ? queue.repeatMode === 2 ? 'All Queue' : 'This Song' : 'Off'}\`/* | Autoplay: \`${queue.autoplay ? 'On' : 'Off'}\` | Filter: \`${filterText}\``;
+	return `Volume: \`${queue.volume}%\` | Loop: \`${queue.repeatMode ? queue.repeatMode === 2 ? 'All Queue' : 'This Song' : 'Off'}\` | Autoplay: \`${queue.autoplay ? 'On' : 'Off'}\` | Filter: \`${filterText}\``;
 };
 
 distube
