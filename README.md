@@ -28,6 +28,9 @@ When inviting the Bot make sure it has the following OAuth Scopes set in the Dis
 > applications.commands<br>
 > Manage Roles<br>
 > Manage Channels<br>
+> Kick Members<br>
+> Ban Members<br>
+> Manage Nicknames<br>
 > Read Messages/View Channels<br>
 > Send Messages<br>
 > Send Messages in Threads<br>
@@ -93,8 +96,8 @@ Please make sure to set some relevant permissions on your server, to avoid troll
 <details>
 <summary>Debian >=10</summary>
 
-1. As root: Create a new user `useradd -m -s /bin/bash dicobo`
-2. Login as dicobo using `su - dicobo`
+1. As root: Create a new user `useradd -m -s /bin/bash DiCoBo`
+2. Login as DiCoBo using `su - DiCoBo`
 3. Run `git clone https://github.com/ballaual/DiCoBo.git`
 4. Run `cd DiCoBo`
 5. Run `npm i` to install the required modules
@@ -110,7 +113,7 @@ Please make sure to set some relevant permissions on your server, to avoid troll
 
 1. Follow the guide from Debian installation guide until step 7
 2. As root: Navigate to systemd's folder using `cd /etc/systemd/system/`
-3. Create a new file called `dicobo.service`
+3. Create a new file called `DiCoBo.service`
 4. Insert following code  
 
 >[Unit]<br>
@@ -118,10 +121,10 @@ Please make sure to set some relevant permissions on your server, to avoid troll
 >After=network.service<br>
 ><br>
 >[Service]<br>
->User=dicobo<br>
->Group=dicobo<br>
+>User=DiCoBo<br>
+>Group=DiCoBo<br>
 >Type=simple<br>
->WorkingDirectory=/home/dicobo/DiCoBo/<br>
+>WorkingDirectory=/home/DiCoBo/DiCoBo/<br>
 >ExecStart=node .<br>
 >RestartSec=15<br>
 >Restart=always<br>
@@ -130,14 +133,14 @@ Please make sure to set some relevant permissions on your server, to avoid troll
 >WantedBy=multi-user.target<br>
 
 5. Run `systemctl daemon-reload` to reload systemd's configs
-6. Run `systemctl enable dicobo` to enable autostart
-7. Run `systemctl start dicobo` to start the bot
+6. Run `systemctl enable DiCoBo` to enable autostart
+7. Run `systemctl start DiCoBo` to start the bot
   
 Note: Now the bot will always run in background and will automatically start when you restart the whole machine.<br>
-To stop the bot run `systemctl stop dicobo`<br>
-To disable the autostart run `systemctl disable dicobo`
+To stop the bot run `systemctl stop DiCoBo`<br>
+To disable the autostart run `systemctl disable DiCoBo`
 
-* Update the bot: `cd /home/dicobo/DiCoBo/ && npm run update`
+* Update the bot: `cd /home/DiCoBo/DiCoBo/ && npm run update`
 </details>
 
 ## Edit the .env file
@@ -179,7 +182,6 @@ Thanks goes to these wonderful people!
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ballaual"><img src="https://avatars.githubusercontent.com/u/38478976?v=4?s=100" width="100px;" alt="Ballaual"/><br /><sub><b>Ballaual</b></sub></a><br /><a href="https://github.com/ballaual/DiCoBo/commits?author=ballaual" title="Code">💻</a> <a href="https://github.com/ballaual/DiCoBo/commits?author=ballaual" title="Tests">⚠️</a> <a href="#ideas-ballaual" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-ballaual" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Justdom22"><img src="https://avatars.githubusercontent.com/u/109627807?v=4?s=100" width="100px;" alt="Justdom22"/><br /><sub><b>Justdom22</b></sub></a><br /><a href="#ideas-Justdom22" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
