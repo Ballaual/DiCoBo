@@ -57,7 +57,8 @@ module.exports = {
 		try {
 			await command.execute(interaction);
 			logCommand(interaction.commandName, interaction.user.tag, interaction.guild?.id);
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(`Error executing ${interaction.commandName}`);
 			console.error(error);
 		}
