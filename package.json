@@ -1,6 +1,6 @@
 {
   "name": "DiCoBo",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "a discordbot written in discord.js v14 using (/) commands",
   "main": "index.js",
   "scripts": {
@@ -40,6 +40,7 @@
     "genius-lyrics-api": "^3.2.0",
     "humanize-duration": "^3.28.0",
     "libsodium-wrappers": "^0.7.11",
+    "node-fetch": "^3.3.1",
     "request": "^2.88.2",
     "sqlite3": "^5.1.6",
     "string-progressbar": "^1.0.4",
