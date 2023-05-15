@@ -15,7 +15,7 @@
 * [Permissions](#set-the-correct-permissions)
 * [Requirements](#Requirements)
 * [Server installation guide](#Server-installation-instructions)
-* [Edit .env](#edit-env-file)
+* [Edit config file](#edit-the-config-file)
 * [Contributing](#Contributing)
 * [Contact](#author--contact)
 * [License](#License)
@@ -70,8 +70,8 @@ Please make sure to set some relevant permissions on your server, to avoid troll
 2. Run `git clone https://github.com/ballaual/DiCoBo.git`
 3. Run `cd DiCoBo`
 4. Run `npm i` to install the required modules
-5. Copy or Rename `.env_example` to `.env`
-6. Edit `.env` - see [here](#edit-env-file)
+5. Copy or Rename `config.json.example` to `config.json.example`
+6. Edit `config.json` - see [here](#edit-the-config-file)
 7. Run `npm start` to start the bot
 
 * Update the bot: `npm run update`
@@ -84,8 +84,8 @@ Please make sure to set some relevant permissions on your server, to avoid troll
 2. Unzip the files using WinRAR or any other package manager
 3. Navigate into the folder `DiCoBo`
 4. Execute `install.bat` to install the required modules
-5. Copy or Rename `.env_example` to `.env`
-6. Edit `.env` - see [here](#edit-env-file)
+5. Copy or Rename `config.json.example` to `config.json`
+6. Edit `config.json` - see [here](#edit-the-config-file)
 7. Execute `startbot.bat` to start the bot
 
 * Update the bot: Execute `update.bat`
@@ -101,8 +101,8 @@ Please make sure to set some relevant permissions on your server, to avoid troll
 3. Run `git clone https://github.com/ballaual/DiCoBo.git`
 4. Run `cd DiCoBo`
 5. Run `npm i` to install the required modules
-6. Run `cp .env_example .env`
-7. Edit `.env` using nano or vim - see [here](#edit-env-file)
+6. Run `cp config.json.example config.json`
+7. Edit `config.json` using nano or vim - see [here](#edit-the-config-file)
 8. Run `npm start` to start the bot
 
 * Update the bot: `npm run update`
@@ -143,19 +143,21 @@ To disable the autostart run `systemctl disable DiCoBo`
 * Update the bot: `cd /home/DiCoBo/DiCoBo/ && npm run update`
 </details>
 
-## Edit the .env file
+## Edit the config file
 Please make sure to fill every field marked with <b>*needed</b> because they are mandatory for the main functions of the bot! Otherwise the bot won't start and / or might crash at some point if these information are missing.
 
 * Needed fields
 > - token<br>
-> - botID<br>
-> - adminID<br>
-> - oauthv2Link<br>
-> - githubLink<br>
-> - logChannel
+> - clientId<br>
+> - ownerId<br>
+> - invite<br>
+> - github<br>
+> - paypal
 
 * Optional fields
 > - ytcookie
+A tutorial video for ytcookie can be found [here](https://www.youtube.com/watch?v=iQnpef9LgVM)
+
 
 ## Contributing
 1. [Fork this repository](https://github.com/ballaual/DiCoBo/fork)
