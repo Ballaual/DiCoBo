@@ -7,7 +7,7 @@ module.exports = {
 		.addUserOption(option => option
 			.setName('target')
 			.setDescription('The user\'s avatar to show'))
-			.setDMPermission(false),
+		.setDMPermission(false),
 	category: 'util',
 	async execute(interaction) {
 		const user = interaction.options.getUser('target');
