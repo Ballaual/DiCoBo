@@ -8,12 +8,12 @@ module.exports = {
 			.setName('target')
 			.setDescription('The member to kick')
 			.setRequired(true))
+			.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
+			.setDMPermission(false)
 		.addStringOption(option => option
 			.setName('reason')
 			.setDescription('The reason for the kick')
-			.setRequired(false))
-		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
-		.setDMPermission(false),
+			.setRequired(false)),
 	category: 'moderation',
 	async execute(interaction) {
 		const user = interaction.options.getMember('target');
