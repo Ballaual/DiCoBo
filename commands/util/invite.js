@@ -5,8 +5,9 @@ const { invite } = require('../../config.json');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('invite')
-		.setDescription('Displays the invite link of the bot'),
-	category: 'misc',
+		.setDescription('Displays the invite link of the bot')
+		.setDMPermission(false),
+	category: 'util',
 	async execute(interaction) {
 		if (!invite) {
 			return interaction.reply({ content: 'Missing `invite` parameter in config.json', ephemeral: true });

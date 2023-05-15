@@ -5,8 +5,9 @@ const { github } = require('../../config.json');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('github')
-		.setDescription('Displays the link to the public github repository of the bot'),
-	category: 'misc',
+		.setDescription('Displays the link to the public github repository of the bot')
+		.setDMPermission(false),
+	category: 'information',
 	async execute(interaction) {
 		if (!github) {
 			return interaction.reply({ content: 'Missing `githubLink` parameter in config.json', ephemeral: true });

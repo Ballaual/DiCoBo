@@ -5,8 +5,9 @@ module.exports = {
 	cooldown: 10,
 	data: new SlashCommandBuilder()
 		.setName('ping')
-		.setDescription('Returns latency and API ping'),
-	category: 'misc',
+		.setDescription('Returns latency and API ping')
+		.setDMPermission(false),
+	category: 'util',
 	async execute(interaction) {
 		const embed = new EmbedBuilder()
 			.setColor('#FF0000')

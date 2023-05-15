@@ -4,8 +4,9 @@ const { EmbedBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('guilds')
-		.setDescription('Displays the top 50 guilds the bot is in'),
-	category: 'misc',
+		.setDescription('Displays the top 50 guilds the bot is in')
+		.setDMPermission(false),
+	category: 'information',
 	async execute(interaction) {
 		const guilds = interaction.client.guilds.cache
 			.sort((a, b) => b.memberCount - a.memberCount)

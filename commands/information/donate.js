@@ -5,8 +5,9 @@ const { donate } = require('../../config.json');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('donate')
-		.setDescription('Displays the donation link'),
-	category: 'misc',
+		.setDescription('Displays the donation link')
+		.setDMPermission(false),
+	category: 'information',
 	async execute(interaction) {
 		if (!donate) {
 			return interaction.reply({ content: 'Missing `donate` parameter in config.json', ephemeral: true });

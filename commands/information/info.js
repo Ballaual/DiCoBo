@@ -7,8 +7,9 @@ const { ownerId } = require('../../config.json');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('info')
-		.setDescription('Displays detailed information about the bot'),
-	category: 'util',
+		.setDescription('Displays detailed information about the bot')
+		.setDMPermission(false),
+	category: 'information',
 	async execute(interaction) {
 		const client = interaction.client;
 		const embed = new EmbedBuilder()

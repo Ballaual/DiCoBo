@@ -4,6 +4,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('nickname')
 		.setDescription('Change the nickname of a user')
+		.setDMPermission(false)
 		.addUserOption(option => option
 			.setName('target')
 			.setDescription('The user to change the nickname for')
