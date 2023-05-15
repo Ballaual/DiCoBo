@@ -1,4 +1,20 @@
 const { Events, Collection } = require('discord.js');
+const fs = require('fs');
+const path = require('path');
+
+function logCommand(commandName, user, serverId) {
+	const logMessage = `${new Date().toLocaleString()}: ${user} executed the command: ${commandName}\n`;
+
+	const logsDir = path.join(__dirname, '..', 'logs');
+	if (!fs.existsSync(logsDir)) {
+		fs.mkdirSync(logsDir);
+	}
+
+	const filePath = path.join(logsDir, `${serverId}.txt`);
+	fs.appendFile(filePath, logMessage, (err) => {
+		if (err) console.error(err);
+	});
+}
 
 module.exports = {
 	name: Events.InteractionCreate,
@@ -12,7 +28,6 @@ module.exports = {
 			return;
 		}
 
-		// Cooldown logic
 		const { cooldowns } = interaction.client;
 
 		if (!cooldowns.has(command.name)) {
@@ -41,8 +56,8 @@ module.exports = {
 
 		try {
 			await command.execute(interaction);
-		}
-		catch (error) {
+			logCommand(interaction.commandName, interaction.user.tag, interaction.guild?.id);
+		} catch (error) {
 			console.error(`Error executing ${interaction.commandName}`);
 			console.error(error);
 		}
