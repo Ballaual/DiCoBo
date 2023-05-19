@@ -1,5 +1,7 @@
+const { Events } = require('discord.js');
+
 module.exports = {
-  name: 'guildMemberAdd',
+  name: Events.GuildMemberAdd,
   once: false,
   async execute(member) {
     try {
