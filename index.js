@@ -42,9 +42,6 @@ for (const file of eventFiles) {
 const deployCommands = require('./events/deployCommands');
 deployCommands(client);
 
-const loadTempChannels = require('./events/loadTempChannels');
-loadTempChannels();
-
 const checkUpdates = require('./events/checkUpdates');
 checkUpdates();
 
