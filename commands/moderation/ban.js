@@ -8,8 +8,8 @@ module.exports = {
 			.setName('target')
 			.setDescription('The member to ban')
 			.setRequired(true))
-			.setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
-			.setDMPermission(false)
+		.setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
+		.setDMPermission(false)
 		.addStringOption(option => option
 			.setName('reason')
 			.setDescription('The reason for the ban')

@@ -9,7 +9,7 @@ module.exports = {
 		.setDescription('Displays the command log')
 		.setDMPermission(false)
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
-	category: "moderation",
+	category: 'moderation',
 	async execute(interaction) {
 		try {
 			const serverId = interaction.guild.id;

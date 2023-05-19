@@ -8,8 +8,8 @@ module.exports = {
 			.setName('target')
 			.setDescription('The member to kick')
 			.setRequired(true))
-			.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
-			.setDMPermission(false)
+		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
+		.setDMPermission(false)
 		.addStringOption(option => option
 			.setName('reason')
 			.setDescription('The reason for the kick')
