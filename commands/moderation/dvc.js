@@ -36,7 +36,7 @@ module.exports = {
             .setRequired(true)
         )
     ),
-  category: "util",
+  category: "moderation",
   async execute(interaction) {
     const subcommand = interaction.options.getSubcommand();
 
