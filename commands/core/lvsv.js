@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { authorId } = require('../../config.json');
+const { ownerId } = require('../../config/config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -15,7 +15,7 @@ module.exports = {
 		const guildId = interaction.options.getString('id');
 		const guild = interaction.client.guilds.cache.get(guildId);
 
-		if (interaction.member.id !== authorId) {
+		if (interaction.member.id !== ownerId) {
 			return interaction.reply({ content: 'Only the bot owner is allowed to use this command!', ephemeral: true });
 		}
 

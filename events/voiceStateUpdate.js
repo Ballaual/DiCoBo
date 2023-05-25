@@ -2,7 +2,7 @@ const { Events, ChannelType, PermissionsBitField } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
-const directory = './database';
+const directory = './config';
 const filePath = path.join(directory, 'dvc.json');
 
 if (!fs.existsSync(directory)) {

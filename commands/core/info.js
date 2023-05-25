@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { EmbedBuilder, version } = require('discord.js');
 const os = require('os');
 const botver = require('../../version.json').version;
-const { ownerId } = require('../../config.json');
+const { ownerId } = require('../../config/config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
