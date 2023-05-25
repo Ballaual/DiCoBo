@@ -12,8 +12,8 @@ async function checkUpdates() {
 			if (data.version !== version) {
 				console.log('\x1b[32m%s\x1b[0m', '===============================Update Available===================================');
 				console.log('Version:', data.version);
-				console.log('\x1b[36m%s\x1b[0m', 'Check commit : https://github.com/ballaual/DiCoBo/commits/master');
-				console.log('\x1b[31m%s\x1b[0m', 'Use `npm run update` to update');
+				console.log('\x1b[36m%s\x1b[0m', 'Latest changes : https://github.com/ballaual/DiCoBo/commits/master');
+				console.log('\x1b[31m%s\x1b[0m', 'Run `npm run update` to update the files');
 				console.log('\x1b[32m%s\x1b[0m', '==================================================================================');
 			}
 			else {
