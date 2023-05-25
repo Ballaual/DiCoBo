@@ -25,7 +25,6 @@ module.exports = {
 		const serverName = interaction.guild.name;
 		const senderName = interaction.user.username;
 
-		// Check if the target user is the bot itself
 		if (target.id === interaction.client.user.id) {
 			const errorMessage = 'Sorry, you cannot poke me!';
 			const errorEmbed = new EmbedBuilder()
@@ -36,12 +35,10 @@ module.exports = {
 			return;
 		}
 
-		// Send a DM to the target user
 		target.send(
 			`You've been poked by **${senderName}** from **${serverName}**!\nMessage: ${message}`,
 		);
 
-		// Send confirmation to the user who initiated the command
 		const embed = new EmbedBuilder()
 			.setColor('#00FF0C')
 			.setTitle('Poke Sent')
