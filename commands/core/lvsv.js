@@ -10,7 +10,7 @@ module.exports = {
 			option.setName('id')
 				.setDescription('id server')
 				.setRequired(true)),
-	category: 'owner',
+	category: 'core',
 	async execute(interaction) {
 		const guildId = interaction.options.getString('id');
 		const guild = interaction.client.guilds.cache.get(guildId);

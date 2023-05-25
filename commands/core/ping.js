@@ -2,12 +2,11 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
-	cooldown: 10,
 	data: new SlashCommandBuilder()
 		.setName('ping')
 		.setDescription('Returns latency and API ping')
 		.setDMPermission(false),
-	category: 'util',
+	category: 'core',
 	async execute(interaction) {
 		const embed = new EmbedBuilder()
 			.setColor('#FF0000')

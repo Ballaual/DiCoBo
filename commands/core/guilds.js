@@ -6,7 +6,7 @@ module.exports = {
 		.setName('guilds')
 		.setDescription('Displays the top 50 guilds the bot is in')
 		.setDMPermission(false),
-	category: 'information',
+	category: 'core',
 	async execute(interaction) {
 		const guilds = interaction.client.guilds.cache
 			.sort((a, b) => b.memberCount - a.memberCount)

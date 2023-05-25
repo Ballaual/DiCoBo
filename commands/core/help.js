@@ -8,7 +8,7 @@ module.exports = {
 		.setName('help')
 		.setDescription('Shows a list with every command available')
 		.setDMPermission(false),
-	category: 'util',
+	category: 'core',
 	async execute(interaction) {
 		const commandFolders = fs.readdirSync(path.join(__dirname, '..', '..', 'commands')).filter(folder => folder !== 'Inactive');
 		const commands = [];

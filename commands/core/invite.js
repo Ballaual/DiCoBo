@@ -7,7 +7,7 @@ module.exports = {
 		.setName('invite')
 		.setDescription('Displays the invite link of the bot')
 		.setDMPermission(false),
-	category: 'util',
+	category: 'core',
 	async execute(interaction) {
 		if (!invite) {
 			return interaction.reply({ content: 'Missing `invite` parameter in config.json', ephemeral: true });

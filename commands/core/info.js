@@ -9,7 +9,7 @@ module.exports = {
 		.setName('info')
 		.setDescription('Displays detailed information about the bot')
 		.setDMPermission(false),
-	category: 'information',
+	category: 'core',
 	async execute(interaction) {
 		const client = interaction.client;
 		const embed = new EmbedBuilder()

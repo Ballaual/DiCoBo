@@ -7,7 +7,7 @@ module.exports = {
 		.setName('donate')
 		.setDescription('Displays the donation link')
 		.setDMPermission(false),
-	category: 'information',
+	category: 'core',
 	async execute(interaction) {
 		if (!donate) {
 			return interaction.reply({ content: 'Missing `donate` parameter in config.json', ephemeral: true });
