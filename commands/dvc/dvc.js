@@ -7,7 +7,7 @@ module.exports = {
 		.setName('dvc')
 		.setDescription('Defines a voice channel as voice creator')
 		.setDMPermission(false)
-		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('add')
@@ -36,7 +36,7 @@ module.exports = {
 						.setRequired(true),
 				),
 		),
-	category: 'moderation',
+	category: 'dvc',
 	async execute(interaction) {
 		const subcommand = interaction.options.getSubcommand();
 

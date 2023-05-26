@@ -12,7 +12,7 @@ module.exports = {
 				.setDescription('Upload a .ydk file')
 				.setRequired(true),
 		),
-	category: 'games',
+	category: 'yugioh',
 	async execute(interaction) {
 		const file = interaction.options.getAttachment('file');
 
