@@ -5,34 +5,34 @@ const { PermissionFlagsBits } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('dvc')
-		.setDescription('Definiere einen Creator-Channel')
+		.setDescription('Defines a voice channel as voice creator')
 		.setDMPermission(false)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('add')
-				.setDescription('Fügt einen Creator-Channel hinzu')
+				.setDescription('Sets a voice channel as voice cretor')
 				.addChannelOption(option =>
 					option
 						.setName('channel')
-						.setDescription('Der Channel, der als Creator-Channel festgelegt werden soll')
+						.setDescription('Select')
 						.setRequired(true),
 				)
 				.addChannelOption(option =>
 					option
 						.setName('category')
-						.setDescription('Die Kategorie, in der der Creator-Channel erstellt werden soll')
+						.setDescription('The channel category where the user channel gets created')
 						.setRequired(true),
 				),
 		)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('remove')
-				.setDescription('Entfernt einen Creator-Channel')
+				.setDescription('Removes a voice channel as voice creator and the channel itself')
 				.addChannelOption(option =>
 					option
 						.setName('channel')
-						.setDescription('Der zu entfernende Creator-Channel')
+						.setDescription('The channel to be removed')
 						.setRequired(true),
 				),
 		),
@@ -45,10 +45,10 @@ module.exports = {
 				const channelId = interaction.options.getChannel('channel').id;
 				const categoryId = interaction.options.getChannel('category').id;
 
-				const data = JSON.parse(fs.readFileSync('./database/dvc.json', 'utf8'));
+				const data = JSON.parse(fs.readFileSync('./config/dvc.json', 'utf8'));
 
 				if (data.creatorChannels && data.creatorChannels.includes(channelId)) {
-					return await interaction.reply('Dieser Channel ist bereits als Creator-Channel festgelegt.');
+					return await interaction.reply({ content: 'The channel is already a voice creator.', ephemeral:true });
 				}
 
 				if (!data.creatorChannels) {
@@ -59,17 +59,17 @@ module.exports = {
 				data.categories = data.categories || {};
 				data.categories[channelId] = categoryId;
 
-				fs.writeFileSync('./database/dvc.json', JSON.stringify(data));
+				fs.writeFileSync('./config/dvc.json', JSON.stringify(data));
 
-				await interaction.reply(`Creator-Channel erfolgreich auf ${channelId} in der Kategorie ${categoryId} gesetzt.`);
+				await interaction.reply({ content: `Successfully set channel id: ${channelId} in category id: ${categoryId} as a voice creator.`, ephemeral: true });
 			}
 			else if (subcommand === 'remove') {
 				const channelId = interaction.options.getChannel('channel').id;
 
-				const data = JSON.parse(fs.readFileSync('./database/dvc.json', 'utf8'));
+				const data = JSON.parse(fs.readFileSync('./config/dvc.json', 'utf8'));
 
 				if (!data.creatorChannels || !data.creatorChannels.includes(channelId)) {
-					return await interaction.reply('Der angegebene Channel ist nicht als Creator-Channel festgelegt.');
+					return await interaction.reply({ content:'The channel is no voice creator.', ephemeral: true });
 				}
 
 				data.creatorChannels = data.creatorChannels.filter(id => id !== channelId);
@@ -78,7 +78,7 @@ module.exports = {
 					delete data.categories[channelId];
 				}
 
-				fs.writeFileSync('./database/dvc.json', JSON.stringify(data));
+				fs.writeFileSync('./config/dvc.json', JSON.stringify(data));
 
 				const guild = interaction.guild;
 				const channel = guild.channels.cache.get(channelId);
@@ -86,12 +86,12 @@ module.exports = {
 					channel.delete();
 				}
 
-				await interaction.reply('Creator-Channel erfolgreich entfernt.');
+				await interaction.reply({ content:'Voice creator successfully removed.', ephemeral: true});
 			}
 		}
 		catch (error) {
 			console.error(error);
-			await interaction.reply('Ein Fehler ist aufgetreten.');
+			await interaction.reply({ content:'An internal error occured.', ephemeral: true});
 		}
 	},
 };
