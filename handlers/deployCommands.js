@@ -83,11 +83,11 @@ async function deployCommands() {
     const guildIds = guilds.map(guild => guild.id);
 
     for (const guildId of guildIds) {
-      createModuleFileIfNotExists(guildId); // Create module file if it doesn't exist
+      createModuleFileIfNotExists(guildId);
 
       const modules = loadModules(guildId);
 
-      console.log('\x1b[31m%s\x1b[0m', `Modules for Guild ID ${guildId}:`, Object.keys(modules).length > 0 ? Object.keys(modules).join(', ') : '---');
+      console.log('\x1b[31m%s\x1b[0m', `Active modules for Guild ID ${guildId}:`, Object.keys(modules).length > 0 ? Object.keys(modules).join(', ') : '---');
 
       const existingCommands = await rest.get(Routes.applicationGuildCommands(clientId, guildId));
 
@@ -98,7 +98,7 @@ async function deployCommands() {
         { body: [] },
       );
 
-      console.log('\x1b[33m%s\x1b[0m', `Successfully deleted ${commandIdsToDelete.length} guild application (/) commands for Guild ID: ${guildId}.`);
+      console.log('\x1b[33m%s\x1b[0m', `Deleted ${commandIdsToDelete.length} guild application (/) commands for Guild ID: ${guildId}.`);
 
       const guildCommands = [];
 
