@@ -1,5 +1,8 @@
-config.json
-node_modules/
-temp/
-logs/
-config/
+# Ignore
+node_modules/*
+temp/*
+logs/*
+config/*
+
+# Allow
+!config/config.json.example
