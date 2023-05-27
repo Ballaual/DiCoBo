@@ -6,7 +6,7 @@ module.exports = {
 		.setName('slots')
 		.setDescription('Play with the Slot Machine')
 		.setDMPermission(false),
-	category: 'games',
+	category: 'minigames',
 	async execute(interaction) {
 		const game = new Slots({
 			message: interaction,

@@ -6,7 +6,7 @@ module.exports = {
 		.setName('snake')
 		.setDescription('Play a game of Snake')
 		.setDMPermission(false),
-	category: 'games',
+	category: 'minigames',
 	async execute(interaction) {
 		const game = new Snake({
 			message: interaction,

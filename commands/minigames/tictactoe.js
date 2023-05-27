@@ -10,7 +10,7 @@ module.exports = {
 			option.setName('opponent')
 				.setDescription('Select your opponent')
 				.setRequired(true)),
-	category: 'games',
+	category: 'minigames',
 	async execute(interaction) {
 		const opponent = interaction.options.getUser('opponent');
 
