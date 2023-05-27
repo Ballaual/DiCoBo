@@ -15,13 +15,11 @@ module.exports = {
 			const serverId = interaction.guild.id;
 			const logFilePath = path.join(__dirname, '../../logs', `${serverId}.txt`);
 
-			// Check if the log file exists for the server
 			if (!fs.existsSync(logFilePath)) {
 				await interaction.reply({ content: 'There is no command log for this server.', ephemeral: true });
 				return;
 			}
 
-			// If the log file exists, create an attachment for it and send it
 			const attachment = new AttachmentBuilder(logFilePath, `${serverId}.txt`);
 			await interaction.reply({
 				content: 'Here is the command log:',

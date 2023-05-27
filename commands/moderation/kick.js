@@ -19,12 +19,10 @@ module.exports = {
 		const user = interaction.options.getMember('target');
 		const reason = interaction.options.getString('reason') || 'No reason specified';
 
-		// Check if the member being kicked is the server owner or an admin
 		if (user.id === interaction.guild.ownerId) {
 			return interaction.reply({ content: 'You cannot kick the server owner!', ephemeral: true });
 		}
 
-		// Perform the kick
 		await user.kick({ reason });
 		return interaction.reply({ content: `Successfully kicked \`${user.user.tag}\` for: \`${reason}\`` });
 	},
