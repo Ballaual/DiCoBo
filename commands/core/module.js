@@ -6,126 +6,131 @@ const { reloadGuildCommands } = require('../../handlers/deployCommands');
 const { PermissionFlagsBits } = require('discord.js');
 
 async function loadModules(guildId) {
-  try {
-    const guildModulesFilePath = path.join(guildModulesFolderPath, `${guildId}.json`);
-    const fileExists = await fs.promises.access(guildModulesFilePath).then(() => true).catch(() => false);
-    if (fileExists) {
-      const data = await fs.promises.readFile(guildModulesFilePath, 'utf8');
-      return JSON.parse(data);
-    } else {
-      return {};
-    }
-  } catch (error) {
-    console.error('Error loading modules:', error);
-    return {};
-  }
+	try {
+		const guildModulesFilePath = path.join(guildModulesFolderPath, `${guildId}.json`);
+		const fileExists = await fs.promises.access(guildModulesFilePath).then(() => true).catch(() => false);
+		if (fileExists) {
+			const data = await fs.promises.readFile(guildModulesFilePath, 'utf8');
+			return JSON.parse(data);
+		}
+		else {
+			return {};
+		}
+	}
+	catch (error) {
+		console.error('Error loading modules:', error);
+		return {};
+	}
 }
 
 async function saveModules(guildId, modules) {
-  try {
-    const guildModulesFilePath = path.join(guildModulesFolderPath, `${guildId}.json`);
-    await fs.promises.writeFile(guildModulesFilePath, JSON.stringify(modules, null, 2));
-  } catch (error) {
-    console.error('Error saving modules:', error);
-  }
+	try {
+		const guildModulesFilePath = path.join(guildModulesFolderPath, `${guildId}.json`);
+		await fs.promises.writeFile(guildModulesFilePath, JSON.stringify(modules, null, 2));
+	}
+	catch (error) {
+		console.error('Error saving modules:', error);
+	}
 }
 
 function getModuleChoices() {
-  const commandsFolderPath = path.join(__dirname, '..', '..', 'commands');
-  const moduleChoices = [];
+	const commandsFolderPath = path.join(__dirname, '..', '..', 'commands');
+	const moduleChoices = [];
 
-  fs.readdirSync(commandsFolderPath).forEach(folder => {
-    const moduleFolderPath = path.join(commandsFolderPath, folder);
-    if (fs.statSync(moduleFolderPath).isDirectory()) {
-      const commandFiles = fs.readdirSync(moduleFolderPath).filter(file => file.endsWith('.js'));
-      if (commandFiles.length > 0 && folder !== 'core') {
-        moduleChoices.push({
-          name: folder.charAt(0).toUpperCase() + folder.slice(1),
-          value: folder,
-        });
-      }
-    }
-  });
+	fs.readdirSync(commandsFolderPath).forEach(folder => {
+		const moduleFolderPath = path.join(commandsFolderPath, folder);
+		if (fs.statSync(moduleFolderPath).isDirectory()) {
+			const commandFiles = fs.readdirSync(moduleFolderPath).filter(file => file.endsWith('.js'));
+			if (commandFiles.length > 0 && folder !== 'core') {
+				moduleChoices.push({
+					name: folder.charAt(0).toUpperCase() + folder.slice(1),
+					value: folder,
+				});
+			}
+		}
+	});
 
-  return moduleChoices;
+	return moduleChoices;
 }
 
 function createGuildModules(guildId) {
-  const guildModulesFilePath = path.join(guildModulesFolderPath, `${guildId}.json`);
-  if (!fs.existsSync(guildModulesFolderPath)) {
-    fs.mkdirSync(guildModulesFolderPath, { recursive: true });
-  }
-  if (!fs.existsSync(guildModulesFilePath)) {
-    fs.writeFileSync(guildModulesFilePath, JSON.stringify({}, null, 2));
-  }
+	const guildModulesFilePath = path.join(guildModulesFolderPath, `${guildId}.json`);
+	if (!fs.existsSync(guildModulesFolderPath)) {
+		fs.mkdirSync(guildModulesFolderPath, { recursive: true });
+	}
+	if (!fs.existsSync(guildModulesFilePath)) {
+		fs.writeFileSync(guildModulesFilePath, JSON.stringify({}, null, 2));
+	}
 }
 
 module.exports = {
-  cooldown: 180,
-  data: new SlashCommandBuilder()
-    .setName('module')
-    .setDescription('Enable, disable, or show modules')
-    .setDMPermission(false)
-    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
-    .addSubcommand(subcommand =>
-      subcommand
-        .setName('add')
-        .setDescription('Enable a module')
-        .addStringOption(option =>
-          option.setName('module')
-            .setDescription('Module to enable')
-            .setRequired(true)
-            .addChoices(...getModuleChoices())
-        )
-    )
-    .addSubcommand(subcommand =>
-      subcommand
-        .setName('remove')
-        .setDescription('Disable a module')
-        .addStringOption(option =>
-          option.setName('module')
-            .setDescription('Module to disable')
-            .setRequired(true)
-            .addChoices(...getModuleChoices())
-        )
-    )
-    .addSubcommand(subcommand =>
-      subcommand
-        .setName('show')
-        .setDescription('Show active modules for the guild')
-    ),
-  category: 'core',
-  async execute(interaction) {
-    const subcommand = interaction.options.getSubcommand();
-    const guildId = interaction.guildId;
-    const modules = await loadModules(guildId); // Load modules asynchronously
+	cooldown: 180,
+	data: new SlashCommandBuilder()
+		.setName('module')
+		.setDescription('Enable, disable, or show modules')
+		.setDMPermission(false)
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('add')
+				.setDescription('Enable a module')
+				.addStringOption(option =>
+					option.setName('module')
+						.setDescription('Module to enable')
+						.setRequired(true)
+						.addChoices(...getModuleChoices()),
+				),
+		)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('remove')
+				.setDescription('Disable a module')
+				.addStringOption(option =>
+					option.setName('module')
+						.setDescription('Module to disable')
+						.setRequired(true)
+						.addChoices(...getModuleChoices()),
+				),
+		)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('show')
+				.setDescription('Show active modules for the guild'),
+		),
+	category: 'core',
+	async execute(interaction) {
+		const subcommand = interaction.options.getSubcommand();
+		const guildId = interaction.guildId;
+		const modules = await loadModules(guildId);
 
-    createGuildModules(guildId);
+		createGuildModules(guildId);
 
-    if (subcommand === 'add') {
-      const module = interaction.options.getString('module');
+		if (subcommand === 'add') {
+			const module = interaction.options.getString('module');
 
-      if (module === 'core') {
-        interaction.reply('The core module cannot be enabled or disabled per guild.');
-        return;
-      }
+			if (module === 'core') {
+				interaction.reply('The core module cannot be enabled or disabled per guild.');
+				return;
+			}
 
-      modules[module] = true;
-      await saveModules(guildId, modules); // Save modules before deploying commands
-      reloadGuildCommands(guildId); // Deploy commands after saving modules
+			modules[module] = true;
+			await saveModules(guildId, modules);
+			reloadGuildCommands(guildId);
 
-      interaction.reply({ content: `Module \`${module}\` has been enabled for this guild.`, ephemeral: true });
-    } else if (subcommand === 'remove') {
-      const module = interaction.options.getString('module');
+			interaction.reply({ content: `Module \`${module}\` has been enabled for this guild.`, ephemeral: true });
+		}
+		else if (subcommand === 'remove') {
+			const module = interaction.options.getString('module');
 
-      delete modules[module];
-      await saveModules(guildId, modules); // Save modules before deploying commands
-      reloadGuildCommands(guildId); // Deploy commands after saving modules
+			delete modules[module];
+			await saveModules(guildId, modules);
+			reloadGuildCommands(guildId);
 
-      interaction.reply({ content: `Module \`${module}\` has been disabled for this guild.`, ephemeral: true });
-    } else if (subcommand === 'show') {
-      const activeModules = Object.keys(modules).filter(key => modules[key]).join(', ') || '---';
-      interaction.reply({ content: `Active modules for Guild ID ${guildId}: ${activeModules}`, ephemeral: true });
-    }
-  },
+			interaction.reply({ content: `Module \`${module}\` has been disabled for this guild.`, ephemeral: true });
+		}
+		else if (subcommand === 'show') {
+			const activeModules = Object.keys(modules).filter(key => modules[key]).join(', ') || '---';
+			interaction.reply({ content: `Active modules for Guild ID ${guildId}: ${activeModules}`, ephemeral: true });
+		}
+	},
 };

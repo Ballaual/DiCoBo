@@ -86,12 +86,12 @@ module.exports = {
 					channel.delete();
 				}
 
-				await interaction.reply({ content:'Voice creator successfully removed.', ephemeral: true});
+				await interaction.reply({ content:'Voice creator successfully removed.', ephemeral: true });
 			}
 		}
 		catch (error) {
 			console.error(error);
-			await interaction.reply({ content:'An internal error occured.', ephemeral: true});
+			await interaction.reply({ content:'An internal error occured.', ephemeral: true });
 		}
 	},
 };
