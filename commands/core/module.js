@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const fs = require('fs');
 const path = require('path');
 const guildModulesFolderPath = path.join(__dirname, '..', '..', 'config', 'modules');
-const deployCommands = require('../../handlers/deployCommands');
+const { reloadGuildCommands } = require('../../handlers/deployCommands');
 const { PermissionFlagsBits } = require('discord.js');
 
 async function loadModules(guildId) {
@@ -98,7 +98,7 @@ module.exports = {
   async execute(interaction) {
     const subcommand = interaction.options.getSubcommand();
     const guildId = interaction.guildId;
-    const modules = loadModules(guildId);
+    const modules = await loadModules(guildId); // Load modules asynchronously
 
     createGuildModules(guildId);
 
@@ -111,29 +111,21 @@ module.exports = {
       }
 
       modules[module] = true;
-      interaction.reply({ content: `Module \`${module}\` has been enabled for this guild.`, ephemeral: true });
+      await saveModules(guildId, modules); // Save modules before deploying commands
+      reloadGuildCommands(guildId); // Deploy commands after saving modules
 
-      saveModules(guildId, modules);
-      deployCommands();
+      interaction.reply({ content: `Module \`${module}\` has been enabled for this guild.`, ephemeral: true });
     } else if (subcommand === 'remove') {
       const module = interaction.options.getString('module');
 
       delete modules[module];
+      await saveModules(guildId, modules); // Save modules before deploying commands
+      reloadGuildCommands(guildId); // Deploy commands after saving modules
+
       interaction.reply({ content: `Module \`${module}\` has been disabled for this guild.`, ephemeral: true });
-
-      saveModules(guildId, modules);
-      deployCommands();
     } else if (subcommand === 'show') {
-      const activeModules = Object.keys(modules).filter(module => module !== 'core').join(', ');
-
-      if (activeModules) {
-        interaction.reply({ content: `Active modules for this guild: \`${activeModules}\``, ephemeral: true });
-      } else {
-        interaction.reply({ content: 'No active modules for this guild.', ephemeral: true });
-      }
-    } else {
-      interaction.reply('Invalid subcommand.');
+      const activeModules = Object.keys(modules).filter(key => modules[key]).join(', ') || '---';
+      interaction.reply({ content: `Active modules for Guild ID ${guildId}: ${activeModules}`, ephemeral: true });
     }
   },
 };
-

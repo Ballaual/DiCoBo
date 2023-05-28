@@ -6,7 +6,7 @@ const errors = require('./events/errors');
 
 const checkUpdates = require('./functions/checkUpdates');
 
-const deployCommands = require('./handlers/deployCommands');
+const { deployCommands } = require('./handlers/deployCommands');
 const handleCommands = require('./handlers/commandHandler');
 const handleEvents = require('./handlers/eventHandler');
 
