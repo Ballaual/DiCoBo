@@ -46,7 +46,7 @@ module.exports = {
 						permissionOverwrites: [
 							{
 								id: user.id,
-								allow: [PermissionsBitField.Flags.ManageChannels],
+								allow: [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles],
 							},
 						],
 					});
@@ -67,12 +67,25 @@ module.exports = {
 
 		if (
 			oldState.channel &&
-      oldState.channel.name.includes(`${oldState.member.user.username}'s Channel`) &&
-      oldState.channel.members.size === 0 &&
-      oldState.member.user.id === newState.member.user.id
+			oldState.channel.name.includes(`${oldState.member.user.username}'s Channel`) &&
+			oldState.member.user.id === newState.member.user.id
 		) {
-			oldState.channel.delete();
+			if(oldState.channel.members.size > 0) {
+				// Get the next member in the channel
+				const nextMember = oldState.channel.members.first();
 
+				// Change channel owner
+				await oldState.channel.permissionOverwrites.edit(nextMember, { ManageChannels: true, ManageRoles: true });
+				await oldState.channel.permissionOverwrites.delete(oldState.member);
+
+				// Rename channel
+				await oldState.channel.edit({ name: `${nextMember.user.username}'s Channel` });
+			} else {
+				// Delete channel if there are no members left
+				oldState.channel.delete();
+			}
+
+			// Update data
 			if (userChannels[oldState.channel.id]) {
 				const creatorChannel = newState.guild.channels.cache.get(userChannels[oldState.channel.id].creatorChannelId);
 				if (creatorChannel) {
