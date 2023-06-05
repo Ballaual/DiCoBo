@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const distube = require('../../distubeClient');
 
 module.exports = {
@@ -17,7 +16,6 @@ module.exports = {
 				.setDescription('Shows the current queue'),
 		)
 		.setDMPermission(false),
-	category: 'music',
 	async execute(interaction) {
 		const subcommand = interaction.options.getSubcommand();
 

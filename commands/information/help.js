@@ -1,14 +1,13 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
-const { EmbedBuilder } = require('discord.js');
+
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
 		.setDescription('Shows a list with every command available')
 		.setDMPermission(false),
-	category: 'core',
 	async execute(interaction) {
 		const commandFolders = fs.readdirSync(path.join(__dirname, '..', '..', 'commands')).filter(folder => folder !== 'Inactive');
 		const commands = [];

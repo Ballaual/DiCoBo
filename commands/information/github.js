@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { github } = require('../../config/config.json');
 
 module.exports = {
@@ -7,7 +6,6 @@ module.exports = {
 		.setName('github')
 		.setDescription('Displays the link to the public github repository of the bot')
 		.setDMPermission(false),
-	category: 'core',
 	async execute(interaction) {
 		if (!github) {
 			return interaction.reply({ content: 'Missing `githubLink` parameter in config.json', ephemeral: true });

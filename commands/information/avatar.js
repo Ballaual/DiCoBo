@@ -8,7 +8,6 @@ module.exports = {
 			.setName('target')
 			.setDescription('The user\'s avatar to show'))
 		.setDMPermission(false),
-	category: 'util',
 	async execute(interaction) {
 		const user = interaction.options.getUser('target');
 		if (user) return interaction.reply(`${user.username}'s avatar: ${user.displayAvatarURL({ dynamic: true })}`);

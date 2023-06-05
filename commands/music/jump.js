@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const distube = require('../../distubeClient');
 
 module.exports = {
@@ -11,7 +10,6 @@ module.exports = {
 			option.setName('id')
 				.setDescription('The music\'s ID in the queue')
 				.setRequired(true)),
-	category: 'music',
 	async execute(interaction) {
 		const musicId = interaction.options.getInteger('id');
 		const queue = await distube.getQueue(interaction);

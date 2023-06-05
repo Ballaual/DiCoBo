@@ -10,7 +10,6 @@ module.exports = {
 			option.setName('json')
 				.setDescription('The raw JSON input for the embed')
 				.setRequired(true)),
-	category: 'util',
 	async execute(interaction) {
 		const jsonOption = interaction.options.getString('json');
 

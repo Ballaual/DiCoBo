@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const axios = require('axios');
 
 module.exports = {
@@ -12,7 +12,6 @@ module.exports = {
 				.setDescription('Upload a .ydk file')
 				.setRequired(true),
 		),
-	category: 'yugioh',
 	async execute(interaction) {
 		const file = interaction.options.getAttachment('file');
 

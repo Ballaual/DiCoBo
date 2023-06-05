@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const { joinVoiceChannel } = require('@discordjs/voice');
 
 module.exports = {
@@ -6,7 +6,6 @@ module.exports = {
 		.setName('leave')
 		.setDescription('The bot leaves the current voice channel')
 		.setDMPermission(false),
-	category: 'music',
 	async execute(interaction) {
 		const voiceChannel = interaction.member.voice.channel;
 		const botMember = interaction.guild.members.cache.get(interaction.client.user.id);

@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const distube = require('../../distubeClient');
 
 const status = (queue) => {
@@ -12,7 +11,6 @@ module.exports = {
 		.setName('current')
 		.setDescription('Displays information about the current track is playing')
 		.setDMPermission(false),
-	category: 'music',
 	async execute(interaction) {
 		const queue = await distube.getQueue(interaction);
 		const voiceChannelId = interaction.member.voice.channelId;

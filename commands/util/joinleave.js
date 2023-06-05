@@ -22,7 +22,6 @@ module.exports = {
 				.setName('remove')
 				.setDescription('Removes the saved channel for join/leave messages'),
 		),
-	category: 'joinleave',
 	async execute(interaction) {
 		const subcommand = interaction.options.getSubcommand();
 		const channelId = interaction.options.getChannel('channel');

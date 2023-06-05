@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -18,7 +17,6 @@ module.exports = {
 				.setRequired(false)
 				.setMaxLength(1024),
 		),
-	category: 'util',
 	async execute(interaction) {
 		const target = interaction.options.getUser('target');
 		const message = interaction.options.getString('message') || ' ';

@@ -1,6 +1,5 @@
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const fs = require('fs');
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { PermissionFlagsBits } = require('discord.js');
 
 const getGuildFilePath = (guildId) => `./config/dvc/${guildId}.json`;
 
@@ -9,7 +8,7 @@ module.exports = {
 		.setName('dvc')
 		.setDescription('Defines a voice channel as voice creator')
 		.setDMPermission(false)
-		.setDefaultMemberPermissions(PermissionFlagsBits.ADMINISTRATOR)
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('add')
@@ -38,7 +37,6 @@ module.exports = {
 						.setRequired(true),
 				),
 		),
-	category: 'dvc',
 	async execute(interaction) {
 		const subcommand = interaction.options.getSubcommand();
 		const guildId = interaction.guildId;

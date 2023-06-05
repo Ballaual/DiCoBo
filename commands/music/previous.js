@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const distube = require('../../distubeClient');
 
 module.exports = {
@@ -7,7 +6,6 @@ module.exports = {
 		.setName('previous')
 		.setDescription('Plays the previous song')
 		.setDMPermission(false),
-	category: 'music',
 	async execute(interaction) {
 		const queue = await distube.getQueue(interaction);
 		const voiceChannelId = interaction.member.voice.channelId;
@@ -27,7 +25,7 @@ module.exports = {
 		}
 
 		if (!queue) {
-			const queueError = new MessageEmbed()
+			const queueError = new EmbedBuilder()
 				.setDescription('There is currently nothing playing!')
 				.setColor('#FF0000');
 			return interaction.reply({ embeds: [queueError] });

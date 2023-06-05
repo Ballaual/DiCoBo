@@ -32,7 +32,6 @@ module.exports = {
 						.setDescription('Select the role')
 						.setRequired(true)),
 		),
-	category: 'moderation',
 	async execute(interaction) {
 		const subcommand = interaction.options.getSubcommand();
 		const user = interaction.options.getMember('user');

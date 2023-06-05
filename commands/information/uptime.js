@@ -1,12 +1,10 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('uptime')
 		.setDescription('Displays the bots uptime')
 		.setDMPermission(false),
-	category: 'core',
 	async execute(interaction) {
 		const days = Math.floor(interaction.client.uptime / 86400000);
 		const hours = Math.floor(interaction.client.uptime / 3600000) % 24;

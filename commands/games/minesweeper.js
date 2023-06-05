@@ -6,7 +6,6 @@ module.exports = {
 		.setName('minesweeper')
 		.setDescription('Play a game of Minesweeper')
 		.setDMPermission(false),
-	category: 'minigames',
 	async execute(interaction) {
 		const game = new Minesweeper({
 			message: interaction,

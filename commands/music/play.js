@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const distube = require('../../distubeClient');
 
 module.exports = {
@@ -10,7 +10,6 @@ module.exports = {
 				.setDescription('Search the song you want to play | Supported url: Youtube, Spotify, Soundcloud, Deezer')
 				.setRequired(true))
 		.setDMPermission(false),
-	category: 'music',
 	async execute(interaction) {
 		const voiceChannel = interaction.member.voice.channel;
 		const query = interaction.options.getString('query');

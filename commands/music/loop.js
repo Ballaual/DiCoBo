@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const distube = require('../../distubeClient');
 
 module.exports = {
@@ -7,7 +6,6 @@ module.exports = {
 		.setName('loop')
 		.setDescription('Loops through current song or the queue')
 		.setDMPermission(false),
-	category: 'music',
 	async execute(interaction) {
 		const queue = await distube.getQueue(interaction);
 		const voiceChannel = interaction.member.voice.channel;

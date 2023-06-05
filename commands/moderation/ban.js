@@ -14,7 +14,6 @@ module.exports = {
 			.setName('reason')
 			.setDescription('The reason for the ban')
 			.setRequired(false)),
-	category: 'moderation',
 	async execute(interaction) {
 		const user = interaction.options.getMember('target');
 		const reason = interaction.options.getString('reason') || 'No reason specified';

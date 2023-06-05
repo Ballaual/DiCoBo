@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const progressbar = require('string-progressbar');
 const distube = require('../../distubeClient');
 
@@ -15,7 +14,6 @@ module.exports = {
 				.setRequired(true),
 		),
 	timeout: 5000,
-	category: 'music',
 	async execute(interaction) {
 		const volume = interaction.options.getInteger('amount');
 		const queue = await distube.getQueue(interaction);

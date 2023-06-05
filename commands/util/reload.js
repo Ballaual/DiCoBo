@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const { ownerId } = require('../../config/config.json');
 const deployCommands = require('../../handlers/deployCommands');
 
@@ -7,8 +7,8 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('reload')
 		.setDescription('Reloads all commands.')
-		.setDMPermission(false),
-	category: 'core',
+		.setDMPermission(false)
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 	async execute(interaction) {
 		if (interaction.member.id !== ownerId) {
 			return interaction.reply({

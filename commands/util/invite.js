@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { invite } = require('../../config/config.json');
 
 module.exports = {
@@ -7,7 +6,6 @@ module.exports = {
 		.setName('invite')
 		.setDescription('Displays the invite link of the bot')
 		.setDMPermission(false),
-	category: 'core',
 	async execute(interaction) {
 		if (!invite) {
 			return interaction.reply({ content: 'Missing `invite` parameter in config.json', ephemeral: true });

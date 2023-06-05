@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { EmbedBuilder, version } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, version } = require('discord.js');
 const os = require('os');
 const botver = require('../../version.json').version;
 const { ownerId } = require('../../config/config.json');
@@ -9,7 +8,6 @@ module.exports = {
 		.setName('info')
 		.setDescription('Displays detailed information about the bot')
 		.setDMPermission(false),
-	category: 'core',
 	async execute(interaction) {
 		const client = interaction.client;
 		const embed = new EmbedBuilder()

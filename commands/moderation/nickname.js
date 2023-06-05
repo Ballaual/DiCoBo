@@ -14,7 +14,6 @@ module.exports = {
 			.setName('nickname')
 			.setDescription('The new nickname for the user')
 			.setRequired(true)),
-	category: 'moderation',
 	async execute(interaction) {
 		const member = interaction.options.getMember('target');
 		const nickname = interaction.options.getString('nickname');

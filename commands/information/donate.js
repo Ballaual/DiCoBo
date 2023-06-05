@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { donate } = require('../../config/config.json');
 
 module.exports = {
@@ -7,7 +6,6 @@ module.exports = {
 		.setName('donate')
 		.setDescription('Displays the donation link')
 		.setDMPermission(false),
-	category: 'core',
 	async execute(interaction) {
 		if (!donate) {
 			return interaction.reply({ content: 'Missing `donate` parameter in config.json', ephemeral: true });

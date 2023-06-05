@@ -1,7 +1,6 @@
+const { SlashCommandBuilder, AttachmentBuilder, PermissionFlagsBits } = require('discord.js');
 const fs = require('fs');
 const path = require('node:path');
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { AttachmentBuilder, PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -9,7 +8,6 @@ module.exports = {
 		.setDescription('Displays the command log')
 		.setDMPermission(false)
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
-	category: 'moderation',
 	async execute(interaction) {
 		try {
 			const serverId = interaction.guild.id;
