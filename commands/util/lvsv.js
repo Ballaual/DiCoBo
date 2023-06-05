@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const { ownerId } = require('../../config/config.json');
 
 module.exports = {
@@ -6,6 +6,7 @@ module.exports = {
 		.setName('lvsv')
 		.setDescription('Leaves a specified discord server | Bot owner only!')
 		.setDMPermission(false)
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.addStringOption(option =>
 			option.setName('id')
 				.setDescription('id server')

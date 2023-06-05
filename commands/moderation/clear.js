@@ -4,14 +4,14 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('clear')
 		.setDescription('Clear up to 99 messages.')
+		.setDMPermission(false)
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
 		.addIntegerOption(option =>
 			option.setName('amount')
 				.setDescription('Number of messages to clear')
 				.setRequired(true)
 				.setMinValue(1)
-				.setMaxValue(100))
-		.setDMPermission(false)
-		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
+				.setMaxValue(100)),
 	async execute(interaction) {
 		const amount = interaction.options.getInteger('amount');
 

@@ -5,11 +5,11 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('play')
 		.setDescription('Plays music from Youtube, Spotify, Soundcloud or Deezer')
+		.setDMPermission(false)
 		.addStringOption(option =>
 			option.setName('query')
 				.setDescription('Search the song you want to play | Supported url: Youtube, Spotify, Soundcloud, Deezer')
-				.setRequired(true))
-		.setDMPermission(false),
+				.setRequired(true)),
 	async execute(interaction) {
 		const voiceChannel = interaction.member.voice.channel;
 		const query = interaction.options.getString('query');

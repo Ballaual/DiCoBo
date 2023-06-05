@@ -4,12 +4,12 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('poke')
 		.setDescription('Sends a poke to another user')
+		.setDMPermission(false)
 		.addUserOption(option =>
 			option
 				.setName('target')
 				.setDescription('The user you want to poke')
 				.setRequired(true))
-		.setDMPermission(false)
 		.addStringOption(option =>
 			option
 				.setName('message')

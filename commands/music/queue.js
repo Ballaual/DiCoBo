@@ -5,6 +5,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('queue')
 		.setDescription('Displays the current songs in the music queue')
+		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('clear')
@@ -14,8 +15,7 @@ module.exports = {
 			subcommand
 				.setName('show')
 				.setDescription('Shows the current queue'),
-		)
-		.setDMPermission(false),
+		),
 	async execute(interaction) {
 		const subcommand = interaction.options.getSubcommand();
 

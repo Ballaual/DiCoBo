@@ -4,12 +4,12 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('about')
 		.setDescription('Displays some information about a specific user')
+		.setDMPermission(false)
 		.addUserOption((option) =>
 			option
 				.setName('user')
 				.setDescription('The user to get information for')
-				.setRequired(true))
-		.setDMPermission(false),
+				.setRequired(true)),
 	async execute(interaction) {
 		const user = interaction.options.getUser('user');
 
