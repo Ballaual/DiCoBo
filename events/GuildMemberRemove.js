@@ -3,11 +3,12 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = {
-	name: Events.GuildMemberAdd,
+	name: Events.GuildMemberRemove,
 	once: false,
 	async execute(member) {
 		try {
 			const { user, guild } = member;
+			const serverName = guild.name;
 
 			const joinLeavesDir = './config/joinleave';
 			const guildConfigFile = path.join(joinLeavesDir, `${guild.id}.json`);
@@ -21,7 +22,7 @@ module.exports = {
 					const channel = guild.channels.cache.get(channelId);
 
 					if (channel && channel.type === ChannelType.GuildText) {
-						await channel.send(`<:join:1091295564483792926> | ${user.toString()} joined the server!`);
+						await channel.send(`:x: | ${user.toString()} left the server!`);
 					} else {
 						console.log('The specified join/leave channel is not a text channel.');
 					}
