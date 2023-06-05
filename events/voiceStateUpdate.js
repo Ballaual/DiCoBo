@@ -73,8 +73,8 @@ module.exports = {
 
 		if (
 			oldState.channel &&
-      oldState.channel.name.includes(`${oldState.member.user.username}'s Channel`) &&
-      oldState.member.user.id === newState.member.user.id
+			oldState.channel.name.includes(`${oldState.member.user.username}'s Channel`) &&
+			oldState.member.user.id === newState.member.user.id
 		) {
 			if (oldState.channel.members.size > 0) {
 				const nextMember = oldState.channel.members.first();
@@ -93,6 +93,6 @@ module.exports = {
 			}
 		}
 
-		fs.writeFileSync(filePath, JSON.stringify({ ...data, userChannels }));
+		fs.writeFileSync(filePath, JSON.stringify({ creatorChannels, categories, userChannels }));
 	},
 };
