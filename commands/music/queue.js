@@ -39,7 +39,7 @@ module.exports = {
 				.setDescription('The queue has been cleared!')
 				.setColor('#00FF00');
 
-			return interaction.reply({ embeds: [queueCleared], ephemeral: true });
+			return interaction.reply({ embeds: [queueCleared] });
 		}
 
 		const queue = await distube.getQueue(interaction);
