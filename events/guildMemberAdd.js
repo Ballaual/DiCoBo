@@ -22,14 +22,17 @@ module.exports = {
 
 					if (channel && channel.type === ChannelType.GuildText) {
 						await channel.send(`<:join:1091295564483792926> | ${user.toString()} joined the server!`);
-					} else {
+					}
+					else {
 						console.log('The specified join/leave channel is not a text channel.');
 					}
-				} else {
+				}
+				else {
 					console.log('No join/leave channel specified in the config file.');
 				}
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			console.error('There was an error:', error);
 		}
 	},

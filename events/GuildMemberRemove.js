@@ -8,7 +8,6 @@ module.exports = {
 	async execute(member) {
 		try {
 			const { user, guild } = member;
-			const serverName = guild.name;
 
 			const joinLeavesDir = './config/joinleave';
 			const guildConfigFile = path.join(joinLeavesDir, `${guild.id}.json`);
@@ -23,14 +22,17 @@ module.exports = {
 
 					if (channel && channel.type === ChannelType.GuildText) {
 						await channel.send(`:x: | ${user.toString()} left the server!`);
-					} else {
+					}
+					else {
 						console.log('The specified join/leave channel is not a text channel.');
 					}
-				} else {
+				}
+				else {
 					console.log('No join/leave channel specified in the config file.');
 				}
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			console.error('There was an error:', error);
 		}
 	},
