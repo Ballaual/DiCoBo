@@ -82,7 +82,7 @@ distube
 
 	.on('initQueue', (queue) => {
 		queue.autoplay = false;
-		queue.volume = 100;
+		queue.volume = 50;
 	});
 
 module.exports = distube;
