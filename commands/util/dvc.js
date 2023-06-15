@@ -36,6 +36,16 @@ module.exports = {
 						.setDescription('The channel to be removed')
 						.setRequired(true),
 				),
+		)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('show-userchannels')
+				.setDescription('Show created user channels for the guild'),
+		)
+		.addSubcommand(subcommand =>
+			subcommand
+				.setName('show-creator')
+				.setDescription('Show the creator channels and their categories'),
 		),
 	async execute(interaction) {
 		const subcommand = interaction.options.getSubcommand();
@@ -88,13 +98,44 @@ module.exports = {
 
 				fs.writeFileSync(filePath, JSON.stringify(data));
 
-				const guild = interaction.guild;
-				const channel = guild.channels.cache.get(channelId);
-				if (channel) {
-					channel.delete();
+				await interaction.reply({ content: `Successfully removed channel id: ${channelId} as a voice creator.`, ephemeral: true });
+			}
+			else if (subcommand === 'show-userchannels') {
+				let data = {};
+				if (fs.existsSync(filePath)) {
+					data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 				}
 
-				await interaction.reply({ content: 'Voice creator successfully removed.', ephemeral: true });
+				const userChannels = data.userChannels || {};
+				const userChannelNames = Object.values(userChannels).map(channel => channel.name);
+
+				if (userChannelNames.length === 0) {
+					await interaction.reply('No user channels found.');
+				}
+				else {
+					await interaction.reply(`User Channels: ${userChannelNames.join(', ')}`);
+				}
+			}
+			else if (subcommand === 'show-creator') {
+				let data = {};
+				if (fs.existsSync(filePath)) {
+					data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+				}
+
+				const creatorChannels = data.creatorChannels || [];
+				const categories = data.categories || {};
+
+				if (creatorChannels.length === 0) {
+					await interaction.reply('No creator channels found.');
+				}
+				else {
+					const creatorChannelsList = creatorChannels.map(channelId => {
+						const categoryId = categories[channelId];
+						return `${channelId} (${categoryId})`;
+					});
+
+					await interaction.reply(`Creator Channels: ${creatorChannelsList.join(', ')}`);
+				}
 			}
 		}
 		catch (error) {
