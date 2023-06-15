@@ -40,12 +40,12 @@ module.exports = {
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('show-userchannels')
-				.setDescription('Show created user channels for the guild'),
+				.setDescription('Shows all created user channels'),
 		)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('show-creator')
-				.setDescription('Show the creator channels and their categories'),
+				.setDescription('Shows all creator channels and their categories'),
 		),
 	async execute(interaction) {
 		const subcommand = interaction.options.getSubcommand();
