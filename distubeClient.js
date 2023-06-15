@@ -7,7 +7,7 @@ const { EmbedBuilder } = require('discord.js');
 const discordClient = require('./discordClient');
 
 const distube = new Distube.default(discordClient, {
-	searchSongs: 3,
+	searchSongs: 5,
 	leaveOnFinish: true,
 	leaveOnEmpty: true,
 	emptyCooldown: 30,
