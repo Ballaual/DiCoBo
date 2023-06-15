@@ -4,11 +4,11 @@ const distube = require('../../distubeClient');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('play')
-		.setDescription('Plays music from Youtube, Spotify, Soundcloud or Deezer')
+		.setDescription('Plays music from Youtube, Spotify, Soundcloud, or Deezer')
 		.setDMPermission(false)
 		.addStringOption(option =>
 			option.setName('query')
-				.setDescription('Search the song you want to play | Supported url: Youtube, Spotify, Soundcloud, Deezer')
+				.setDescription('Search the song you want to play | Supported URL: Youtube, Spotify, Soundcloud, Deezer')
 				.setRequired(true)),
 	async execute(interaction) {
 		const voiceChannel = interaction.member.voice.channel;
@@ -17,11 +17,24 @@ module.exports = {
 			return interaction.reply({ content: 'Please join a voice channel first!', ephemeral: true });
 		}
 
-		await interaction.reply('🔍 **Searching and attempting...**');
-		await interaction.editReply('Searching done :ok_hand: \nPlayback will start shortly!');
-		distube.play(voiceChannel, query, {
-			textChannel: interaction.channel,
-			member: interaction.member,
-		});
+		await interaction.reply('🔍 **Searching and collecting songs...**');
+		await interaction.editReply('Searching done :ok_hand:');
+
+		try {
+			await distube.play(voiceChannel, query, {
+				textChannel: interaction.channel,
+				member: interaction.member,
+			});
+
+		}
+		catch (error) {
+			console.error(error);
+			if (error.errorCode === 'YTDLP_ERROR' && error.message.includes('DRM protection')) {
+				interaction.followUp('❌ | The requested song is DRM protected and cannot be played!');
+			}
+			else if (error.errorCode === 'SPOTIFY_API_ERROR' && error.message.includes('URL is private')) {
+				interaction.followUp('❌ | The requested Spotify playlist is set to private!');
+			}
+		}
 	},
 };
