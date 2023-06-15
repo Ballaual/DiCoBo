@@ -32,30 +32,42 @@ module.exports = {
 		const categories = data.categories;
 		const userChannels = data.userChannels || {};
 
-		if (newState.channel && creatorChannels.includes(newState.channel.id) && newState.channel.members.size === 1) {
+		if (
+			newState.channel &&
+			creatorChannels.includes(newState.channel.id) &&
+			newState.channel.members.size === 1
+		) {
 			const guild = newState.guild;
 			const user = newState.member.user;
 
-			let existingChannel = guild.channels.cache.find(channel => channel.name === `${user.username}'s Channel`);
+			let existingChannel = guild.channels.cache.find(
+				(channel) =>
+					channel.name === `${user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s Channel`,
+			);
 
 			if (!existingChannel) {
 				const categoryId = categories[newState.channel.id];
 				const category = guild.channels.cache.get(categoryId);
 
 				if (category && category.type === ChannelType.GuildCategory) {
-					const newChannel = await guild.channels.create({
-						name: `${user.username}'s Channel`,
-						type: ChannelType.GuildVoice,
-						parent: category,
-						userLimit: newState.channel.userLimit,
-						bitrate: newState.channel.bitrate,
-						permissionOverwrites: [
-							{
-								id: user.id,
-								allow: [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles],
-							},
-						],
-					});
+					const newChannel = await guild.channels.create(
+						{
+							name: `${user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s Channel`,
+							type: ChannelType.GuildVoice,
+							parent: category,
+							userLimit: newState.channel.userLimit,
+							bitrate: newState.channel.bitrate,
+							permissionOverwrites: [
+								{
+									id: user.id,
+									allow: [
+										PermissionsBitField.Flags.ManageChannels,
+										PermissionsBitField.Flags.ManageRoles,
+									],
+								},
+							],
+						},
+					);
 
 					newState.setChannel(newChannel);
 
@@ -63,6 +75,7 @@ module.exports = {
 					if (creatorChannel) {
 						userChannels[newChannel.id] = {
 							creatorChannelId: creatorChannel.id,
+							name: newChannel.name,
 						};
 
 						existingChannel = newChannel;
@@ -73,18 +86,31 @@ module.exports = {
 
 		if (
 			oldState.channel &&
-      oldState.channel.name.includes(`${oldState.member.user.username}'s Channel`) &&
-      oldState.member.user.id === newState.member.user.id
+			oldState.channel.name.includes(
+				`${oldState.member.user.username.charAt(0).toUpperCase() + oldState.member.user.username.slice(1)}'s Channel`,
+			) &&
+			oldState.member.user.id === newState.member.user.id
 		) {
 			if (oldState.channel.members.size > 0) {
 				const nextMember = oldState.channel.members.first();
-				await oldState.channel.permissionOverwrites.edit(nextMember, { ManageChannels: true, ManageRoles: true });
+				await oldState.channel.permissionOverwrites.edit(nextMember, {
+					ManageChannels: true,
+					ManageRoles: true,
+				});
 				await oldState.channel.permissionOverwrites.delete(oldState.member);
-				await oldState.channel.edit({ name: `${nextMember.user.username}'s Channel` });
+				await oldState.channel.edit({
+					name: `${nextMember.user.username.charAt(0).toUpperCase() + nextMember.user.username.slice(1)}'s Channel`,
+				});
+
+				if (userChannels[oldState.channel.id]) {
+					userChannels[oldState.channel.id].name = oldState.channel.name;
+				}
 			}
 			else {
 				if (userChannels[oldState.channel.id]) {
-					const creatorChannel = newState.guild.channels.cache.get(userChannels[oldState.channel.id].creatorChannelId);
+					const creatorChannel = newState.guild.channels.cache.get(
+						userChannels[oldState.channel.id].creatorChannelId,
+					);
 					if (creatorChannel) {
 						delete userChannels[oldState.channel.id];
 					}
