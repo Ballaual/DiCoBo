@@ -75,6 +75,7 @@ module.exports = {
 					if (creatorChannel) {
 						userChannels[newChannel.id] = {
 							creatorChannelId: creatorChannel.id,
+							channelOwner: user.id,
 							name: newChannel.name,
 						};
 
@@ -104,18 +105,24 @@ module.exports = {
 
 				if (userChannels[oldState.channel.id]) {
 					userChannels[oldState.channel.id].name = oldState.channel.name;
-				}
-			}
-			else {
-				if (userChannels[oldState.channel.id]) {
-					const creatorChannel = newState.guild.channels.cache.get(
-						userChannels[oldState.channel.id].creatorChannelId,
-					);
-					if (creatorChannel) {
-						delete userChannels[oldState.channel.id];
+					if (userChannels[oldState.channel.id].channelOwner === oldState.member.user.id) {
+						userChannels[oldState.channel.id].channelOwner = nextMember.user.id;
 					}
 				}
-				oldState.channel.delete();
+			}
+			else if (userChannels[oldState.channel.id]) {
+				const creatorChannel = newState.guild.channels.cache.get(
+					userChannels[oldState.channel.id].creatorChannelId,
+				);
+				if (creatorChannel) {
+					try {
+						delete userChannels[oldState.channel.id];
+						await oldState.channel.delete();
+					}
+					catch (error) {
+						console.error(`Failed to delete channel: ${error.message}`);
+					}
+				}
 			}
 		}
 
