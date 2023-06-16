@@ -45,19 +45,11 @@ When inviting the Bot make sure it has the following OAuth Scopes set in the Dis
 > Move Members<br>
 > Use Voice Activity<br>
 
-Please make sure to set some relevant permissions on your server, to avoid trolls and griefing.<br>
-1. Open your server settings
-2. Navigate to Integrations -> DiCoBo
-3. Set permissions for @everyone
-4. You should deny at least the following commands to @everyone: clear, log, reload, registerchannel, unregisterchannel
-5. You may add permissions to a moderation rules to these command
-6. The lvsv command is handled in background to be used only by the server owner
-
 ## Requirements
-1. Nodejs>=18.5.0: **[Download](https://nodejs.org/en/download)**
+1. Nodejs>=18.15.0: **[Download](https://nodejs.org/en/download)**
 2. Git: **[Download](https://git-scm.com)**
 3. Discord Bot Token: **[Get it here](https://discord.com/developers/applications)**
-4. Discord Bot CLIENT_ID: **[Get it here](https://discord.com/developers/applications)**
+4. Discord Bot ClientId: **[Get it here](https://discord.com/developers/applications)**
 
 ## Server installation instructions
 
@@ -70,11 +62,13 @@ Please make sure to set some relevant permissions on your server, to avoid troll
 2. Run `git clone https://github.com/ballaual/DiCoBo.git`
 3. Run `cd DiCoBo`
 4. Run `npm i` to install the required modules
-5. Copy or Rename `config.json.example` to `config.json.example`
-6. Edit `config.json` - see [here](#edit-the-config-file)
-7. Run `npm start` to start the bot
+5. Run `cd config` to navigate into the config folder
+6. Copy or Rename `config.json.example` to `config.json`
+7. Edit `config.json` - see [here](#edit-the-config-file)
+8. Run `cd ..` to navigate into the root folder of the bot
+9. Run `npm start` to start the bot
 
-* Update the bot: `npm run update`
+* To update the bot run `npm run update`
 </details>
 
 <details>
@@ -82,13 +76,15 @@ Please make sure to set some relevant permissions on your server, to avoid troll
 
 1. Download latest release from [here](https://github.com/ballaual/DiCoBo/releases/latest)
 2. Unzip the files using WinRAR or any other package manager
-3. Navigate into the folder `DiCoBo`
+3. Navigate into the folder `DiCoBo\scripts`
 4. Execute `install.bat` to install the required modules
-5. Copy or Rename `config.json.example` to `config.json`
-6. Edit `config.json` - see [here](#edit-the-config-file)
-7. Execute `startbot.bat` to start the bot
+5. Navigate into the folder `DiCoBo\config`
+6. Copy or Rename `config.json.example` to `config.json`
+7. Edit `config.json` - see [here](#edit-the-config-file)
+8. Navigate into the folder `DiCoBo\scripts`
+9. Execute `startbot.bat` to start the bot
 
-* Update the bot: Execute `update.bat`
+* To update the bot execute the `update.bat`
 </details>
 
 * Linux
@@ -101,11 +97,13 @@ Please make sure to set some relevant permissions on your server, to avoid troll
 3. Run `git clone https://github.com/ballaual/DiCoBo.git`
 4. Run `cd DiCoBo`
 5. Run `npm i` to install the required modules
-6. Run `cp config.json.example config.json`
-7. Edit `config.json` using nano or vim - see [here](#edit-the-config-file)
-8. Run `npm start` to start the bot
+6. Run `cd config` to navigate into the config folder
+7. Run `cp config.json.example config.json`
+8. Edit `config.json` using nano or vim - see [here](#edit-the-config-file)
+9. Run `cd ..` to navigate into the root folder of the bot
+10. Run `npm start` to start the bot
 
-* Update the bot: `npm run update`
+* To update the bot run `npm run update`
 </details>
 
 <details>
@@ -136,17 +134,17 @@ Please make sure to set some relevant permissions on your server, to avoid troll
 6. Run `systemctl enable DiCoBo` to enable autostart
 7. Run `systemctl start DiCoBo` to start the bot
   
-Note: Now the bot will always run in background and will automatically start when you restart the whole machine.<br>
+Note: From now on the bot will always run in background and will automatically start when the machine gets rebooted.<br>
 To stop the bot run `systemctl stop DiCoBo`<br>
 To disable the autostart run `systemctl disable DiCoBo`
 
-* Update the bot: `cd /home/DiCoBo/DiCoBo/ && npm run update`
+* Update the bot: `cd /home/DiCoBo/DiCoBo/scripts && npm run update`
 </details>
 
 ## Edit the config file
-Please make sure to fill every field marked with <b>*needed</b> because they are mandatory for the main functions of the bot! Otherwise the bot won't start and / or might crash at some point if these information are missing.
+Please make sure to fill every field marked as <b>*required</b> because they are mandatory for the main functions of the bot! Otherwise the bot won't start and / or might crash at some point if these information are missing.
 
-* Needed fields
+* Required values
 > - token<br>
 > - clientId<br>
 > - ownerId<br>
@@ -154,7 +152,7 @@ Please make sure to fill every field marked with <b>*needed</b> because they are
 > - github<br>
 > - paypal
 
-* Optional fields
+* Optional values
 > - ytcookie
 > - A tutorial video for ytcookie can be found [here](https://www.youtube.com/watch?v=iQnpef9LgVM)
 
