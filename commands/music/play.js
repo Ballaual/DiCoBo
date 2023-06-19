@@ -48,6 +48,6 @@ module.exports = {
 				interaction.followUp('❌ | The requested Spotify playlist is set to private!');
 			}
 		}
-		
+
 	},
 };
