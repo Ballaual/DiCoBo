@@ -38,12 +38,16 @@ module.exports = {
 		}
 		catch (error) {
 			console.error(error);
-			if (error.errorCode === 'YTDLP_ERROR' && error.message.includes('DRM protection')) {
+			if (error.errorCode === 'VOICE_MISSING_PERMS') {
+				interaction.followUp('❌ | I do not have the required permissions to join this voice channel!');
+			}
+			else if (error.errorCode === 'YTDLP_ERROR' && error.message.includes('DRM protection')) {
 				interaction.followUp('❌ | The requested song is DRM protected and cannot be played!');
 			}
 			else if (error.errorCode === 'SPOTIFY_API_ERROR' && error.message.includes('URL is private')) {
 				interaction.followUp('❌ | The requested Spotify playlist is set to private!');
 			}
 		}
+		
 	},
 };
