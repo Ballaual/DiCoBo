@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, ButtonStyle, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const fs = require('fs');
+const path = require('path');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -8,7 +9,7 @@ module.exports = {
 		.addStringOption(option =>
 			option
 				.setName('message')
-				.setDescription('Tthe message to display above the button')
+				.setDescription('The message to display above the button')
 				.setRequired(true),
 		)
 		.addRoleOption(option =>
@@ -30,9 +31,14 @@ module.exports = {
 				roleId: roleId,
 			};
 
-			const filePath = `./config/reactionrole/${guildId}-rules.json`;
+			const reactionRolesFolderPath = './config/reactionrole/';
+			const reactionRolesFilePath = path.join(reactionRolesFolderPath, `${guildId}-rules.json`);
 
-			fs.writeFile(filePath, JSON.stringify(data), (err) => {
+			if (!fs.existsSync(reactionRolesFolderPath)) {
+				fs.mkdirSync(reactionRolesFolderPath, { recursive: true });
+			}
+
+			fs.writeFile(reactionRolesFilePath, JSON.stringify(data), (err) => {
 				if (err) {
 					console.error(err);
 					return interaction.reply({

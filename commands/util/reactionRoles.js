@@ -5,14 +5,20 @@ const path = require('path');
 const reactionRolesFolderPath = './config/reactionrole/';
 
 function updateReactionRoles(guildId, roles) {
-	const reactionRolesFilePath = path.join(reactionRolesFolderPath, `${guildId}-roles.json`);
+	const reactionRolesFolder = './config/reactionrole/';
+	const reactionRolesFilePath = path.join(reactionRolesFolder, `${guildId}-roles.json`);
 	const reactionRoles = {
 		GuildID: guildId,
 		roles: roles,
 	};
 
+	if (!fs.existsSync(reactionRolesFolder)) {
+		fs.mkdirSync(reactionRolesFolder, { recursive: true });
+	}
+
 	fs.writeFileSync(reactionRolesFilePath, JSON.stringify(reactionRoles));
 }
+
 
 function getReactionRoles(guildId) {
 	const reactionRolesFilePath = path.join(reactionRolesFolderPath, `${guildId}-roles.json`);
