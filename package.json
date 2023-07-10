@@ -50,7 +50,7 @@
     "node": ">=18.5.0"
   },
   "devDependencies": {
-    "all-contributors-cli": "^6.26.0",
+    "all-contributors-cli": "^6.26.1",
     "eslint": "^8.43.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.27.5",
