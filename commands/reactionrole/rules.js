@@ -6,6 +6,8 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('rules')
 		.setDescription('Posts a button to accept the rules')
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+		.setDMPermission(false)
 		.addStringOption(option =>
 			option
 				.setName('message')
