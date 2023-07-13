@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ButtonStyle, ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const { SlashCommandBuilder, ButtonStyle, ActionRowBuilder, ButtonBuilder, PermissionFlagsBits } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 

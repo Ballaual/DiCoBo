@@ -41,11 +41,13 @@ module.exports = {
 			try {
 				await command.execute(interaction);
 				logCommand(interaction.commandName, interaction.user.tag, interaction.guild?.id);
-			} catch (error) {
+			}
+			catch (error) {
 				console.error(`Error executing ${interaction.commandName}`);
 				console.error(error);
 			}
-		} else if (interaction.isStringSelectMenu()) {
+		}
+		else if (interaction.isStringSelectMenu()) {
 			if (interaction.customId === 'reaction-roles') {
 				const guildId = interaction.guildId;
 				const roleId = interaction.member.roles.cache.get(guildId);
@@ -82,7 +84,7 @@ module.exports = {
 							.setColor('#7200FF')
 							.addFields(
 								{ name: 'Added Roles', value: addedRoles.map(role => role.name).join('\n') || 'None' },
-								{ name: 'Removed Roles', value: removedRoles.map(role => role.name).join('\n') || 'None' }
+								{ name: 'Removed Roles', value: removedRoles.map(role => role.name).join('\n') || 'None' },
 							)
 							.setTimestamp();
 
@@ -93,7 +95,8 @@ module.exports = {
 							ephemeral: true,
 						});
 
-					} catch (error) {
+					}
+					catch (error) {
 						console.error(`Error reading reaction role data for guild ${guildId}`);
 						console.error(error);
 						await interaction.reply({
@@ -103,7 +106,8 @@ module.exports = {
 					}
 				}
 			}
-		} else if (interaction.isButton()) {
+		}
+		else if (interaction.isButton()) {
 			if (interaction.customId === 'rules-button') {
 				const guildId = interaction.guildId;
 				const roleId = interaction.member.roles.cache.get(guildId);
@@ -123,7 +127,7 @@ module.exports = {
 							.setTitle('Role Update')
 							.setDescription('You accepted the rules!')
 							.setColor('#7200FF')
-							.addFields({name: 'Added Role', value: roleToAssign.name})
+							.addFields({ name: 'Added Role', value: roleToAssign.name })
 							.setTimestamp();
 
 						await interaction.user.send({ embeds: [embed] });
@@ -132,7 +136,8 @@ module.exports = {
 							content: 'You accepted the rules! Check your DMs for more information.',
 							ephemeral: true,
 						});
-					} else {
+					}
+					else {
 						await interaction.reply({
 							content: 'The role to assign does not exist.',
 							ephemeral: true,
