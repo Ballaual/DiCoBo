@@ -40,6 +40,7 @@ module.exports = {
 		.setName('reactionsroles')
 		.setDescription('Manages reaction roles')
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+		.setDMPermission(false)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('add')

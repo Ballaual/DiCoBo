@@ -1,5 +1,4 @@
-const { Events, Collection } = require('discord.js');
-const { getReactionRoles } = require('../utils/reactionRoles');
+const { Events, Collection, EmbedBuilder } = require('discord.js');
 const logCommand = require('../functions/commandLogger');
 
 module.exports = {
@@ -42,39 +41,69 @@ module.exports = {
 			try {
 				await command.execute(interaction);
 				logCommand(interaction.commandName, interaction.user.tag, interaction.guild?.id);
-			}
-			catch (error) {
+			} catch (error) {
 				console.error(`Error executing ${interaction.commandName}`);
 				console.error(error);
 			}
-		}
-		else if (interaction.isStringSelectMenu()) {
+		} else if (interaction.isStringSelectMenu()) {
 			if (interaction.customId === 'reaction-roles') {
-				const roles = getReactionRoles(interaction.guildId);
+				const guildId = interaction.guildId;
+				const roleId = interaction.member.roles.cache.get(guildId);
 
-				const rolesToRemove = roles.filter(
-					role => interaction.member.roles.cache.has(role.roleId) && !interaction.values.includes(role.roleId),
-				);
+				if (roleId) {
+					const filePath = `../config/reactionrole/${guildId}-roles.json`;
 
-				const roleIdsToRemove = rolesToRemove.map(role => role.roleId);
-				await interaction.member.roles.remove(roleIdsToRemove);
+					try {
+						const reactionRolesData = require(filePath);
+						const roles = reactionRolesData.roles;
 
-				const rolesToAdd = roles.filter(
-					role => !interaction.member.roles.cache.has(role.roleId) && interaction.values.includes(role.roleId),
-				);
+						const rolesToRemove = roles.filter(
+							role => interaction.member.roles.cache.has(role.roleId) && !interaction.values.includes(role.roleId),
+						);
 
-				for (const role of rolesToAdd) {
-					const discordRole = interaction.guild.roles.cache.get(role.roleId);
-					await interaction.member.roles.add(discordRole);
+						const roleIdsToRemove = rolesToRemove.map(role => role.roleId);
+						await interaction.member.roles.remove(roleIdsToRemove);
+
+						const rolesToAdd = roles.filter(
+							role => !interaction.member.roles.cache.has(role.roleId) && interaction.values.includes(role.roleId),
+						);
+
+						for (const role of rolesToAdd) {
+							const discordRole = interaction.guild.roles.cache.get(role.roleId);
+							await interaction.member.roles.add(discordRole);
+						}
+
+						const addedRoles = rolesToAdd.map(role => interaction.guild.roles.cache.get(role.roleId));
+						const removedRoles = rolesToRemove.map(role => interaction.guild.roles.cache.get(role.roleId));
+
+						const embed = new EmbedBuilder()
+							.setTitle('Role Update')
+							.setDescription('Your roles have been updated!')
+							.setColor('#7200FF')
+							.addFields(
+								{ name: 'Added Roles', value: addedRoles.map(role => role.name).join('\n') || 'None' },
+								{ name: 'Removed Roles', value: removedRoles.map(role => role.name).join('\n') || 'None' }
+							)
+							.setTimestamp();
+
+						await interaction.user.send({ embeds: [embed] });
+
+						await interaction.reply({
+							content: 'You updated your server roles! Check your DMs for more information.',
+							ephemeral: true,
+						});
+
+					} catch (error) {
+						console.error(`Error reading reaction role data for guild ${guildId}`);
+						console.error(error);
+						await interaction.reply({
+							content: 'An error occurred while processing the reaction roles.',
+							ephemeral: true,
+						});
+					}
 				}
-
-				await interaction.reply({
-					content: 'Your roles have been updated!',
-					ephemeral: true,
-				});
 			}
-		}
-		else if (interaction.isButton()) {
+		} else if (interaction.isButton()) {
 			if (interaction.customId === 'rules-button') {
 				const guildId = interaction.guildId;
 				const roleId = interaction.member.roles.cache.get(guildId);
@@ -89,12 +118,21 @@ module.exports = {
 					const roleToAssign = interaction.guild.roles.cache.get(roleIdToAssign);
 					if (roleToAssign) {
 						await interaction.member.roles.add(roleToAssign);
+
+						const embed = new EmbedBuilder()
+							.setTitle('Role Update')
+							.setDescription('You accepted the rules!')
+							.setColor('#7200FF')
+							.addFields({name: 'Added Role', value: roleToAssign.name})
+							.setTimestamp();
+
+						await interaction.user.send({ embeds: [embed] });
+
 						await interaction.reply({
-							content: 'You accepted the rules!',
+							content: 'You accepted the rules! Check your DMs for more information.',
 							ephemeral: true,
 						});
-					}
-					else {
+					} else {
 						await interaction.reply({
 							content: 'The role to assign does not exist.',
 							ephemeral: true,
