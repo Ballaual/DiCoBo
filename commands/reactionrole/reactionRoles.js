@@ -37,7 +37,7 @@ function getReactionRoles(guildId) {
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('reactionsroles')
+		.setName('reactionroles')
 		.setDescription('Manages reaction roles')
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.setDMPermission(false)
