@@ -1,6 +1,7 @@
 const { Events, ChannelType, PermissionsBitField } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
+
 const directory = './config/dvc';
 const getGuildFilePath = (guildId) => path.join(directory, `${guildId}.json`);
 
@@ -31,14 +32,18 @@ module.exports = {
 		const categories = data.categories;
 		const userChannels = data.userChannels || {};
 
-		const isChannelOwner = userChannels[oldState.channel.id]?.channelOwner === oldState.member.user.id;
-
-		if (newState.channel && creatorChannels.includes(newState.channel.id) && newState.channel.members.size === 1) {
+		if (
+			newState.channel &&
+			creatorChannels.includes(newState.channel.id) &&
+			newState.channel.members.size === 1
+		) {
 			const guild = newState.guild;
 			const user = newState.member.user;
 
 			let existingChannel = guild.channels.cache.find(
-				(channel) => channel.name === `${user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s VC`,
+				(channel) =>
+					channel.name ===
+					`${user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s VC`,
 			);
 
 			if (!existingChannel) {
@@ -59,7 +64,10 @@ module.exports = {
 
 					permissionOverwrites.push({
 						id: user.id,
-						allow: [PermissionsBitField.Flags.ManageChannels, PermissionsBitField.Flags.ManageRoles],
+						allow: [
+							PermissionsBitField.Flags.ManageChannels,
+							PermissionsBitField.Flags.ManageRoles,
+						],
 					});
 
 					const newChannelName = `${user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s VC`;
@@ -91,7 +99,10 @@ module.exports = {
 			}
 		}
 
-		if (oldState.channel && oldState.member.user.id === newState.member.user.id) {
+		if (
+			oldState.channel &&
+			oldState.member.user.id === newState.member.user.id
+		) {
 			if (oldState.channel.members.size > 0) {
 				const nextMember = oldState.channel.members.first();
 
@@ -119,10 +130,6 @@ module.exports = {
 					}
 				}
 
-				if (!isChannelOwner) {
-					return;
-				}
-
 				await oldState.channel.edit({
 					name: newChannelName,
 				});
@@ -134,7 +141,7 @@ module.exports = {
 					}
 				}
 			}
-			else if (userChannels[oldState.channel.id] && isChannelOwner) {
+			else if (userChannels[oldState.channel.id]) {
 				const creatorChannel = newState.guild.channels.cache.get(userChannels[oldState.channel.id].creatorChannelId);
 				if (creatorChannel) {
 					try {
