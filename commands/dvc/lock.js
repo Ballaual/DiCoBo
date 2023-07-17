@@ -1,4 +1,8 @@
 const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
+const fs = require('fs');
+const path = require('path');
+const directory = './config/dvc';
+const getGuildFilePath = (guildId) => path.join(directory, `${guildId}.json`);
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -29,6 +33,21 @@ module.exports = {
 			const newChannelName = `Locked | ${channel.name}`;
 
 			await channel.setName(newChannelName);
+
+			const guildId = interaction.guild.id;
+			const filePath = getGuildFilePath(guildId);
+
+			if (fs.existsSync(filePath)) {
+				const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+				const userChannels = data.userChannels || {};
+
+				if (userChannels[channel.id]) {
+					userChannels[channel.id].name = newChannelName;
+					userChannels[channel.id].isLocked = true;
+				}
+
+				fs.writeFileSync(filePath, JSON.stringify({ ...data, userChannels }));
+			}
 
 			return interaction.reply('The channel has been locked for everyone.');
 		}
