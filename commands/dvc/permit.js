@@ -29,7 +29,6 @@ module.exports = {
 
 		try {
 			await channel.permissionOverwrites.create(userToPermit, {
-				ViewChannel: true,
 				Connect: true,
 			});
 
