@@ -14,7 +14,7 @@ module.exports = {
 		}
 
 		if (!channel.permissionsFor(interaction.user).has(PermissionsBitField.Flags.ManageChannels)) {
-			return interaction.reply('You do not have permission to manage this channel.');
+			return interaction.reply('You do not have permissions to manage this channel.');
 		}
 
 		try {
