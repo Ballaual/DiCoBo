@@ -19,7 +19,7 @@ module.exports = {
 
 		try {
 			await channel.permissionOverwrites.edit(channel.guild.roles.everyone, {
-				Connect: null,
+				Connect: false,
 			});
 
 			await channel.permissionOverwrites.edit(interaction.user, {
