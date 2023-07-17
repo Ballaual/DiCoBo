@@ -34,8 +34,8 @@ module.exports = {
 
 		if (
 			newState.channel &&
-      creatorChannels.includes(newState.channel.id) &&
-      newState.channel.members.size === 1
+			creatorChannels.includes(newState.channel.id) &&
+			newState.channel.members.size === 1
 		) {
 			const guild = newState.guild;
 			const user = newState.member.user;
@@ -43,7 +43,7 @@ module.exports = {
 			let existingChannel = guild.channels.cache.find(
 				(channel) =>
 					channel.name ===
-          `${user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s VC`,
+					`${user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s VC`,
 			);
 
 			if (!existingChannel) {
@@ -70,9 +70,10 @@ module.exports = {
 						],
 					});
 
+					const newChannelName = `${user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s VC`;
 					const newChannel = await guild.channels.create(
 						{
-							name: `${user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s VC`,
+							name: newChannelName,
 							type: ChannelType.GuildVoice,
 							parent: category,
 							userLimit: newState.channel.userLimit,
@@ -89,6 +90,7 @@ module.exports = {
 							creatorChannelId: creatorChannel.id,
 							channelOwner: user.id,
 							name: newChannel.name,
+							isLocked: false,
 						};
 
 						existingChannel = newChannel;
@@ -99,8 +101,7 @@ module.exports = {
 
 		if (
 			oldState.channel &&
-      oldState.channel.name.includes(`${oldState.member.user.username.charAt(0).toUpperCase() + oldState.member.user.username.slice(1)}'s VC`) &&
-      oldState.member.user.id === newState.member.user.id
+			oldState.member.user.id === newState.member.user.id
 		) {
 			if (oldState.channel.members.size > 0) {
 				const nextMember = oldState.channel.members.first();
@@ -112,8 +113,25 @@ module.exports = {
 
 				await oldState.channel.permissionOverwrites.delete(oldState.member);
 
+				let newChannelName = `${nextMember.user.username.charAt(0).toUpperCase() + nextMember.user.username.slice(1)}'s VC`;
+
+				const permissions = oldState.channel.members.map((member) =>
+					member.permissionsIn(oldState.channel),
+				);
+
+				const allCanConnect = permissions.every((permission) =>
+					permission.has(PermissionsBitField.Flags.Connect),
+				);
+
+				if (allCanConnect === false || (userChannels[oldState.channel.id] && userChannels[oldState.channel.id].isLocked)) {
+					newChannelName = `Locked | ${newChannelName}`;
+					if (userChannels[oldState.channel.id]) {
+						userChannels[oldState.channel.id].isLocked = true;
+					}
+				}
+
 				await oldState.channel.edit({
-					name: `${nextMember.user.username.charAt(0).toUpperCase() + nextMember.user.username.slice(1)}'s VC`,
+					name: newChannelName,
 				});
 
 				if (userChannels[oldState.channel.id]) {
