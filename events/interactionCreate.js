@@ -1,5 +1,7 @@
 const { Events, Collection, EmbedBuilder } = require('discord.js');
 const logCommand = require('../functions/commandLogger');
+const lockCommand = require('../commands/dvc/lock');
+const unlockCommand = require('../commands/dvc/unlock');
 
 module.exports = {
 	name: Events.InteractionCreate,
@@ -106,9 +108,22 @@ module.exports = {
 					}
 				}
 			}
-		}
-		else if (interaction.isButton()) {
-			if (interaction.customId === 'rules-button') {
+		} else if (interaction.isButton()) {
+			if (interaction.customId === 'vcLock') {
+			  await lockCommand.execute(interaction);
+			} else if (interaction.customId === 'vcUnlock') {
+			  await unlockCommand.execute(interaction);
+			} else if (interaction.customId === 'vcRename') {
+			  // Logic for the vcRename button
+			} else if (interaction.customId === 'vcBlock') {
+			  // Logic for the vcBlock button
+			} else if (interaction.customId === 'vcPermit') {
+			  // Logic for the vcPermit button
+			} else if (interaction.customId === 'vcLimit') {
+			  // Logic for the vcLimit button
+			} else if (interaction.customId === 'vcKick') {
+			  // Logic for the vcKick button
+			} else if (interaction.customId === 'rules-button') {
 				const guildId = interaction.guildId;
 				const roleId = interaction.member.roles.cache.get(guildId);
 
@@ -145,6 +160,6 @@ module.exports = {
 					}
 				}
 			}
+		  }
 		}
-	},
-};
+	}
