@@ -5,55 +5,54 @@ const directory = './config/dvc';
 const getGuildFilePath = (guildId) => path.join(directory, `${guildId}.json`);
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('unlock')
-		.setDescription('Unlocks the current voice channel for everyone.')
-		.setDMPermission(false),
+  data: new SlashCommandBuilder()
+    .setName('unlock')
+    .setDescription('Unlocks the current voice channel for everyone.')
+    .setDMPermission(false),
 
-	async execute(interaction) {
-		const channel = interaction.member.voice.channel;
+  async execute(interaction) {
+    const channel = interaction.member.voice.channel;
 
-		if (!channel) {
-			return interaction.reply('You must be in a voice channel to use this command.');
-		}
+    if (!channel) {
+      return interaction.reply({ content: 'You must be in a voice channel to use this command.', ephemeral: true });
+    }
 
-		if (!channel.permissionsFor(interaction.user).has(PermissionsBitField.Flags.ManageChannels)) {
-			return interaction.reply('You do not have permission to manage this channel.');
-		}
+    if (!channel.permissionsFor(interaction.user).has(PermissionsBitField.Flags.ManageChannels)) {
+      return interaction.reply({ content: 'You do not have permission to manage this channel.', ephemeral: true });
+    }
 
-		try {
-			await channel.permissionOverwrites.edit(channel.guild.roles.everyone, {
-				Connect: null,
-			});
+    try {
+      await channel.permissionOverwrites.edit(channel.guild.roles.everyone, {
+        Connect: null,
+      });
 
-			await channel.permissionOverwrites.edit(interaction.user, {
-				Connect: null,
-			});
+      await channel.permissionOverwrites.edit(interaction.user, {
+        Connect: null,
+      });
 
-			const newChannelName = channel.name.replace(/^Locked \| /i, '');
+      const newChannelName = channel.name.replace(/^Locked \| /i, '');
 
-			await channel.setName(newChannelName);
+      await channel.setName(newChannelName);
 
-			const guildId = interaction.guild.id;
-			const filePath = getGuildFilePath(guildId);
+      const guildId = interaction.guild.id;
+      const filePath = getGuildFilePath(guildId);
 
-			if (fs.existsSync(filePath)) {
-				const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-				const userChannels = data.userChannels || {};
+      if (fs.existsSync(filePath)) {
+        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        const userChannels = data.userChannels || {};
 
-				if (userChannels[channel.id]) {
-					userChannels[channel.id].channelName = newChannelName;
-					userChannels[channel.id].isLocked = false;
-				}
+        if (userChannels[channel.id]) {
+          userChannels[channel.id].channelName = newChannelName;
+          userChannels[channel.id].isLocked = false;
+        }
 
-				fs.writeFileSync(filePath, JSON.stringify({ ...data, userChannels }));
-			}
+        fs.writeFileSync(filePath, JSON.stringify({ ...data, userChannels }));
+      }
 
-			return interaction.reply('The channel is now unlocked for everyone.');
-		}
-		catch (error) {
-			console.error('Failed to unlock channel:', error);
-			return interaction.reply('An error occurred while unlocking the channel.');
-		}
-	},
+      return interaction.reply({ content: 'The channel is now unlocked for everyone.', ephemeral: true });
+    } catch (error) {
+      console.error('Failed to unlock channel:', error);
+      return interaction.reply({ content: 'An error occurred while unlocking the channel.', ephemeral: true });
+    }
+  },
 };
