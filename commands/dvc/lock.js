@@ -42,7 +42,7 @@ module.exports = {
 				const userChannels = data.userChannels || {};
 
 				if (userChannels[channel.id]) {
-					userChannels[channel.id].name = newChannelName;
+					userChannels[channel.id].channelName = newChannelName;
 					userChannels[channel.id].isLocked = true;
 				}
 
