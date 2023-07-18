@@ -1,4 +1,4 @@
-const { Events, ChannelType, PermissionsBitField } = require('discord.js');
+const { Events, ChannelType, Permissions, PermissionsBitField } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -40,61 +40,52 @@ module.exports = {
 			const guild = newState.guild;
 			const user = newState.member.user;
 
-			let existingChannel = guild.channels.cache.find(
-				(channel) =>
-					channel.name ===
-					`${user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s VC`,
-			);
+			const categoryId = categories[newState.channel.id];
+			const category = guild.channels.cache.get(categoryId);
 
-			if (!existingChannel) {
-				const categoryId = categories[newState.channel.id];
-				const category = guild.channels.cache.get(categoryId);
+			if (category && category.type === ChannelType.GuildCategory) {
+				const parentOverwrites = newState.channel.parent.permissionOverwrites.cache;
+				const permissionOverwrites = [];
 
-				if (category && category.type === ChannelType.GuildCategory) {
-					const parentOverwrites = newState.channel.parent.permissionOverwrites.cache;
-					const permissionOverwrites = [];
-
-					parentOverwrites.forEach((overwrite) => {
-						permissionOverwrites.push({
-							id: overwrite.id,
-							allow: overwrite.allow.bitfield,
-							deny: overwrite.deny.bitfield,
-						});
-					});
-
+				parentOverwrites.forEach((overwrite) => {
 					permissionOverwrites.push({
-						id: user.id,
-						allow: [
-							PermissionsBitField.Flags.ManageChannels,
-							PermissionsBitField.Flags.ManageRoles,
-						],
+						id: overwrite.id,
+						allow: overwrite.allow.bitfield,
+						deny: overwrite.deny.bitfield,
 					});
+				});
 
-					const newChannelName = `${user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s VC`;
-					const newChannel = await guild.channels.create(
-						{
-							name: newChannelName,
-							type: ChannelType.GuildVoice,
-							parent: category,
-							userLimit: newState.channel.userLimit,
-							bitrate: newState.channel.bitrate,
-							permissionOverwrites,
-						},
-					);
+				permissionOverwrites.push({
+					id: user.id,
+					allow: [
+						PermissionsBitField.Flags.ManageChannels,
+						PermissionsBitField.Flags.ManageRoles,
+					],
+				});
 
-					newState.setChannel(newChannel);
+				const newChannel = await guild.channels.create(
+					{
+						name: `${newState.member.displayName}'s VC`,
+						type: ChannelType.GuildVoice,
+						parent: category,
+						userLimit: newState.channel.userLimit,
+						bitrate: newState.channel.bitrate,
+						permissionOverwrites,
+					},
+				);
 
-					const creatorChannel = guild.channels.cache.get(newState.channel.id);
-					if (creatorChannel) {
-						userChannels[newChannel.id] = {
-							creatorChannelId: creatorChannel.id,
-							channelOwner: user.id,
-							name: newChannel.name,
-							isLocked: false,
-						};
+				newState.setChannel(newChannel);
 
-						existingChannel = newChannel;
-					}
+				const creatorChannel = guild.channels.cache.get(newState.channel.id);
+				if (creatorChannel) {
+					userChannels[newChannel.id] = {
+						creatorChannelId: creatorChannel.id,
+						channelOwnerId: user.id,
+						channelOwnerName: user.username,
+						channelName: newChannel.name,
+						userLimit: newState.channel.userLimit,
+						isLocked: false,
+					};
 				}
 			}
 		}
@@ -103,45 +94,7 @@ module.exports = {
 			oldState.channel &&
 			oldState.member.user.id === newState.member.user.id
 		) {
-			if (oldState.channel.members.size > 0) {
-				const nextMember = oldState.channel.members.first();
-
-				await oldState.channel.permissionOverwrites.edit(nextMember, {
-					ManageChannels: true,
-					ManageRoles: true,
-				});
-
-				await oldState.channel.permissionOverwrites.delete(oldState.member);
-
-				let newChannelName = `${nextMember.user.username.charAt(0).toUpperCase() + nextMember.user.username.slice(1)}'s VC`;
-
-				const permissions = oldState.channel.members.map((member) =>
-					member.permissionsIn(oldState.channel),
-				);
-
-				const allCanConnect = permissions.every((permission) =>
-					permission.has(PermissionsBitField.Flags.Connect),
-				);
-
-				if (allCanConnect === false || (userChannels[oldState.channel.id] && userChannels[oldState.channel.id].isLocked)) {
-					newChannelName = `Locked | ${newChannelName}`;
-					if (userChannels[oldState.channel.id]) {
-						userChannels[oldState.channel.id].isLocked = true;
-					}
-				}
-
-				await oldState.channel.edit({
-					name: newChannelName,
-				});
-
-				if (userChannels[oldState.channel.id]) {
-					userChannels[oldState.channel.id].name = oldState.channel.name;
-					if (userChannels[oldState.channel.id].channelOwner === oldState.member.user.id) {
-						userChannels[oldState.channel.id].channelOwner = nextMember.user.id;
-					}
-				}
-			}
-			else if (userChannels[oldState.channel.id]) {
+			if (oldState.channel.members.size === 0 && userChannels[oldState.channel.id]) {
 				const creatorChannel = newState.guild.channels.cache.get(userChannels[oldState.channel.id].creatorChannelId);
 				if (creatorChannel) {
 					try {
@@ -153,6 +106,35 @@ module.exports = {
 					}
 				}
 			}
+			else if (
+				oldState.channel.members.size > 0 &&
+				userChannels[oldState.channel.id] &&
+				!oldState.selfMute &&
+				!oldState.selfDeaf &&
+				!newState.selfMute &&
+				!newState.selfDeaf
+			  ) {
+				const nextMember = oldState.channel.members.first();
+				const channelData = userChannels[oldState.channel.id];
+			  
+				await oldState.channel.permissionOverwrites.edit(nextMember, {
+				  ManageChannels: true,
+				  ManageRoles: true,
+				});
+			  
+				await oldState.channel.permissionOverwrites.delete(oldState.member);
+			  
+				let newChannelName = `${nextMember.displayName}'s VC`;
+				if (channelData.isLocked) {
+				  newChannelName = `Locked | ${nextMember.displayName}'s VC`;
+				}
+			  
+				await oldState.channel.edit({ name: newChannelName });
+			  
+				data.userChannels[oldState.channel.id].channelOwnerId = nextMember.id;
+				data.userChannels[oldState.channel.id].channelOwnerName = nextMember.user.username;
+				data.userChannels[oldState.channel.id].channelName = newChannelName;
+			  }
 		}
 
 		fs.writeFileSync(filePath, JSON.stringify({ ...data, userChannels }));
