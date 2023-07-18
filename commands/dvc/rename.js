@@ -43,7 +43,7 @@ module.exports = {
 				const userChannels = data.userChannels || {};
 
 				if (userChannels[channel.id]) {
-					userChannels[channel.id].name = newName;
+					userChannels[channel.id].channelName = newName;
 				}
 
 				fs.writeFileSync(filePath, JSON.stringify({ ...data, userChannels }));
