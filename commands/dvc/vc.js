@@ -42,9 +42,25 @@ module.exports = {
 				.setName('permit')
 				.setDescription('Allows a user to join the locked channel.')
 				.addUserOption(option =>
-					option.setName('user')
-						.setDescription('The user to allow access to the locked channel.')
-						.setRequired(true)),
+					option.setName('user1')
+						.setDescription('The first user to allow access to the locked channel.')
+						.setRequired(true))
+				.addUserOption(option =>
+					option.setName('user2')
+						.setDescription('The second user to allow access to the locked channel.')
+						.setRequired(false))
+				.addUserOption(option =>
+					option.setName('user3')
+						.setDescription('The third user to allow access to the locked channel.')
+						.setRequired(false))
+				.addUserOption(option =>
+					option.setName('user4')
+						.setDescription('The fourth user to allow access to the locked channel.')
+						.setRequired(false))
+				.addUserOption(option =>
+					option.setName('user5')
+						.setDescription('The fifth user to allow access to the locked channel.')
+						.setRequired(false)),
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
@@ -315,14 +331,20 @@ module.exports = {
 			const channel = interaction.member.voice.channel;
 
 			if (!channel) {
-				return interaction.reply({ content: 'You must be in a voice channel to use this command.', ephemeral: true });
+				return interaction.reply({
+					content: 'You must be in a voice channel to use this command.',
+					ephemeral: true,
+				});
 			}
 
 			const guildId = interaction.guild.id;
 			const filePath = getGuildFilePath(guildId);
 
 			if (!fs.existsSync(filePath)) {
-				return interaction.reply({ content: 'The configuration file does not exist.', ephemeral: true });
+				return interaction.reply({
+					content: 'The configuration file does not exist.',
+					ephemeral: true,
+				});
 			}
 
 			const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -330,39 +352,61 @@ module.exports = {
 
 			const channelInfo = userChannels[channel.id];
 			if (!channelInfo) {
-				return interaction.reply({ content: 'This channel is not managed by the bot.', ephemeral: true });
+				return interaction.reply({
+					content: 'This channel is not managed by the bot.',
+					ephemeral: true,
+				});
 			}
 
 			const channelOwnerId = channelInfo.channelOwnerId;
-			const isUserAdmin = interaction.member.permissions.has(PermissionsBitField.Flags.Administrator);
+			const isUserAdmin = interaction.member.permissions.has(
+				PermissionsBitField.Flags.Administrator,
+			);
 
 			if (channelOwnerId !== interaction.user.id && !isUserAdmin) {
-				return interaction.reply({ content: 'Only the channel owner and Administrators can use this command!', ephemeral: true });
-			}
-
-			const userToPermit = interaction.options.getUser('user');
-
-			if (!userToPermit) {
-				return interaction.reply({ content: 'Invalid user specified.', ephemeral: true });
-			}
-
-			try {
-				await channel.permissionOverwrites.create(userToPermit, {
-					Connect: true,
-					ViewChannel: true,
+				return interaction.reply({
+					content: 'Only the channel owner and Administrators can use this command!',
+					ephemeral: true,
 				});
-
-				const permitEmbed = new EmbedBuilder()
-					.setTitle('Channel permissions updated!')
-					.setDescription(`${userToPermit.username} has been permitted to join the locked channel.`)
-					.setColor('#00FF00');
-
-				return interaction.reply({ embeds: [permitEmbed], ephemeral: true });
 			}
-			catch (error) {
-				console.error('Failed to permit user to join the channel:', error);
-				return interaction.reply({ content: 'An error occurred while permitting the user to join the channel.', ephemeral: true });
+
+			const permittedUsers = [];
+			const userOptions = ['user1', 'user2', 'user3', 'user4', 'user5'];
+
+			for (const option of userOptions) {
+				const userToPermit = interaction.options.getUser(option);
+
+				if (userToPermit) {
+					try {
+						await channel.permissionOverwrites.create(userToPermit, {
+							Connect: true,
+							ViewChannel: true,
+						});
+						permittedUsers.push(userToPermit.username);
+					}
+					catch (error) {
+						console.error('Failed to permit user to join the channel:', error);
+					}
+				}
 			}
+
+			if (permittedUsers.length === 0) {
+				return interaction.reply({
+					content: 'No valid users specified for permitting.',
+					ephemeral: true,
+				});
+			}
+
+			const permitEmbed = new EmbedBuilder()
+				.setTitle('Channel permissions updated!')
+				.setDescription(
+					`\`${permittedUsers.join(', ')}\` ${
+						permittedUsers.length === 1 ? 'has' : 'have'
+					} been permitted to join the locked channel.`,
+				)
+				.setColor('#00FF00');
+
+			return interaction.reply({ embeds: [permitEmbed], ephemeral: true });
 		}
 		else if (subcommand === 'kick') {
 			const channel = interaction.member.voice.channel;
