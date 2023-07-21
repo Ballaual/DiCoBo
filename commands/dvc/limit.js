@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
-
 const directory = './config/dvc';
 const getGuildFilePath = (guildId) => path.join(directory, `${guildId}.json`);
 
@@ -19,17 +18,17 @@ module.exports = {
 		const channel = interaction.member.voice.channel;
 
 		if (!channel) {
-			return interaction.reply('You must be in a voice channel to use this command.');
+			return interaction.reply({ content: 'You must be in a voice channel to use this command.', ephemeral: true });
 		}
 
 		if (!channel.permissionsFor(interaction.user).has(PermissionsBitField.Flags.ManageChannels)) {
-			return interaction.reply('You do not have permissions to manage this channel.');
+			return interaction.reply({ content: 'You do not have permissions to manage this channel.', ephemeral: true });
 		}
 
 		const userLimit = interaction.options.getInteger('limit');
 
 		if (userLimit === null || userLimit < 0) {
-			return interaction.reply('Invalid user limit specified.');
+			return interaction.reply({ content: 'Invalid user limit specified.', ephemeral: true });
 		}
 
 		try {
@@ -51,11 +50,11 @@ module.exports = {
 				fs.writeFileSync(filePath, JSON.stringify({ ...data, userChannels }));
 			}
 
-			return interaction.reply(`The user limit for the voice channel has been set to \`${limit}\`.`);
+			return interaction.reply({ content: `The user limit for the voice channel has been set to \`${limit}\`.`, ephemeral: true });
 		}
 		catch (error) {
 			console.error('Failed to set user limit for the channel:', error);
-			return interaction.reply('An error occurred while setting the user limit for the channel.');
+			return interaction.reply({ content: 'An error occurred while setting the user limit for the channel.', ephemeral: true });
 		}
 	},
 };

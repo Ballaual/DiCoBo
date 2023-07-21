@@ -14,33 +14,33 @@ module.exports = {
 		const channel = interaction.member.voice.channel;
 
 		if (!channel) {
-			return interaction.reply('You must be in a voice channel to use this command.');
+			return interaction.reply({ content: 'You must be in a voice channel to use this command.', ephemeral: true });
 		}
 
 		if (!channel.permissionsFor(interaction.user).has(PermissionsBitField.Flags.ManageChannels)) {
-			return interaction.reply('You do not have permissions to kick members.');
+			return interaction.reply({ content: 'You do not have permissions to kick members.', ephemeral: true });
 		}
 
 		const userToKick = interaction.options.getUser('user');
 
 		if (!userToKick) {
-			return interaction.reply('Invalid user specified.');
+			return interaction.reply({ content: 'Invalid user specified.', ephemeral: true });
 		}
 
 		const memberToKick = channel.members.get(userToKick.id);
 
 		if (!memberToKick) {
-			return interaction.reply(`${userToKick.username} is not in the same voice channel.`);
+			return interaction.reply({ content: `${userToKick.username} is not in the same voice channel.`, ephemeral: true });
 		}
 
 		try {
 			await memberToKick.voice.setChannel(null);
 
-			return interaction.reply(`${userToKick.username} has been kicked from the voice channel.`);
+			return interaction.reply({ content: `${userToKick.username} has been kicked from the voice channel.`, ephemeral: true });
 		}
 		catch (error) {
 			console.error('Failed to kick user from the channel:', error);
-			return interaction.reply('An error occurred while kicking the user from the channel.');
+			return interaction.reply({ content: 'An error occurred while kicking the user from the channel.', ephemeral: true });
 		}
 	},
 };

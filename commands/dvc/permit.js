@@ -14,29 +14,29 @@ module.exports = {
 		const channel = interaction.member.voice.channel;
 
 		if (!channel) {
-			return interaction.reply('You must be in a voice channel to use this command.');
+			return interaction.reply({ content: 'You must be in a voice channel to use this command.', ephemeral: true });
 		}
 
 		if (!channel.permissionsFor(interaction.user).has(PermissionsBitField.Flags.ManageChannels)) {
-			return interaction.reply('You do not have permissions to manage this channel.');
+			return interaction.reply({ content: 'You do not have permissions to manage this channel.', ephemeral: true });
 		}
 
 		const userToPermit = interaction.options.getUser('user');
 
 		if (!userToPermit) {
-			return interaction.reply('Invalid user specified.');
+			return interaction.reply({ content: 'Invalid user specified.', ephemeral: true });
 		}
 
 		try {
 			await channel.permissionOverwrites.create(userToPermit, {
-				Connect: true,
+				CONNECT: true,
 			});
 
-			return interaction.reply(`${userToPermit.username} has been permitted to join the locked channel.`);
+			return interaction.reply({ content: `${userToPermit.username} has been permitted to join the locked channel.`, ephemeral: true });
 		}
 		catch (error) {
 			console.error('Failed to permit user to join the channel:', error);
-			return interaction.reply('An error occurred while permitting the user to join the channel.');
+			return interaction.reply({ content: 'An error occurred while permitting the user to join the channel.', ephemeral: true });
 		}
 	},
 };
