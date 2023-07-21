@@ -96,7 +96,6 @@ module.exports = {
 							content: 'You updated your server roles! Check your DMs for more information.',
 							ephemeral: true,
 						});
-
 					}
 					catch (error) {
 						console.error(`Error reading reaction role data for guild ${guildId}`);
@@ -108,22 +107,30 @@ module.exports = {
 					}
 				}
 			}
-		} else if (interaction.isButton()) {
+		}
+		else if (interaction.isButton()) {
 			if (interaction.customId === 'vcLock') {
-			  await lockCommand.execute(interaction);
-			} else if (interaction.customId === 'vcUnlock') {
-			  await unlockCommand.execute(interaction);
-			} else if (interaction.customId === 'vcRename') {
-			  // Logic for the vcRename button
-			} else if (interaction.customId === 'vcBlock') {
-			  // Logic for the vcBlock button
-			} else if (interaction.customId === 'vcPermit') {
-			  // Logic for the vcPermit button
-			} else if (interaction.customId === 'vcLimit') {
-			  // Logic for the vcLimit button
-			} else if (interaction.customId === 'vcKick') {
-			  // Logic for the vcKick button
-			} else if (interaction.customId === 'rules-button') {
+				await lockCommand.execute(interaction);
+			}
+			else if (interaction.customId === 'vcUnlock') {
+				await unlockCommand.execute(interaction);
+			}
+			else if (interaction.customId === 'vcRename') {
+				// Logic for the vcRename button
+			}
+			else if (interaction.customId === 'vcBlock') {
+				// Logic for the vcBlock button
+			}
+			else if (interaction.customId === 'vcPermit') {
+				// Logic for the vcPermit button
+			}
+			else if (interaction.customId === 'vcLimit') {
+				// Logic for the vcLimit button
+			}
+			else if (interaction.customId === 'vcKick') {
+				// Logic for the vcKick button
+			}
+			else if (interaction.customId === 'rules-button') {
 				const guildId = interaction.guildId;
 				const roleId = interaction.member.roles.cache.get(guildId);
 
@@ -160,6 +167,6 @@ module.exports = {
 					}
 				}
 			}
-		  }
 		}
-	}
+	},
+};
