@@ -21,8 +21,26 @@ module.exports = {
 			return interaction.reply({ content: 'You must be in a voice channel to use this command.', ephemeral: true });
 		}
 
-		if (!channel.permissionsFor(interaction.user).has(PermissionsBitField.Flags.ManageChannels)) {
-			return interaction.reply({ content: 'You do not have permissions to manage this channel.', ephemeral: true });
+		const guildId = interaction.guild.id;
+		const filePath = getGuildFilePath(guildId);
+
+		if (!fs.existsSync(filePath)) {
+			return interaction.reply({ content: 'The configuration file does not exist.', ephemeral: true });
+		}
+
+		const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+		const userChannels = data.userChannels || {};
+
+		const channelInfo = userChannels[channel.id];
+		if (!channelInfo) {
+			return interaction.reply({ content: 'This channel is not managed by the bot.', ephemeral: true });
+		}
+
+		const channelOwnerId = channelInfo.channelOwnerId;
+		const isUserAdmin = interaction.member.permissions.has(PermissionsBitField.Flags.Administrator);
+
+		if (channelOwnerId !== interaction.user.id && !isUserAdmin) {
+			return interaction.reply({ content: 'Only the channel owner and Administrators can use this command!', ephemeral: true });
 		}
 
 		const newName = interaction.options.getString('name');
@@ -34,19 +52,11 @@ module.exports = {
 		try {
 			await channel.setName(newName);
 
-			const guildId = interaction.guild.id;
-			const filePath = getGuildFilePath(guildId);
-
-			if (fs.existsSync(filePath)) {
-				const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-				const userChannels = data.userChannels || {};
-
-				if (userChannels[channel.id]) {
-					userChannels[channel.id].channelName = newName;
-				}
-
-				fs.writeFileSync(filePath, JSON.stringify({ ...data, userChannels }));
+			if (userChannels[channel.id]) {
+				userChannels[channel.id].channelName = newName;
 			}
+
+			fs.writeFileSync(filePath, JSON.stringify({ ...data, userChannels }));
 
 			return interaction.reply({ content: `The voice channel has been renamed to \`${newName}\`.`, ephemeral: true });
 		}

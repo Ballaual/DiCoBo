@@ -1,4 +1,8 @@
 const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
+const fs = require('fs');
+const path = require('path');
+const directory = './config/dvc';
+const getGuildFilePath = (guildId) => path.join(directory, `${guildId}.json`);
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -17,8 +21,26 @@ module.exports = {
 			return interaction.reply({ content: 'You must be in a voice channel to use this command.', ephemeral: true });
 		}
 
-		if (!channel.permissionsFor(interaction.user).has(PermissionsBitField.Flags.ManageChannels)) {
-			return interaction.reply({ content: 'You do not have permissions to manage this channel.', ephemeral: true });
+		const guildId = interaction.guild.id;
+		const filePath = getGuildFilePath(guildId);
+
+		if (!fs.existsSync(filePath)) {
+			return interaction.reply({ content: 'The configuration file does not exist.', ephemeral: true });
+		}
+
+		const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+		const userChannels = data.userChannels || {};
+
+		const channelInfo = userChannels[channel.id];
+		if (!channelInfo) {
+			return interaction.reply({ content: 'This channel is not managed by the bot.', ephemeral: true });
+		}
+
+		const channelOwnerId = channelInfo.channelOwnerId;
+		const isUserAdmin = interaction.member.permissions.has(PermissionsBitField.Flags.Administrator);
+
+		if (channelOwnerId !== interaction.user.id && !isUserAdmin) {
+			return interaction.reply({ content: 'Only the channel owner and Administrators can use this command!', ephemeral: true });
 		}
 
 		const userToPermit = interaction.options.getUser('user');
@@ -29,7 +51,8 @@ module.exports = {
 
 		try {
 			await channel.permissionOverwrites.create(userToPermit, {
-				CONNECT: true,
+				Connect: true,
+				ViewChannel: true,
 			});
 
 			return interaction.reply({ content: `${userToPermit.username} has been permitted to join the locked channel.`, ephemeral: true });

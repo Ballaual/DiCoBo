@@ -17,13 +17,33 @@ module.exports = {
 			return interaction.reply({ content: 'You must be in a voice channel to use this command.', ephemeral: true });
 		}
 
-		if (!channel.permissionsFor(interaction.user).has(PermissionsBitField.Flags.ManageChannels)) {
-			return interaction.reply({ content: 'You do not have permission to manage this channel.', ephemeral: true });
+		const guildId = interaction.guild.id;
+		const filePath = getGuildFilePath(guildId);
+
+		if (!fs.existsSync(filePath)) {
+			return interaction.reply({ content: 'The configuration file does not exist.', ephemeral: true });
 		}
 
-		const isChannelUnlocked = channel.permissionsFor(channel.guild.roles.everyone).has(PermissionsBitField.Flags.Connect);
+		const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+		const userChannels = data.userChannels || {};
 
-		if (isChannelUnlocked) {
+		const channelInfo = userChannels[channel.id];
+		if (!channelInfo) {
+			return interaction.reply({ content: 'This channel is not managed by the bot.', ephemeral: true });
+		}
+
+		const channelOwnerId = channelInfo.channelOwnerId;
+		const isUserAdmin = interaction.member.permissions.has(PermissionsBitField.Flags.Administrator);
+
+		if (channelOwnerId !== interaction.user.id && !isUserAdmin) {
+			return interaction.reply({ content: 'Only the channel owner and Administrators can use this command!', ephemeral: true });
+		}
+
+		const isChannelLocked = channel.permissionOverwrites.cache.some((overwrite) => {
+			return overwrite.id === channel.guild.roles.everyone.id && overwrite.deny.has(PermissionsBitField.Flags.Connect);
+		});
+
+		if (!isChannelLocked) {
 			return interaction.reply({ content: 'The channel is already unlocked.', ephemeral: true });
 		}
 
@@ -32,27 +52,13 @@ module.exports = {
 				Connect: null,
 			});
 
-			await channel.permissionOverwrites.edit(interaction.user, {
-				Connect: null,
-			});
-
 			const newChannelName = channel.name.replace(/^Locked \| /i, '');
 
 			await channel.setName(newChannelName);
 
-			const guildId = interaction.guild.id;
-			const filePath = getGuildFilePath(guildId);
-
-			if (fs.existsSync(filePath)) {
-				const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-				const userChannels = data.userChannels || {};
-
-				if (userChannels[channel.id]) {
-					userChannels[channel.id].channelName = newChannelName;
-					userChannels[channel.id].isLocked = false;
-				}
-
-				fs.writeFileSync(filePath, JSON.stringify({ ...data, userChannels }));
+			if (channelInfo.isLocked) {
+				channelInfo.isLocked = false;
+				fs.writeFileSync(filePath, JSON.stringify(data));
 			}
 
 			return interaction.reply({ content: 'The channel is now unlocked for everyone.', ephemeral: true });

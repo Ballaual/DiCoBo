@@ -21,8 +21,26 @@ module.exports = {
 			return interaction.reply({ content: 'You must be in a voice channel to use this command.', ephemeral: true });
 		}
 
-		if (!channel.permissionsFor(interaction.user).has(PermissionsBitField.Flags.ManageChannels)) {
-			return interaction.reply({ content: 'You do not have permissions to manage this channel.', ephemeral: true });
+		const guildId = interaction.guild.id;
+		const filePath = getGuildFilePath(guildId);
+
+		if (!fs.existsSync(filePath)) {
+			return interaction.reply({ content: 'The configuration file does not exist.', ephemeral: true });
+		}
+
+		const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+		const userChannels = data.userChannels || {};
+
+		const channelInfo = userChannels[channel.id];
+		if (!channelInfo) {
+			return interaction.reply({ content: 'This channel is not managed by the bot.', ephemeral: true });
+		}
+
+		const channelOwnerId = channelInfo.channelOwnerId;
+		const isUserAdmin = interaction.member.permissions.has(PermissionsBitField.Flags.Administrator);
+
+		if (channelOwnerId !== interaction.user.id && !isUserAdmin) {
+			return interaction.reply({ content: 'Only the channel owner and Administrators can use this command!', ephemeral: true });
 		}
 
 		const userLimit = interaction.options.getInteger('limit');
@@ -36,18 +54,9 @@ module.exports = {
 
 			const limit = userLimit === 0 ? 'unlimited' : userLimit.toString();
 
-			const guildId = interaction.guild.id;
-			const filePath = getGuildFilePath(guildId);
-
-			if (fs.existsSync(filePath)) {
-				const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-				const userChannels = data.userChannels || {};
-
-				if (userChannels[channel.id]) {
-					userChannels[channel.id].userLimit = userLimit;
-				}
-
-				fs.writeFileSync(filePath, JSON.stringify({ ...data, userChannels }));
+			if (userChannels[channel.id]) {
+				userChannels[channel.id].userLimit = userLimit;
+				fs.writeFileSync(filePath, JSON.stringify(data));
 			}
 
 			return interaction.reply({ content: `The user limit for the voice channel has been set to \`${limit}\`.`, ephemeral: true });
