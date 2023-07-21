@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const directory = './config/dvc';
@@ -12,12 +12,12 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('lock')
-				.setDescription('Locks the current voice channel for everyone.')
+				.setDescription('Locks the current voice channel for everyone.'),
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('unlock')
-				.setDescription('Unlocks the current voice channel for everyone.')
+				.setDescription('Unlocks the current voice channel for everyone.'),
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
@@ -26,7 +26,7 @@ module.exports = {
 				.addStringOption(option =>
 					option.setName('name')
 						.setDescription('The new name for the voice channel.')
-						.setRequired(true))
+						.setRequired(true)),
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
@@ -35,7 +35,7 @@ module.exports = {
 				.addIntegerOption(option =>
 					option.setName('limit')
 						.setDescription('The user limit for the voice channel.')
-						.setRequired(true))
+						.setRequired(true)),
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
@@ -44,7 +44,7 @@ module.exports = {
 				.addUserOption(option =>
 					option.setName('user')
 						.setDescription('The user to allow access to the locked channel.')
-						.setRequired(true))
+						.setRequired(true)),
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
@@ -53,7 +53,7 @@ module.exports = {
 				.addUserOption(option =>
 					option.setName('user')
 						.setDescription('The user to kick from the voice channel.')
-						.setRequired(true))
+						.setRequired(true)),
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
@@ -62,7 +62,7 @@ module.exports = {
 				.addUserOption(option =>
 					option.setName('user')
 						.setDescription('The user to block from connecting to the voice channel.')
-						.setRequired(true))
+						.setRequired(true)),
 		),
 
 	async execute(interaction) {
@@ -123,13 +123,19 @@ module.exports = {
 					fs.writeFileSync(filePath, JSON.stringify(data));
 				}
 
-				return interaction.reply({ content: 'The channel has been locked for everyone.', ephemeral: true });
+				const lockedEmbed = new EmbedBuilder()
+					.setTitle('Voice channel locked!')
+					.setDescription('Your voice channel has been 🔒 locked for @everyone!')
+					.setColor('#00FF00');
+
+				return interaction.reply({ embeds: [lockedEmbed], ephemeral: true });
 			}
 			catch (error) {
 				console.error('Failed to lock channel:', error);
 				return interaction.reply({ content: 'An error occurred while locking the channel.', ephemeral: true });
 			}
-		} else if (subcommand === 'unlock') {
+		}
+		else if (subcommand === 'unlock') {
 			const channel = interaction.member.voice.channel;
 
 			if (!channel) {
@@ -180,13 +186,19 @@ module.exports = {
 					fs.writeFileSync(filePath, JSON.stringify(data));
 				}
 
-				return interaction.reply({ content: 'The channel is now unlocked for everyone.', ephemeral: true });
+				const unlockedEmbed = new EmbedBuilder()
+					.setTitle('Voice channel unlocked!')
+					.setDescription('Your voice channel has been 🔓 unlocked for @everyone!')
+					.setColor('#00FF00');
+
+				return interaction.reply({ embeds: [unlockedEmbed], ephemeral: true });
 			}
 			catch (error) {
 				console.error('Failed to unlock channel:', error);
 				return interaction.reply({ content: 'An error occurred while unlocking the channel.', ephemeral: true });
 			}
-		} else if (subcommand === 'rename') {
+		}
+		else if (subcommand === 'rename') {
 			const channel = interaction.member.voice.channel;
 
 			if (!channel) {
@@ -230,13 +242,19 @@ module.exports = {
 
 				fs.writeFileSync(filePath, JSON.stringify({ ...data, userChannels }));
 
-				return interaction.reply({ content: `The voice channel has been renamed to \`${newName}\`.`, ephemeral: true });
+				const renamedEmbed = new EmbedBuilder()
+					.setTitle('Name updated!')
+					.setDescription(`The name of your voice channel has been updated to \`${newName}\`.`)
+					.setColor('#00FF00');
+
+				return interaction.reply({ embeds: [renamedEmbed], ephemeral: true });
 			}
 			catch (error) {
 				console.error('Failed to rename the voice channel:', error);
 				return interaction.reply({ content: 'An error occurred while renaming the voice channel.', ephemeral: true });
 			}
-		} else if (subcommand === 'limit') {
+		}
+		else if (subcommand === 'limit') {
 			const channel = interaction.member.voice.channel;
 
 			if (!channel) {
@@ -281,13 +299,19 @@ module.exports = {
 					fs.writeFileSync(filePath, JSON.stringify(data));
 				}
 
-				return interaction.reply({ content: `The user limit for the voice channel has been set to \`${limit}\`.`, ephemeral: true });
+				const limitEmbed = new EmbedBuilder()
+					.setTitle('User limit updated!')
+					.setDescription(`The user limit of your voice channel has been updated to \`${limit}\`.`)
+					.setColor('#00FF00');
+
+				return interaction.reply({ embeds: [limitEmbed], ephemeral: true });
 			}
 			catch (error) {
 				console.error('Failed to set user limit for the channel:', error);
 				return interaction.reply({ content: 'An error occurred while setting the user limit for the channel.', ephemeral: true });
 			}
-		} else if (subcommand === 'permit') {
+		}
+		else if (subcommand === 'permit') {
 			const channel = interaction.member.voice.channel;
 
 			if (!channel) {
@@ -328,13 +352,19 @@ module.exports = {
 					ViewChannel: true,
 				});
 
-				return interaction.reply({ content: `${userToPermit.username} has been permitted to join the locked channel.`, ephemeral: true });
+				const permitEmbed = new EmbedBuilder()
+					.setTitle('Channel permissions updated!')
+					.setDescription(`${userToPermit.username} has been permitted to join the locked channel.`)
+					.setColor('#00FF00');
+
+				return interaction.reply({ embeds: [permitEmbed], ephemeral: true });
 			}
 			catch (error) {
 				console.error('Failed to permit user to join the channel:', error);
 				return interaction.reply({ content: 'An error occurred while permitting the user to join the channel.', ephemeral: true });
 			}
-		} else if (subcommand === 'kick') {
+		}
+		else if (subcommand === 'kick') {
 			const channel = interaction.member.voice.channel;
 
 			if (!channel) {
@@ -378,13 +408,19 @@ module.exports = {
 			try {
 				await memberToKick.voice.setChannel(null);
 
-				return interaction.reply({ content: `\`${userToKick.username}\` has been kicked from the voice channel.`, ephemeral: true });
+				const kickEmbed = new EmbedBuilder()
+					.setTitle('User has been kicked!')
+					.setDescription(`\`${userToKick.username}\` has been kicked from the voice channel.`)
+					.setColor('#00FF00');
+
+				return interaction.reply({ embeds: [kickEmbed], ephemeral: true });
 			}
 			catch (error) {
 				console.error('Failed to kick user from the channel:', error);
 				return interaction.reply({ content: 'An error occurred while kicking the user from the channel.', ephemeral: true });
 			}
-		} else if (subcommand === 'ban') {
+		}
+		else if (subcommand === 'ban') {
 			const channel = interaction.member.voice.channel;
 
 			if (!channel) {
@@ -424,7 +460,12 @@ module.exports = {
 					Connect: false,
 				});
 
-				return interaction.reply({ content: `\`${userToBlock.username}\` has been blocked from connecting to the voice channel.`, ephemeral: true });
+				const banEmbed = new EmbedBuilder()
+					.setTitle('Channel permissions updated!')
+					.setDescription(`\`${userToBlock.username}\` has been blocked from connecting to the voice channel.`)
+					.setColor('#00FF00');
+
+				return interaction.reply({ embeds: [banEmbed], ephemeral: true });
 			}
 			catch (error) {
 				console.error('Failed to block user from connecting to the channel:', error);

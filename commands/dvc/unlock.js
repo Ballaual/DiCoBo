@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const directory = './config/dvc';
@@ -62,7 +62,12 @@ module.exports = {
 				fs.writeFileSync(filePath, JSON.stringify(data));
 			}
 
-			return interaction.reply({ content: 'The channel is now unlocked for everyone.', ephemeral: true });
+			const unlockedEmbed = new EmbedBuilder()
+				.setTitle('Voice channel unlocked!')
+				.setDescription('Your voice channel has been 🔓 unlocked for @everyone!')
+				.setColor('#00FF00');
+
+			return interaction.reply({ embeds: [unlockedEmbed], ephemeral: true });
 		}
 		catch (error) {
 			console.error('Failed to unlock channel:', error);

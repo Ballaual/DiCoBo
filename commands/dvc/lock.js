@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const directory = './config/dvc';
@@ -65,7 +65,12 @@ module.exports = {
 				fs.writeFileSync(filePath, JSON.stringify(data));
 			}
 
-			return interaction.reply({ content: 'The channel has been locked for everyone.', ephemeral: true });
+			const lockedEmbed = new EmbedBuilder()
+				.setTitle('Voice channel locked!')
+				.setDescription('Your voice channel has been 🔒 locked for @everyone!')
+				.setColor('#00FF00');
+
+			return interaction.reply({ embeds: [lockedEmbed], ephemeral: true });
 		}
 		catch (error) {
 			console.error('Failed to lock channel:', error);
