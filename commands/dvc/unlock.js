@@ -53,6 +53,10 @@ module.exports = {
 				Connect: null,
 			});
 
+			await channel.permissionOverwrites.edit(interaction.user, {
+				Connect: null,
+			});
+
 			const newChannelName = channel.name.replace(/^Locked \| /i, '');
 
 			await channel.setName(newChannelName);

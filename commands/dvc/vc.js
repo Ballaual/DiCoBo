@@ -130,6 +130,10 @@ module.exports = {
 					Connect: false,
 				});
 
+				await channel.permissionOverwrites.edit(interaction.user, {
+					Connect: true,
+				});
+
 				const newChannelName = `Locked | ${channel.name}`;
 
 				await channel.setName(newChannelName);
@@ -190,6 +194,10 @@ module.exports = {
 
 			try {
 				await channel.permissionOverwrites.edit(channel.guild.roles.everyone, {
+					Connect: null,
+				});
+
+				await channel.permissionOverwrites.edit(interaction.user, {
 					Connect: null,
 				});
 
