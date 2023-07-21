@@ -1,4 +1,5 @@
-const { Events, Collection, EmbedBuilder } = require('discord.js');
+const { Events, Collection, EmbedBuilder, ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
+const fs = require('fs');
 const logCommand = require('../functions/commandLogger');
 const lockCommand = require('../commands/dvc/lock');
 const unlockCommand = require('../commands/dvc/unlock');
@@ -116,7 +117,20 @@ module.exports = {
 				await unlockCommand.execute(interaction);
 			}
 			else if (interaction.customId === 'vcRename') {
-				// Logic for the vcRename button
+				const vcRenameModal = new ModalBuilder()
+					.setCustomId('vcRenameModal')
+					.setTitle('Update your channel name');
+
+				const vcRenameInput = new TextInputBuilder()
+					.setCustomId('vcRenameInput')
+					.setLabel('Insert your new channel name and hit submit')
+					.setMaxLength(15)
+					.setRequired(true)
+					.setStyle(TextInputStyle.Short);
+
+				const vcRenameActionRow = new ActionRowBuilder().addComponents(vcRenameInput);
+				vcRenameModal.addComponents(vcRenameActionRow);
+				await interaction.showModal(vcRenameModal);
 			}
 			else if (interaction.customId === 'vcBlock') {
 				// Logic for the vcBlock button
@@ -125,7 +139,21 @@ module.exports = {
 				// Logic for the vcPermit button
 			}
 			else if (interaction.customId === 'vcLimit') {
-				// Logic for the vcLimit button
+				const vcLimitModal = new ModalBuilder()
+					.setCustomId('vcLimitModal')
+					.setTitle('Update the user limit');
+
+				const vcLimitInput = new TextInputBuilder()
+					.setCustomId('vcLimitInput')
+					.setLabel('Insert the new user limit and submit')
+					.setMinLength(1)
+					.setMaxLength(2)
+					.setRequired(true)
+					.setStyle(TextInputStyle.Short);
+
+				const vcLimitActionRow = new ActionRowBuilder().addComponents(vcLimitInput);
+				vcLimitModal.addComponents(vcLimitActionRow);
+				await interaction.showModal(vcLimitModal);
 			}
 			else if (interaction.customId === 'vcKick') {
 				// Logic for the vcKick button
@@ -165,6 +193,69 @@ module.exports = {
 							ephemeral: true,
 						});
 					}
+				}
+			}
+		}
+		else if (interaction.isModalSubmit()) {
+			if (interaction.customId === 'vcRenameModal') {
+				const vcRenameNewName = interaction.fields.getTextInputValue('vcRenameInput');
+				const voiceChannel = interaction.member.voice.channel;
+
+				if (!voiceChannel) {
+					return interaction.reply({ content: 'You are not in a voice channel.', ephemeral: true });
+				}
+
+				try {
+					await voiceChannel.setName(vcRenameNewName);
+
+					const guildId = interaction.guildId;
+					const filePath = `./config/dvc/${guildId}.json`;
+					const data = fs.readFileSync(filePath, 'utf8');
+					const config = JSON.parse(data);
+					config.userChannels[voiceChannel.id].channelName = vcRenameNewName;
+					fs.writeFileSync(filePath, JSON.stringify(config, null, 4));
+
+					const vcRenamedEmbed = new EmbedBuilder()
+						.setTitle('Name updated!')
+						.setDescription(`The name of your voice channel has been updated to \`${vcRenameNewName}\`.`)
+						.setColor('#00FF00');
+
+					return interaction.reply({ embeds: [vcRenamedEmbed], ephemeral: true });
+				}
+				catch (error) {
+					console.error('Failed to update voice channel name:', error);
+					await interaction.reply({ content: 'An error occurred while updating the voice channel name.', ephemeral: true });
+				}
+			}
+			else if (interaction.customId === 'vcLimitModal') {
+				const vcLimitNewLimit = interaction.fields.getTextInputValue('vcLimitInput');
+				const voiceChannel = interaction.member.voice.channel;
+
+				if (!voiceChannel) {
+					return interaction.reply({ content: 'You are not in a voice channel.', ephemeral: true });
+				}
+
+				try {
+					await voiceChannel.setUserLimit(vcLimitNewLimit);
+					const limit = vcLimitNewLimit === '0' ? 'unlimited' : vcLimitNewLimit.toString();
+
+					const guildId = interaction.guildId;
+					const filePath = `./config/dvc/${guildId}.json`;
+					const data = fs.readFileSync(filePath, 'utf8');
+					const config = JSON.parse(data);
+					config.userChannels[voiceChannel.id].userLimit = parseInt(vcLimitNewLimit);
+					fs.writeFileSync(filePath, JSON.stringify(config, null, 4));
+
+					const vcRenamedEmbed = new EmbedBuilder()
+						.setTitle('User Limit updated!')
+						.setDescription(`The user limit of your voice channel has been updated to \`${limit}\`.`)
+						.setColor('#00FF00');
+
+					return interaction.reply({ embeds: [vcRenamedEmbed], ephemeral: true });
+				}
+				catch (error) {
+					console.error('Failed to update user limit of the voice channel:', error);
+					await interaction.reply({ content: 'An error occurred while updating the user limit of the voice channel.', ephemeral: true });
 				}
 			}
 		}
