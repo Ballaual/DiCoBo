@@ -47,7 +47,7 @@
     "ytdl-core": "^4.11.5"
   },
   "engines": {
-    "node": ">=18.17.0"
+    "node": ">=18.16.1"
   },
   "devDependencies": {
     "all-contributors-cli": "^6.26.1",
