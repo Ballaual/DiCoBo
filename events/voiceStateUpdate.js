@@ -1,7 +1,6 @@
-const { Events, ChannelType, PermissionsBitField } = require('discord.js');
+const { Events, ChannelType } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
-
 const directory = './config/dvc';
 const getGuildFilePath = (guildId) => path.join(directory, `${guildId}.json`);
 
@@ -57,10 +56,7 @@ module.exports = {
 
 				permissionOverwrites.push({
 					id: user.id,
-					allow: [
-						PermissionsBitField.Flags.ManageChannels,
-						PermissionsBitField.Flags.ManageRoles,
-					],
+					allow: [],
 				});
 
 				const newChannel = await guild.channels.create({
@@ -126,10 +122,7 @@ module.exports = {
 				const channelData = userChannels[oldState.channel.id];
 
 				if (channelData.channelOwnerId === oldState.member.user.id) {
-					await oldState.channel.permissionOverwrites.edit(nextMember, {
-						ManageChannels: true,
-						ManageRoles: true,
-					});
+					await oldState.channel.permissionOverwrites.edit(nextMember, {});
 
 					await oldState.channel.permissionOverwrites.delete(oldState.member);
 
@@ -145,6 +138,35 @@ module.exports = {
 						nextMember.user.username;
 					data.userChannels[oldState.channel.id].channelName = newChannelName;
 				}
+			}
+		}
+
+		const guild = newState.guild;
+		const channelsToDelete = [];
+
+		for (const channelId in userChannels) {
+			const channelData = userChannels[channelId];
+			const channel = guild.channels.cache.get(channelId);
+
+			if (!channel) {
+				delete userChannels[channelId];
+				continue;
+			}
+
+			if (channel.members.size === 0) {
+				if (channelData.channelOwnerId !== newState.member.user.id) {
+					channelsToDelete.push(channel);
+					delete userChannels[channelId];
+				}
+			}
+		}
+
+		for (const channel of channelsToDelete) {
+			try {
+				await channel.delete();
+			}
+			catch (error) {
+				console.error(`Failed to delete channel: ${error.message}`);
 			}
 		}
 
