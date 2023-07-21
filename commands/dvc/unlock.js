@@ -21,6 +21,12 @@ module.exports = {
 			return interaction.reply({ content: 'You do not have permission to manage this channel.', ephemeral: true });
 		}
 
+		const isChannelUnlocked = channel.permissionsFor(channel.guild.roles.everyone).has(PermissionsBitField.Flags.Connect);
+
+		if (isChannelUnlocked) {
+			return interaction.reply({ content: 'The channel is already unlocked.', ephemeral: true });
+		}
+
 		try {
 			await channel.permissionOverwrites.edit(channel.guild.roles.everyone, {
 				Connect: null,

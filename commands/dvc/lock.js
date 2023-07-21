@@ -21,6 +21,17 @@ module.exports = {
 			return interaction.reply({ content: 'You do not have permissions to manage this channel.', ephemeral: true });
 		}
 
+		let isChannelLocked = false;
+		channel.permissionOverwrites.cache.forEach((overwrite) => {
+			if (overwrite.id === channel.guild.roles.everyone.id && overwrite.deny.has(PermissionsBitField.Flags.Connect)) {
+				isChannelLocked = true;
+			}
+		});
+
+		if (isChannelLocked) {
+			return interaction.reply({ content: 'The channel is already locked.', ephemeral: true });
+		}
+
 		try {
 			await channel.permissionOverwrites.edit(channel.guild.roles.everyone, {
 				Connect: false,
@@ -41,9 +52,11 @@ module.exports = {
 				const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 				const userChannels = data.userChannels || {};
 
-				if (userChannels[channel.id]) {
-					userChannels[channel.id].channelName = newChannelName;
-					userChannels[channel.id].isLocked = true;
+				if (!userChannels[channel.id]) {
+					userChannels[channel.id] = {
+						channelName: newChannelName,
+						isLocked: true,
+					};
 				}
 
 				fs.writeFileSync(filePath, JSON.stringify({ ...data, userChannels }));
