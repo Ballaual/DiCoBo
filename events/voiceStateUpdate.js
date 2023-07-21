@@ -2,6 +2,7 @@ const { Events, ChannelType } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const directory = './config/dvc';
+const formatDate = require('../functions/formatDate')
 const getGuildFilePath = (guildId) => path.join(directory, `${guildId}.json`);
 
 if (!fs.existsSync(directory)) {
@@ -72,7 +73,10 @@ module.exports = {
 
 				const creatorChannel = guild.channels.cache.get(newState.channel.id);
 				if (creatorChannel) {
+					const createdTimestamp = Date.now();
+					const formattedTimestamp = formatDate(createdTimestamp);
 					userChannels[newChannel.id] = {
+						created: formattedTimestamp,
 						creatorChannelId: creatorChannel.id,
 						channelOwnerId: user.id,
 						channelOwnerName: user.username,
