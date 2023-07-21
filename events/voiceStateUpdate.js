@@ -4,6 +4,7 @@ const path = require('path');
 const directory = './config/dvc';
 const formatDate = require('../functions/formatDate');
 const getGuildFilePath = (guildId) => path.join(directory, `${guildId}.json`);
+const { vcInterface } = require('../util/vcInterface');
 
 if (!fs.existsSync(directory)) {
 	fs.mkdirSync(directory, { recursive: true });
@@ -70,6 +71,7 @@ module.exports = {
 				});
 
 				newState.setChannel(newChannel);
+				await vcInterface(newChannel);
 
 				const creatorChannel = guild.channels.cache.get(newState.channel.id);
 				if (creatorChannel) {
