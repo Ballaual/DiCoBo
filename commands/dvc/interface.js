@@ -4,8 +4,8 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('interface')
 		.setDescription('Creates the interface for managing dynamic voice channels')
-		.setDMPermission(false)
-		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+		.setDMPermission(false),
 	async execute(interaction) {
 		const vcLock = new ButtonBuilder()
 			.setCustomId('vcLock')

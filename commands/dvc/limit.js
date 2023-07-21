@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const directory = './config/dvc';
@@ -8,6 +8,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('limit')
 		.setDescription('Sets the user limit for the voice channel.')
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.setDMPermission(false)
 		.addIntegerOption(option =>
 			option.setName('limit')

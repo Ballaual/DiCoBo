@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const directory = './config/dvc';
@@ -8,6 +8,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('permit')
 		.setDescription('Allows a user to join the locked channel.')
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.setDMPermission(false)
 		.addUserOption(option =>
 			option.setName('user')

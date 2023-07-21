@@ -6,8 +6,8 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('dvc')
 		.setDescription('Defines a voice channel as voice creator')
-		.setDMPermission(false)
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+		.setDMPermission(false)
 		.addSubcommand(subcommand =>
 			subcommand
 				.setName('add')
