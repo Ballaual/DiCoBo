@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const fs = require('fs');
-
 const getGuildFilePath = (guildId) => `./config/dvc/${guildId}.json`;
 
 module.exports = {
