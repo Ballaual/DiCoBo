@@ -9,7 +9,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('limit')
 		.setDescription('Sets the user limit for the voice channel.')
-		.setDefaultPermission(false)
+		.setDMPermission(false)
 		.addIntegerOption(option =>
 			option.setName('limit')
 				.setDescription('The user limit for the voice channel.')
