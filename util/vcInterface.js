@@ -26,7 +26,7 @@ async function vcInterface(channel) {
 
 	const embed = new EmbedBuilder()
 		.setTitle('Voice Channel Interface')
-		.setDescription('You can use this interface to manage your voice channel.\nYou can also use the `/vc slash commands!`\n\n🔒 Lock\n🔓 Unlock\n✏️ Rename')
+		.setDescription('You can use this interface to manage your voice channel.\nYou can also use the `/vc slash commands!`\n\n🔒 Lock\n🔓 Unlock\n✏️ Rename\n👪 Limit')
 		.setFooter({ text: 'Use the buttons below to manage your voice channel!' });
 
 	await channel.send({
