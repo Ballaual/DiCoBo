@@ -1,4 +1,4 @@
-const { Events, ChannelType } = require('discord.js');
+const { Events, ChannelType, PermissionsBitField  } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const directory = './config/dvc';
@@ -58,7 +58,9 @@ module.exports = {
 
 				permissionOverwrites.push({
 					id: user.id,
-					allow: [],
+					allow: [
+						PermissionsBitField.Flags.Connect,
+					],
 				});
 
 				const newChannel = await guild.channels.create({
@@ -128,7 +130,9 @@ module.exports = {
 				const channelData = userChannels[oldState.channel.id];
 
 				if (channelData.channelOwnerId === oldState.member.user.id) {
-					await oldState.channel.permissionOverwrites.edit(nextMember, {});
+					await oldState.channel.permissionOverwrites.edit(nextMember, {
+						Connect: true,
+					});
 
 					await oldState.channel.permissionOverwrites.delete(oldState.member);
 
