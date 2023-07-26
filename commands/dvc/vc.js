@@ -7,7 +7,7 @@ const getGuildFilePath = (guildId) => path.join(directory, `${guildId}.json`);
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('vc')
-		.setDescription('Manage dynamic voice channels')
+		.setDescription('Manages dynamic voice channels')
 		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
 			subcommand
