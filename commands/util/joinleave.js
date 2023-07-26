@@ -28,7 +28,7 @@ module.exports = {
 
 		if (subcommand === 'add') {
 			if (!channelId) {
-				await interaction.reply('Please provide a valid channel.');
+				await interaction.reply({ content: 'Please provide a valid channel.', ephemeral: true });
 				return;
 			}
 
@@ -51,7 +51,7 @@ module.exports = {
 
 			fs.writeFileSync(guildConfigFile, JSON.stringify(guildConfig, null, 4));
 
-			await interaction.reply(`Join/leave messages will now be sent to <#${channelId.id}>.`);
+			await interaction.reply({ content: `Join/leave messages will now be sent to <#${channelId.id}>.`, ephemeral: true })
 		}
 		else if (subcommand === 'remove') {
 			const guildId = interaction.guildId;
@@ -59,10 +59,10 @@ module.exports = {
 
 			if (fs.existsSync(guildConfigFile)) {
 				fs.unlinkSync(guildConfigFile);
-				await interaction.reply('Join/leave channel removed.');
+				await interaction.reply({ content: 'Join/leave channel removed.', ephemeral: true });
 			}
 			else {
-				await interaction.reply('There is no join/leave channel configured.');
+				await interaction.reply({ content: 'There is no join/leave channel configured.', ephemeral: true });
 			}
 		}
 	},
