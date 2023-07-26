@@ -5,7 +5,7 @@ const { ownerId } = require('../../config/config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('info')
+		.setName('sysinfo')
 		.setDescription('Displays detailed information about the bot')
 		.setDMPermission(false),
 	async execute(interaction) {
