@@ -1,4 +1,4 @@
-const { Events, ChannelType, PermissionsBitField  } = require('discord.js');
+const { Events, ChannelType, PermissionsBitField } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const directory = './config/dvc';
