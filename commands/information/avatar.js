@@ -6,7 +6,7 @@ module.exports = {
 		.setDescription('Gets the avatar URL of the selected user, or your own avatar.')
 		.setDMPermission(false)
 		.addUserOption(option => option
-			.setName('target')
+			.setName('user')
 			.setDescription('The user\'s avatar to show')),
 	async execute(interaction) {
 		const user = interaction.options.getUser('target');
