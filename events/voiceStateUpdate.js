@@ -121,10 +121,16 @@ module.exports = {
 				userChannels[oldState.channel.id] &&
 				!oldState.selfMute &&
 				!oldState.selfDeaf &&
-				!oldState.selfStream &&
+				!oldState.selfVideo &&
+				!oldState.streaming &&
+				!oldState.serverDeaf &&
+				!oldState.serverMute &&
 				!newState.selfMute &&
 				!newState.selfDeaf &&
-				!newState.selfStream
+				!newState.selfVideo &&
+				!newState.streaming &&
+				!newState.serverDeaf &&
+				!newState.serverMute
 			) {
 				const nextMember = oldState.channel.members.first();
 				const channelData = userChannels[oldState.channel.id];
