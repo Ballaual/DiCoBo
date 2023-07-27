@@ -51,7 +51,7 @@ module.exports = {
 
 			fs.writeFileSync(guildConfigFile, JSON.stringify(guildConfig, null, 4));
 
-			await interaction.reply({ content: `Join/leave messages will now be sent to <#${channelId.id}>.`, ephemeral: true })
+			await interaction.reply({ content: `Join/leave messages will now be sent to <#${channelId.id}>.`, ephemeral: true });
 		}
 		else if (subcommand === 'remove') {
 			const guildId = interaction.guildId;
