@@ -33,7 +33,7 @@
     "@distube/ytdl-core": "^4.11.15",
     "discord-api-types": "^0.37.50",
     "discord-gamecord": "^4.4.0",
-    "discord.js": "^14.11.0",
+    "discord.js": "^14.12.1",
     "distube": "^4.0.5",
     "ffmpeg-static": "^5.1.0",
     "genius-lyrics-api": "^3.2.0",
