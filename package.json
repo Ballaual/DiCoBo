@@ -1,6 +1,6 @@
 {
   "name": "DiCoBo",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "description": "a discordbot written in discord.js v14 using (/) commands",
   "main": "index.js",
   "scripts": {
@@ -29,11 +29,12 @@
     "@distube/deezer": "^2.0.1",
     "@distube/soundcloud": "^2.0.3",
     "@distube/spotify": "^2.0.2",
+    "@distube/youtube": "^1.0.4",
     "@distube/yt-dlp": "^2.0.1",
     "@distube/ytdl-core": "^4.14.4",
     "discord-api-types": "^0.37.101",
     "discord-gamecord": "^4.4.2",
-    "discord.js": "^14.16.2",
+    "discord.js": "^14.16.3",
     "distube": "^5.0.2",
     "ffmpeg-static": "^5.2.0",
     "genius-lyrics-api": "^3.2.1",

@@ -1,20 +1,37 @@
 const Distube = require('distube');
+const { YouTubePlugin } = require('@distube/youtube');
 const { SoundCloudPlugin } = require('@distube/soundcloud');
 const { SpotifyPlugin } = require('@distube/spotify');
-const { YtDlpPlugin } = require('@distube/yt-dlp');
 const { DeezerPlugin } = require('@distube/deezer');
 const { EmbedBuilder } = require('discord.js');
 const discordClient = require('./discordClient');
+const ytdl = require('@distube/ytdl-core');
+const fs = require('fs');
+
+// Lese die Cookies aus einer JSON-Datei (z. B. cookies.json)
+const cookies = JSON.parse(fs.readFileSync('cookies.json'));
+
+// Erstelle den Agent mit den Cookies
+const agent = ytdl.createAgent(cookies);
 
 const distube = new Distube.default(discordClient, {
-	plugins: [new SoundCloudPlugin(), new SpotifyPlugin(), new YtDlpPlugin(), new DeezerPlugin()],
+	plugins: [
+		new YouTubePlugin(), // Add YouTube plugin
+		new SoundCloudPlugin(),
+		new SpotifyPlugin(),
+		new DeezerPlugin(),
+	],
 });
+
+// Erhöhe die Anzahl der maximalen Listener
+distube.setMaxListeners(20); // Oder eine andere Zahl
 
 const status = (queue) => {
 	const filterText = Array.isArray(queue.filters) ? queue.filters.join(', ') : 'Off';
 	return `Volume: \`${queue.volume}%\` | Loop: \`${queue.repeatMode ? queue.repeatMode === 2 ? 'All Queue' : 'This Song' : 'Off'}\` | Autoplay: \`${queue.autoplay ? 'On' : 'Off'}\` | Filter: \`${filterText}\``;
 };
 
+// Verwende die ytdlOptions beim Abrufen von Songs
 distube
 	.on('playSong', (queue, song) => {
 		const embed = new EmbedBuilder()
@@ -26,7 +43,8 @@ distube
 				{ name: '**Views:**', value: song.views.toString(), inline: true },
 				{ name: '**Likes:**', value: song.likes.toString(), inline: true },
 				{ name: '**Duration:**', value: song.formattedDuration.toString(), inline: true },
-				{ name: '**Status**', value: status(queue).toString() })
+				{ name: '**Status**', value: status(queue).toString() }
+			)
 			.setFooter({ text: `Requested by ${song.user.username}`, iconURL: song.user.avatarURL() })
 			.setTimestamp();
 		queue.textChannel.send({ embeds: [embed] });
@@ -77,5 +95,15 @@ distube
 		queue.autoplay = false;
 		queue.volume = 50;
 	});
+
+// Verwende ytdlOptions nur beim Abrufen von Songs
+distube.on('playSong', async (queue, song) => {
+	try {
+		const songInfo = await ytdl.getInfo(song.url, { agent });
+		// Hier kannst du die songInfo verwenden, um weitere Informationen zu erhalten
+	} catch (error) {
+		console.error(error);
+	}
+});
 
 module.exports = distube;
