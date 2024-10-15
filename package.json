@@ -1,6 +1,6 @@
 {
   "name": "DiCoBo",
-  "version": "2.6.9",
+  "version": "2.7.0",
   "description": "a discordbot written in discord.js v14 using (/) commands",
   "main": "index.js",
   "scripts": {
@@ -51,11 +51,11 @@
   },
   "devDependencies": {
     "all-contributors-cli": "^6.26.1",
-    "eslint": "^9.11.1",
+    "eslint": "^8.57.1",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^7.1.0",
+    "eslint-plugin-promise": "^6.6.0",
     "nodemon": "^3.1.7"
   }
 }
