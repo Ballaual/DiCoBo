@@ -7,13 +7,6 @@ const { EmbedBuilder } = require('discord.js');
 const discordClient = require('./discordClient');
 
 const distube = new Distube.default(discordClient, {
-	searchSongs: 5,
-	leaveOnFinish: true,
-	leaveOnEmpty: true,
-	emptyCooldown: 30,
-	emitNewSongOnly: true,
-	nsfw: true,
-	youtubeCookie: process.env.ytcookie,
 	plugins: [new SoundCloudPlugin(), new SpotifyPlugin(), new YtDlpPlugin(), new DeezerPlugin()],
 });
 
