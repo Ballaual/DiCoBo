@@ -1,3 +1,4 @@
+const path = require('path');
 const Distube = require('distube');
 const { SoundCloudPlugin } = require('@distube/soundcloud');
 const { SpotifyPlugin } = require('@distube/spotify');
@@ -6,6 +7,9 @@ const { DeezerPlugin } = require('@distube/deezer');
 const { EmbedBuilder } = require('discord.js');
 const discordClient = require('./discordClient');
 
+// Set the path to cookies.json
+const youtubeCookiePath = path.join(__dirname, 'cookies.json');
+
 const distube = new Distube.default(discordClient, {
 	searchSongs: 5,
 	leaveOnFinish: true,
@@ -13,7 +17,7 @@ const distube = new Distube.default(discordClient, {
 	emptyCooldown: 30,
 	emitNewSongOnly: true,
 	nsfw: true,
-	youtubeCookie: JSON.parse(readFileSync('cookies.json', 'utf-8')),
+	youtubeCookie: youtubeCookiePath, // Pass the path instead of reading the file
 	plugins: [new SoundCloudPlugin(), new SpotifyPlugin(), new YtDlpPlugin(), new DeezerPlugin()],
 });
 
